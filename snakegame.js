@@ -5,7 +5,9 @@ var SnakeGame = {};
 (function(app){
 
   var config = {
-    scale: 12,
+    scale: 14,
+    frameRate: 60 ,
+    direction: 'none'
     // speed: 1
   };
 
@@ -16,6 +18,7 @@ var SnakeGame = {};
       app.stage = new Stage();
       app.renderer = new Renderer();
       app.controller = new Controller();
+      app.timer = new Timer();
     });
   };
 
@@ -45,38 +48,59 @@ var SnakeGame = {};
   var Controller = function() {
     var self = {},
         stage = app.stage,
-        segment = app.segment;
+        segment = app.segment,
+        direction = config.direction;
 
     self.init = function() {
       $(window).on('keydown', self.keyHandler);
     };
 
-    self.keyHandler = function(event) {
-      var move = true,
-          direction;
+    // self.advance = function() {
+    //   self.move();
+    // };
 
-      switch (event.keyCode) {
-        case 37: // left
+    self.move = function() {
+      switch (direction) {
+        case 'left':
           segment.position[0] -= 1;
           break;
-        case 38: // up
-          segment.position[1] -= 1;
-          break;
-        case 39: // right
+        case 'right':
           segment.position[0] += 1;
           break;
-        case 40: // down
+        case 'up':
+          segment.position[1] -= 1;
+          break;
+        case 'down':
           segment.position[1] += 1;
           break;
-        default:
-          move = false;
       }
 
-      if (move) {
-        self.checkBorder();
-        app.renderer.draw();
-      }
+      self.checkBorder();
+      app.renderer.draw();
+    };
 
+    self.keyHandler = function(event) {
+      switch (event.keyCode) {
+        case 37: // left
+        case 65: // a
+          direction = 'left';
+          break;
+        case 39: // right
+        case 68: // d
+          direction = 'right';
+          break;
+        case 38: // up
+        case 87: // w
+          direction = 'up';
+          break;
+        case 40: // down
+        case 83: // s
+          direction = 'down';
+          break;
+        case 32: // space
+          direction = 'none';
+          break;
+      }
     };
 
     self.checkBorder = function() {
@@ -97,6 +121,22 @@ var SnakeGame = {};
 
     self.init();
 
+    return self;
+  };
+
+
+  var Timer = function() {
+    self = {};
+
+    self.init = function() {
+      window.setInterval(self.frame, config.frameRate);
+    };
+
+    self.frame = function() {
+      app.controller.move();
+    };
+
+    self.init();
   };
 
   var Renderer = function() {
