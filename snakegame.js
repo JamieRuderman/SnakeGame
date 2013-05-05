@@ -6,13 +6,13 @@ var SnakeGame = {};
 
   var config = {
     scale: 12,
-    speed: 1
+    // speed: 1
   };
 
   app.start = function() {
     // start snake game
     $(document).ready(function() {
-      app.head = new Head();
+      app.segment = new Segment();
       app.stage = new Stage();
       app.renderer = new Renderer();
       app.controller = new Controller();
@@ -20,26 +20,24 @@ var SnakeGame = {};
   };
 
   var Stage = function() {
-    // width, height in px
     var self = {
+      // width, height in blocks
       size: [50, 50],
-      css: {
-        'background': 'red',
-      }
+      position: [0, 0],
+      el: $('.stage'),
+      name: 'stage'
     };
 
     return self;
   };
 
-  var Head = function() {
+  var Segment = function() {
     var self = {
-        size: 1,
-        position: [0, 0],
-        css: {
-        'background': 'white',
-        'box-shadow': 'black 0px 0px 0px 1px inset'
-        }
-      };
+      size: [1, 1],
+      position: [0, 0],
+      el: $('.snake'),
+      name: 'segment'
+    };
 
     return self;
   };
@@ -47,7 +45,7 @@ var SnakeGame = {};
   var Controller = function() {
     var self = {},
         stage = app.stage,
-        head = app.head;
+        segment = app.segment;
 
     self.init = function() {
       $(window).on('keydown', self.keyHandler);
@@ -59,16 +57,16 @@ var SnakeGame = {};
 
       switch (event.keyCode) {
         case 37: // left
-          head.position[0] -= head.speed;
+          segment.position[0] -= 1;
           break;
         case 38: // up
-          head.position[1] -= head.speed;
+          segment.position[1] -= 1;
           break;
         case 39: // right
-          head.position[0] += head.speed;
+          segment.position[0] += 1;
           break;
         case 40: // down
-          head.position[1] += head.speed;
+          segment.position[1] += 1;
           break;
         default:
           move = false;
@@ -76,24 +74,24 @@ var SnakeGame = {};
 
       if (move) {
         self.checkBorder();
-        renderer.draw();
+        app.renderer.draw();
       }
 
     };
 
     self.checkBorder = function() {
       // left / right
-      if (head.position[0] < 0) {
-        head.position[0] = 0;
-      } else if (head.position[0] >= stage.size[0]) {
-        head.position[0] = stage.size[0] - 1;
+      if (segment.position[0] < 0) {
+        segment.position[0] = 0;
+      } else if (segment.position[0] >= stage.size[0]) {
+        segment.position[0] = stage.size[0] - 1;
       }
 
       // up / down
-      if (head.position[1] < 0) {
-        head.position[1] = 0;
-      } else if (head.position[1] >= stage.size[1]) {
-        head.position[1] = stage.size[1] - 1;
+      if (segment.position[1] < 0) {
+        segment.position[1] = 0;
+      } else if (segment.position[1] >= stage.size[1]) {
+        segment.position[1] = stage.size[1] - 1;
       }
     };
 
@@ -102,27 +100,47 @@ var SnakeGame = {};
   };
 
   var Renderer = function() {
-
-    var self = {};
-
-    var stage = app.stage,
-        head = app.head;
+    var self = {},
+        body = $('body'),
+        scale = config.scale,
+        stage = app.stage,
+        segment = app.segment;
 
     self.init = function() {
-      $('body').append(stage.el);
-      stage.el.append(head.el);
-      head.position = [
-        stage.size[0]/2,
-        stage.size[1]/2
-      ];
-      self.draw();
+      self.add(stage);
+      self.center(segment);
+      self.add(segment);
     };
 
     self.draw = function() {
-      head.el.css({
-        top: (head.position[1] * config.scale) + 'px',
-        left: (head.position[0] * config.scale) + 'px'
+      self.position(segment);
+    };
+
+    self.add = function(sprite) {
+      body.append(sprite.el);
+      self.size(sprite);
+      self.position(sprite);
+    };
+
+    self.position = function(sprite) {
+      sprite.el.css({
+        top: (sprite.position[1] * scale) + 'px',
+        left: (sprite.position[0] * scale) + 'px'
       });
+    };
+
+    self.size = function(sprite) {
+      sprite.el.css({
+        width: sprite.size[0] * scale,
+        height: sprite.size[1] * scale
+      });
+    };
+
+    self.center = function(sprite) {
+      sprite.position = [
+        stage.size[0]/2,
+        stage.size[1]/2
+      ];
     };
 
     self.init();
