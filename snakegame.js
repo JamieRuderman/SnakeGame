@@ -24,15 +24,15 @@ var SnakeGame = {};
 
   var Stage = function() {
 
-    var body = $('body'),
-        scale = config.scale;
-
     var self = {
       // width, height in blocks
-      size: [50, 50],
+      size: [60, 80],
       name: 'stage',
       el: $('<canvas />')
     };
+
+    var body = $('body'),
+        scale = config.scale;
 
     self.init = function() {
       body.append(self.el);
@@ -225,13 +225,15 @@ var SnakeGame = {};
 
   var Renderer = function() {
     var self = {},
-        scale = config.scale,
         stage = app.stage,
         context = stage.context,
         snake = app.snake;
 
     self.init = function() {
       self.draw();
+      context.strokeStyle = '#000';
+      context.lineJoin = 'miter';
+      context.lineWidth = 1;
     };
 
     self.draw = function() {
@@ -243,14 +245,18 @@ var SnakeGame = {};
 
     self.snake = function() {
       context.fillStyle = 'red';
-      // console.log('frame --------------------------');
       snake.eachSegment(function(part) {
-        // console.log('part', part);
         context.fillRect(
-          part[0] * scale,
-          part[1] * scale,
-          snake.size[0] * scale,
-          snake.size[1] * scale
+          scale(part[0]),
+          scale(part[1]),
+          scale(snake.size[0]),
+          scale(snake.size[1])
+        );
+        context.strokeRect(
+          scale(part[0]) + 0.5,
+          scale(part[1]) + 0.5,
+          scale(snake.size[0]) - 1,
+          scale(snake.size[1]) - 1
         );
       });
     };
@@ -258,9 +264,15 @@ var SnakeGame = {};
     self.clear = function() {
       context.fillStyle = 'black';
       context.fillRect(0, 0,
-        stage.size[0] * scale,
-        stage.size[1] * scale
+        scale(stage.size[0]),
+        scale(stage.size[1])
       );
+    };
+
+    // private
+
+    scale = function(size) {
+      return Math.round(size * config.scale);
     };
 
     self.init();
