@@ -6,7 +6,7 @@ var SnakeGame = {};
 
   var config = {
     scale: 10,
-    fps: 20,
+    fps: 40,
     direction: 'down'
     // speed: 1
   };
@@ -64,8 +64,13 @@ var SnakeGame = {};
 
     self.advance = function() {
       self.addSegment();
+      self.checkLength();
+    };
+
+    self.checkLength = function() {
       if (self.segments.length > self.length) {
         self.segments.pop();
+        self.checkLength();
       }
     };
 
@@ -112,8 +117,8 @@ var SnakeGame = {};
       }
 
       self.checkBorder();
+      self.checkHit();
       snake.advance();
-      app.renderer.draw();
     };
 
     self.center = function(sprite) {
@@ -167,6 +172,24 @@ var SnakeGame = {};
       }
     };
 
+    self.checkHit = function() {
+      if (self.hitBody()) {
+        // app.timer.stop();
+        app.snake.length -= 10;
+        console.log('ouch');
+      }
+    };
+
+    self.hitBody = function() {
+      var hit = false;
+      snake.eachSegment(function(part) {
+        if (part[0] == snake.position[0] && part[1] == snake.position[1]) {
+          hit = true;
+        }
+      });
+      return hit;
+    };
+
     self.init();
 
     return self;
@@ -177,6 +200,7 @@ var SnakeGame = {};
         frameRate = 1000 / config.fps,
         startTime = new Date().getTime(),
         checkTime = startTime,
+        counter = 0,
         timer;
 
     self.init = function() {
@@ -185,7 +209,7 @@ var SnakeGame = {};
 
     self.frame = function() {
       self.checkTime();
-      app.controller.move();
+      app.renderer.draw();
     };
 
     self.start = function() {
@@ -209,9 +233,21 @@ var SnakeGame = {};
       var now = new Date().getTime(),
           elapsed = now - checkTime;
 
+      counter++;
+
+      // advance every other frame
+      if (counter % 2 === 0) {
+        app.controller.move();
+      }
+
+      // rotate every frame
+      if (counter % 1 === 0) {
+        // app.renderer.rotate(1);
+      }
+
       // lengthen the snake every 5 seconds
       if (elapsed > 5000) {
-        app.snake.length += 20;
+        app.snake.length += 10;
         checkTime = now;
         console.log('longer', app.snake.length);
       }
@@ -231,7 +267,6 @@ var SnakeGame = {};
 
     self.init = function() {
       self.draw();
-      context.strokeStyle = '#000';
       context.lineJoin = 'miter';
       context.lineWidth = 1;
     };
@@ -245,6 +280,7 @@ var SnakeGame = {};
 
     self.snake = function() {
       context.fillStyle = 'red';
+      context.strokeStyle = '#000';
       snake.eachSegment(function(part) {
         context.fillRect(
           scale(part[0]),
@@ -263,9 +299,26 @@ var SnakeGame = {};
 
     self.clear = function() {
       context.fillStyle = 'black';
+      context.strokeStyle = 'green';
       context.fillRect(0, 0,
         scale(stage.size[0]),
         scale(stage.size[1])
+      );
+      context.strokeRect(0, 0,
+        scale(stage.size[0]),
+        scale(stage.size[1])
+      );
+    };
+
+    self.rotate = function(deg) {
+      app.stage.context.translate(
+        app.stage.size[0] / 2 * config.scale,
+        app.stage.size[1] / 2 * config.scale
+      );
+      app.stage.context.rotate(deg * Math.PI / 180);
+      app.stage.context.translate(
+        -app.stage.size[0] / 2 * config.scale,
+        -app.stage.size[1] / 2 * config.scale
       );
     };
 
@@ -278,7 +331,6 @@ var SnakeGame = {};
     self.init();
 
     return self;
-
   };
 
 })(SnakeGame);
