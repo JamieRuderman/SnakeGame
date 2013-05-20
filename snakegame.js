@@ -7,6 +7,7 @@ var SnakeGame = {};
   var config = {
     scale: 10,
     fps: 40,
+    length: 10,
     direction: 'down'
     // speed: 1
   };
@@ -54,7 +55,7 @@ var SnakeGame = {};
       size: [1, 1],
       position: [0, 0],
       segments: [],
-      length: 10,
+      length: config.length,
       name: 'snake'
     };
 
@@ -82,6 +83,11 @@ var SnakeGame = {};
       for (var i = 0, len = self.segments.length; i < len; i++) {
         callback(self.segments[i]);
       }
+    };
+
+    self.reset = function() {
+      app.snake.length = config.length;
+      self.segments = [];
     };
 
     self.init();
@@ -174,9 +180,7 @@ var SnakeGame = {};
 
     self.checkHit = function() {
       if (self.hitBody()) {
-        // app.timer.stop();
-        app.snake.length -= 10;
-        console.log('ouch');
+        self.reset();
       }
     };
 
@@ -188,6 +192,12 @@ var SnakeGame = {};
         }
       });
       return hit;
+    };
+
+    self.reset = function() {
+      self.center(snake);
+      snake.reset();
+      app.timer.reset();
     };
 
     self.init();
@@ -227,6 +237,12 @@ var SnakeGame = {};
       } else {
         self.start();
       }
+    };
+
+    self.reset = function() {
+      self.stop();
+      counter = 0,
+      self.start();
     };
 
     self.checkTime = function() {
