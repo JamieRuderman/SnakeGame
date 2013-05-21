@@ -8,7 +8,7 @@ var SnakeGame = {};
     scale: 10,
     fps: 40,
     length: 10,
-    direction: 'down'
+    direction: 'none'
     // speed: 1
   };
 
@@ -196,6 +196,7 @@ var SnakeGame = {};
 
     self.reset = function() {
       self.center(snake);
+      direction = 'none';
       snake.reset();
       app.timer.reset();
     };
@@ -295,7 +296,7 @@ var SnakeGame = {};
     };
 
     self.snake = function() {
-      context.fillStyle = 'red';
+      context.fillStyle = '#00ff00';
       context.strokeStyle = '#000';
       snake.eachSegment(function(part) {
         context.fillRect(
