@@ -6,11 +6,11 @@ var SnakeGame = {};
 
   var config = {
     scale: 10,
-    fps: 40,
+    fps: 40, // frames per second
+    fpm: 5, // frames per move
     length: 10,
     direction: 'none',
     grow: 15
-    // speed: 1
   };
 
   app.start = function() {
@@ -29,7 +29,7 @@ var SnakeGame = {};
 
     var self = {
       // width, height in blocks
-      size: [60, 80],
+      size: [40, 40],
       el: $('<canvas />')
     };
 
@@ -60,7 +60,7 @@ var SnakeGame = {};
     };
 
     self.init = function() {
-      self.addSegment(self.position);
+      // self.addSegment(self.position);
     };
 
     self.advance = function() {
@@ -76,7 +76,7 @@ var SnakeGame = {};
     };
 
     self.addSegment = function() {
-      self.segments.unshift([self.position[0], self.position[1]]);
+      self.segments.unshift(self.position.slice());
     };
 
     self.each = function(callback) {
@@ -102,17 +102,39 @@ var SnakeGame = {};
       length: config.length
     };
 
-    self.add = function(max) {
+    /*
+      @param max array [x max value, y max value]
+      @param occupiedCallback function add validation callback
+    */
+    self.add = function(max, occupiedCallback) {
       var point = [
-        Math.round(Math.random() * max[0]),
-        Math.round(Math.random() * max[1])
+        Math.round(Math.random() * (max[0] -1)),
+        Math.round(Math.random() * (max[1] -1))
       ];
-      self.points.unshift(point);
+
+      if (occupiedCallback(point)) {
+        console.log('space occupied', point);
+        self.add(max, occupiedCallback);
+      }
+      else {
+        console.log('add point', point);
+        self.points.push(point);
+      }
+    };
+
+    self.remove = function(position) {
+      self.each(function(point, index) {
+        if (point[0] == position[0] && point[1] == position[1]) {
+          self.points.splice(index, 1);
+        }
+      });
     };
 
     self.each = function(callback) {
       for (var i = 0, len = self.points.length; i < len; i++) {
-        callback(self.points[i]);
+        if (self.points[i] !== undefined) {
+          callback(self.points[i], i);
+        }
       }
     };
 
@@ -129,7 +151,7 @@ var SnakeGame = {};
     self.init = function() {
       $(window).on('keydown', self.changeDirection);
       self.center(snake);
-      points.add(stage.size);
+      self.addPoint();
     };
 
     self.move = function() {
@@ -149,14 +171,14 @@ var SnakeGame = {};
       }
 
       self.checkBorder();
-      self.checkHit();
+      self.checkHit(snake.position);
       snake.advance();
     };
 
     self.center = function(sprite) {
       sprite.position = [
-        stage.size[0]/2,
-        stage.size[1]/2
+        stage.size[0] / 2,
+        stage.size[1] / 2
       ];
     };
 
@@ -185,7 +207,16 @@ var SnakeGame = {};
           app.timer.pause();
           break;
       }
-      // console.log('key', event.keyCode);
+    };
+
+    self.addPoint = function() {
+      if (self.full()) {
+        app.timer.stop();
+        console.log('GAME OVER');
+      }
+      else {
+        points.add(stage.size, self.occupied);
+      }
     };
 
     self.checkBorder = function() {
@@ -204,27 +235,50 @@ var SnakeGame = {};
       }
     };
 
-    self.checkHit = function() {
-      if (self.hit('snake')) {
+    self.checkHit = function(position) {
+      if (self.hit('snake', position)) {
         self.reset();
       }
-      if (self.hit('points')) {
-        app.snake.length += config.grow;
+      if (self.hit('points', position)) {
+        snake.length += config.grow;
+        points.remove(snake.position);
+        // self.addPoint();
         console.log('got it!');
       }
     };
 
-    self.hit = function(typeName) {
+    self.hit = function(typeName, position) {
       var type = app[typeName],
           hit = false;
 
       type.each(function(item) {
-        if (item[0] == snake.position[0] && item[1] == snake.position[1]) {
+        if (item[0] == position[0] && item[1] == position[1]) {
           hit = true;
         }
       });
 
       return hit;
+    };
+
+    self.occupied = function(position) {
+      var types = ['snake', 'points'],
+          occupied = false;
+
+      for (var i = types.length - 1; i >= 0; i--) {
+        if (self.hit(types[i], position)) {
+          occupied = true;
+          break;
+        }
+      }
+
+      return occupied;
+    };
+
+    self.full = function() {
+      var max = stage.size[0] * stage.size[1],
+          total = points.points.length + snake.segments.length;
+          console.log('full?', total, max);
+      return total >= max;
     };
 
     self.reset = function() {
@@ -285,8 +339,8 @@ var SnakeGame = {};
 
       counter++;
 
-      // advance every other frame
-      if (counter % 2 === 0) {
+      // advance frame
+      if (counter % config.fpm === 0) {
         app.controller.move();
       }
 
@@ -295,11 +349,16 @@ var SnakeGame = {};
         // app.renderer.rotate(1);
       }
 
-      // lengthen the snake every 5 seconds
-      if (elapsed > 5000) {
-        app.snake.length += 10;
+      // every second
+      if (counter % config.fps === 0) {
+        // app.controller.addPoint();
+      }
+
+      // lengthen the snake every second
+      if (elapsed > 3000) {
+        // app.snake.length += 10;
+        app.controller.addPoint();
         checkTime = now;
-        console.log('longer', app.snake.length);
       }
 
     };
@@ -334,30 +393,14 @@ var SnakeGame = {};
       context.fillStyle = '#00ff00';
       context.strokeStyle = '#000';
       snake.each(function(part) {
-        context.fillRect(
-          scale(part[0]),
-          scale(part[1]),
-          scale(snake.size[0]),
-          scale(snake.size[1])
-        );
-        context.strokeRect(
-          scale(part[0]) + 0.5,
-          scale(part[1]) + 0.5,
-          scale(snake.size[0]) - 1,
-          scale(snake.size[1]) - 1
-        );
+        block(part, snake.size);
       });
     };
 
     self.points = function() {
-      context.fillStyle = '#FF0000';
+      context.fillStyle = '#00ffff';
       points.each(function(point) {
-        context.fillRect(
-          scale(point[0]),
-          scale(point[1]),
-          scale(points.size[0]),
-          scale(points.size[1])
-        );
+        block(point, points.size);
       });
     };
 
@@ -387,6 +430,21 @@ var SnakeGame = {};
     };
 
     // private
+
+    block = function(position, size) {
+      context.fillRect(
+        scale(position[0]),
+        scale(position[1]),
+        scale(size[0]),
+        scale(size[1])
+      );
+      context.strokeRect(
+        scale(position[0]) + 0.5,
+        scale(position[1]) + 0.5,
+        scale(size[0]) - 1,
+        scale(size[1]) - 1
+      );
+    };
 
     scale = function(size) {
       return Math.round(size * config.scale);
