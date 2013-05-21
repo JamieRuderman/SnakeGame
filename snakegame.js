@@ -8,7 +8,8 @@ var SnakeGame = {};
     scale: 10,
     fps: 40,
     length: 10,
-    direction: 'none'
+    direction: 'none',
+    grow: 15
     // speed: 1
   };
 
@@ -16,6 +17,7 @@ var SnakeGame = {};
     // start snake game
     $(document).ready(function() {
       app.snake = new Snake();
+      app.points = new Points();
       app.stage = new Stage();
       app.renderer = new Renderer();
       app.controller = new Controller();
@@ -28,7 +30,6 @@ var SnakeGame = {};
     var self = {
       // width, height in blocks
       size: [60, 80],
-      name: 'stage',
       el: $('<canvas />')
     };
 
@@ -55,8 +56,7 @@ var SnakeGame = {};
       size: [1, 1],
       position: [0, 0],
       segments: [],
-      length: config.length,
-      name: 'snake'
+      length: config.length
     };
 
     self.init = function() {
@@ -79,7 +79,7 @@ var SnakeGame = {};
       self.segments.unshift([self.position[0], self.position[1]]);
     };
 
-    self.eachSegment = function(callback) {
+    self.each = function(callback) {
       for (var i = 0, len = self.segments.length; i < len; i++) {
         callback(self.segments[i]);
       }
@@ -95,15 +95,41 @@ var SnakeGame = {};
     return self;
   };
 
+  var Points = function() {
+    var self = {
+      points: [],
+      size: [1, 1],
+      length: config.length
+    };
+
+    self.add = function(max) {
+      var point = [
+        Math.round(Math.random() * max[0]),
+        Math.round(Math.random() * max[1])
+      ];
+      self.points.unshift(point);
+    };
+
+    self.each = function(callback) {
+      for (var i = 0, len = self.points.length; i < len; i++) {
+        callback(self.points[i]);
+      }
+    };
+
+    return self;
+  };
+
   var Controller = function() {
     var self = {},
         stage = app.stage,
         snake = app.snake,
+        points = app.points,
         direction = config.direction;
 
     self.init = function() {
       $(window).on('keydown', self.changeDirection);
       self.center(snake);
+      points.add(stage.size);
     };
 
     self.move = function() {
@@ -179,18 +205,25 @@ var SnakeGame = {};
     };
 
     self.checkHit = function() {
-      if (self.hitBody()) {
+      if (self.hit('snake')) {
         self.reset();
+      }
+      if (self.hit('points')) {
+        app.snake.length += config.grow;
+        console.log('got it!');
       }
     };
 
-    self.hitBody = function() {
-      var hit = false;
-      snake.eachSegment(function(part) {
-        if (part[0] == snake.position[0] && part[1] == snake.position[1]) {
+    self.hit = function(typeName) {
+      var type = app[typeName],
+          hit = false;
+
+      type.each(function(item) {
+        if (item[0] == snake.position[0] && item[1] == snake.position[1]) {
           hit = true;
         }
       });
+
       return hit;
     };
 
@@ -279,6 +312,7 @@ var SnakeGame = {};
   var Renderer = function() {
     var self = {},
         stage = app.stage,
+        points = app.points,
         context = stage.context,
         snake = app.snake;
 
@@ -292,13 +326,14 @@ var SnakeGame = {};
       // context.save();
       self.clear();
       self.snake();
+      self.points();
       // context.restore();
     };
 
     self.snake = function() {
       context.fillStyle = '#00ff00';
       context.strokeStyle = '#000';
-      snake.eachSegment(function(part) {
+      snake.each(function(part) {
         context.fillRect(
           scale(part[0]),
           scale(part[1]),
@@ -310,6 +345,18 @@ var SnakeGame = {};
           scale(part[1]) + 0.5,
           scale(snake.size[0]) - 1,
           scale(snake.size[1]) - 1
+        );
+      });
+    };
+
+    self.points = function() {
+      context.fillStyle = '#FF0000';
+      points.each(function(point) {
+        context.fillRect(
+          scale(point[0]),
+          scale(point[1]),
+          scale(points.size[0]),
+          scale(points.size[1])
         );
       });
     };
