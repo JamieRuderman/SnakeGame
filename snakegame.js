@@ -10,7 +10,7 @@ var SnakeGame = {};
     fpm: 5, // frames per move
     length: 10,
     direction: 'none',
-    grow: 15
+    grow: 5
   };
 
   app.start = function() {
@@ -29,7 +29,7 @@ var SnakeGame = {};
 
     var self = {
       // width, height in blocks
-      size: [40, 40],
+      size: [50, 50],
       el: $('<canvas />')
     };
 
@@ -242,7 +242,7 @@ var SnakeGame = {};
       if (self.hit('points', position)) {
         snake.length += config.grow;
         points.remove(snake.position);
-        // self.addPoint();
+        self.addPoint();
         console.log('got it!');
       }
     };
@@ -357,7 +357,7 @@ var SnakeGame = {};
       // lengthen the snake every second
       if (elapsed > 3000) {
         // app.snake.length += 10;
-        app.controller.addPoint();
+        //app.controller.addPoint();
         checkTime = now;
       }
 
