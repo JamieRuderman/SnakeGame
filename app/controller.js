@@ -47,19 +47,19 @@ var SnakeGame = SnakeGame || {};
       switch (event.keyCode) {
         case 37: // left
         case 65: // a
-          direction = 'left';
+          direction = direction == 'right' ? 'right' : 'left';
           break;
         case 39: // right
         case 68: // d
-          direction = 'right';
+          direction = direction == 'left' ? 'left' : 'right';
           break;
         case 38: // up
         case 87: // w
-          direction = 'up';
+          direction = direction == 'down' ? 'down' : 'up';
           break;
         case 40: // down
         case 83: // s
-          direction = 'down';
+          direction = direction == 'up' ? 'up' : 'down';
           break;
         case 32: // space
           direction = 'none';
