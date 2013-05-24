@@ -1,23 +1,43 @@
 <html>
 <head>
   <script src="lib/jquery.min.js"></script>
+
   <script src="app/controller.js"></script>
+  <script src="app/display.js"></script>
   <script src="app/points.js"></script>
   <script src="app/renderer.js"></script>
   <script src="app/snake.js"></script>
   <script src="app/stage.js"></script>
+  <script src="app/state.js"></script>
   <script src="app/timer.js"></script>
   <script src="app/start.js"></script>
-  <script></script>
+
+  <link href='http://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet' type='text/css'>
+
   <style>
     body {
       background-color: gray;
+      font-family: 'Press Start 2P', sans-serif;
     }
-    .stage {
-      /*background-color: black;*/
+    .game {
+      float: left;
+    }
+    .controls {
+      padding: 14px;
+      background-color: #000;
+      border: 1px solid #020;
+    }
+    .score {
+      color: #0ff;
     }
   </style>
 </head>
 <body>
+  <div class="game">
+    <canvas class="stage"></canvas>
+    <div class="controls">
+      <span class="score"></span>
+    </div>
+  </div>
 </body>
 </html>

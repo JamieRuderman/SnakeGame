@@ -104,7 +104,7 @@ var SnakeGame = SnakeGame || {};
         snake.length += app.config.grow;
         points.remove(snake.position);
         self.addPoint();
-        console.log('got it!');
+        app.state.score += app.config.POINT_VALUE;
       }
     };
 
@@ -138,7 +138,6 @@ var SnakeGame = SnakeGame || {};
     self.full = function() {
       var max = stage.size[0] * stage.size[1],
           total = points.points.length + snake.segments.length;
-          console.log('full?', total, max);
       return total >= max;
     };
 
@@ -147,6 +146,7 @@ var SnakeGame = SnakeGame || {};
       direction = 'none';
       snake.reset();
       app.timer.reset();
+      app.state.score = 0;
     };
 
     self.init();

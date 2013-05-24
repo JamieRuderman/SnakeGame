@@ -21,11 +21,9 @@ var SnakeGame = SnakeGame || {};
       ];
 
       if (occupiedCallback(point)) {
-        console.log('space occupied', point);
         self.add(max, occupiedCallback);
       }
       else {
-        console.log('add point', point);
         self.points.push(point);
       }
     };

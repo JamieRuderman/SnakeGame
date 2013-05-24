@@ -17,6 +17,7 @@ var SnakeGame = SnakeGame || {};
     self.frame = function() {
       self.checkTime();
       app.renderer.draw();
+      app.display.update();
     };
 
     self.start = function() {

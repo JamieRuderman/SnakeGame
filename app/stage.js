@@ -6,16 +6,14 @@ var SnakeGame = SnakeGame || {};
 
     var self = {
       // width, height in blocks
-      size: [40, 40],
-      el: $('<canvas />')
+      size: app.config.STAGE_SIZE
     };
 
     var body = $('body'),
         scale = app.config.scale;
 
     self.init = function() {
-      body.append(self.el);
-      self.el.addClass('stage');
+      self.el = $('.stage');
       self.el.attr({
         width: (self.size[0] * scale) + 'px',
         height: (self.size[1] * scale) + 'px'

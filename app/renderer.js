@@ -16,11 +16,9 @@ var SnakeGame = SnakeGame || {};
     };
 
     self.draw = function() {
-      // context.save();
       self.clear();
       self.snake();
       self.points();
-      // context.restore();
     };
 
     self.snake = function() {
