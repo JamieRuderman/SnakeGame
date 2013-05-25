@@ -7,7 +7,8 @@ var SnakeGame = SnakeGame || {};
         stage = app.stage,
         snake = app.snake,
         points = app.points,
-        direction = app.config.direction;
+        direction = app.config.direction,
+        moving;
 
     self.init = function() {
       $(window).on('keydown', self.changeDirection);
@@ -16,6 +17,8 @@ var SnakeGame = SnakeGame || {};
     };
 
     self.move = function() {
+      self.noReverse();
+
       switch (direction) {
         case 'left':
           snake.position[0] -= 1;
@@ -36,6 +39,14 @@ var SnakeGame = SnakeGame || {};
       snake.advance();
     };
 
+    self.noReverse = function() {
+      if (moving == 'left' && direction =='right') direction = 'left';
+      else if (moving == 'right' && direction =='left') direction = 'right';
+      else if (moving == 'up' && direction =='down') direction = 'up';
+      else if (moving == 'down' && direction =='up') direction = 'down';
+      moving = direction;
+    };
+
     self.center = function(sprite) {
       sprite.position = [
         stage.size[0] / 2,
@@ -47,19 +58,19 @@ var SnakeGame = SnakeGame || {};
       switch (event.keyCode) {
         case 37: // left
         case 65: // a
-          direction = direction == 'right' ? 'right' : 'left';
+          direction = 'left';
           break;
         case 39: // right
         case 68: // d
-          direction = direction == 'left' ? 'left' : 'right';
+          direction = 'right';
           break;
         case 38: // up
         case 87: // w
-          direction = direction == 'down' ? 'down' : 'up';
+          direction = 'up';
           break;
         case 40: // down
         case 83: // s
-          direction = direction == 'up' ? 'up' : 'down';
+          direction = 'down';
           break;
         case 32: // space
           direction = 'none';
