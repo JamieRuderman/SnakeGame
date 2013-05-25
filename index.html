@@ -14,30 +14,34 @@
 
   <link href='http://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet' type='text/css'>
 
-  <style>
-    body {
-      background-color: gray;
-      font-family: 'Press Start 2P', sans-serif;
-    }
-    .game {
-      float: left;
-    }
-    .controls {
-      padding: 14px;
-      background-color: #000;
-      border: 1px solid #020;
-    }
-    .score {
-      color: #0ff;
-    }
-  </style>
+  <link href="reset.css" type="text/css" rel="stylesheet">
+  <link href="style.css" type="text/css" rel="stylesheet">
+
 </head>
 <body>
   <div class="game">
+
     <canvas class="stage"></canvas>
     <div class="controls">
       <span class="score"></span>
     </div>
+
+  </div>
+  <div class="menu center hidden">
+
+    <div class="start">
+      <h1>GAME SELECT</h1>
+      <ul>
+        <li class="small">small</li>
+        <li class="medium">medium</li>
+        <li class="large">large</li>
+      </ul>
+    </div>
+
+    <div class="end hidden">
+      <h1>GAME OVER</h1>
+    </div>
+
   </div>
 </body>
 </html>

@@ -10,9 +10,7 @@ var SnakeGame = SnakeGame || {};
       length: app.config.LENGTH
     };
 
-    self.init = function() {
-      // self.addSegment(self.position);
-    };
+    self.init = function() {};
 
     self.advance = function() {
       self.addSegment();

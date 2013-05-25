@@ -19,6 +19,15 @@ var SnakeGame = SnakeGame || {};
         height: (self.size[1] * scale) + 'px'
       });
       self.context = self.el[0].getContext('2d');
+      self.position();
+    };
+
+    self.position = function() {
+      var el = $('.game');
+      el.css({
+        'margin-left': (el.width() / 2 * -1) + 'px',
+        'margin-top': (el.height() / 2 * -1) + 'px'
+      });
     };
 
     self.init();

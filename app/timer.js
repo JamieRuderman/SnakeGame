@@ -70,7 +70,7 @@ var SnakeGame = SnakeGame || {};
       // lengthen the snake every second
       if (elapsed > 10000) {
         // app.snake.length += 10;
-        app.controller.addPoint();
+        // app.controller.addPoint();
         checkTime = now;
       }
 

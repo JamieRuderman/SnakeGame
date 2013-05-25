@@ -1,0 +1,36 @@
+body {
+  background-color: black;
+  font-family: 'Press Start 2P', sans-serif;
+}
+.hidden {
+  display: none;
+}
+.center {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  top: 50%;
+  left: 50%;
+  margin-left: -200px;
+  margin-top: -200px;
+}
+.menu {
+  background-color: black;
+  color: #0f0;
+  text-align: center;
+  border: 20px solid rgba(255, 255, 255, 0.1);
+}
+.game {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+}
+.controls {
+  padding: 14px;
+  background-color: #000;
+  /*border: 1px solid #020;*/
+}
+.score {
+  color: #0ff;
+}
