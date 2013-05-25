@@ -10,7 +10,7 @@ var SnakeGame = SnakeGame || {};
     };
 
     var body = $('body'),
-        scale = app.config.scale;
+        scale = app.config.SCALE;
 
     self.init = function() {
       self.el = $('.stage');

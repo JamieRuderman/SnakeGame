@@ -21,7 +21,6 @@ var SnakeGame = SnakeGame || {};
         if (self.value[key] !== state[key]) {
           self.value[key] = state[key];
           self.el[key].text(state[key]);
-          console.info(key, ':', state[key]);
         }
       }
     };

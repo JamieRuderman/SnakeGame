@@ -7,12 +7,13 @@ var SnakeGame = SnakeGame || {};
         stage = app.stage,
         snake = app.snake,
         points = app.points,
-        direction = app.config.direction,
+        direction = app.config.DIRECTION,
         moving;
 
     self.init = function() {
       $(window).on('keydown', self.changeDirection);
       self.center(snake);
+      snake.addSegment(snake.position);
       self.addPoint();
     };
 
@@ -49,12 +50,16 @@ var SnakeGame = SnakeGame || {};
 
     self.center = function(sprite) {
       sprite.position = [
-        stage.size[0] / 2,
-        stage.size[1] / 2
+        Math.round(stage.size[0] / 2) - 1,
+        Math.round(stage.size[1] / 2) - 1
       ];
     };
 
     self.changeDirection = function(event) {
+      if (app.timer.ready) {
+        app.timer.start();
+      }
+
       switch (event.keyCode) {
         case 37: // left
         case 65: // a
@@ -73,8 +78,6 @@ var SnakeGame = SnakeGame || {};
           direction = 'down';
           break;
         case 32: // space
-          direction = 'none';
-          break;
         case 27: // esc
           app.timer.pause();
           break;
@@ -112,7 +115,7 @@ var SnakeGame = SnakeGame || {};
         self.reset();
       }
       if (self.hit('points', position)) {
-        snake.length += app.config.grow;
+        snake.length += app.config.GROW;
         points.remove(snake.position);
         self.addPoint();
         app.state.score += app.config.POINT_VALUE;
@@ -142,7 +145,6 @@ var SnakeGame = SnakeGame || {};
           break;
         }
       }
-
       return occupied;
     };
 
@@ -158,6 +160,7 @@ var SnakeGame = SnakeGame || {};
       snake.reset();
       app.timer.reset();
       app.state.score = 0;
+      points.reset();
     };
 
     self.init();

@@ -7,7 +7,7 @@ var SnakeGame = SnakeGame || {};
       points: [],
 
       size: [1, 1],
-      length: app.config.length
+      length: app.config.LENGTH
     };
 
     /*
@@ -43,6 +43,12 @@ var SnakeGame = SnakeGame || {};
         }
       }
     };
+
+    self.reset = function() {
+      console.log('reset points');
+      self.points = [];
+      self.add(app.stage.size, app.controller.occupied);
+    }
 
     return self;
   };

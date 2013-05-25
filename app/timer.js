@@ -3,15 +3,17 @@ var SnakeGame = SnakeGame || {};
 (function(app){
 
   app.Timer = function() {
-    var self = {},
-        frameRate = 1000 / app.config.fps,
+    var self = {
+          ready: true
+        },
+        frameRate = 1000 / app.config.FPS,
         startTime = new Date().getTime(),
         checkTime = startTime,
         counter = 0,
         timer;
 
     self.init = function() {
-      self.start();
+      self.frame();
     };
 
     self.frame = function() {
@@ -22,6 +24,7 @@ var SnakeGame = SnakeGame || {};
 
     self.start = function() {
       timer = setInterval(self.frame, frameRate);
+      self.ready = false;
     };
 
     self.stop = function() {
@@ -40,7 +43,7 @@ var SnakeGame = SnakeGame || {};
     self.reset = function() {
       self.stop();
       counter = 0,
-      self.start();
+      self.ready = true;
     };
 
     self.checkTime = function() {
@@ -50,7 +53,7 @@ var SnakeGame = SnakeGame || {};
       counter++;
 
       // advance frame
-      if (counter % app.config.fpm === 0) {
+      if (counter % app.config.FPM === 0) {
         app.controller.move();
       }
 
@@ -60,14 +63,14 @@ var SnakeGame = SnakeGame || {};
       }
 
       // every second
-      if (counter % app.config.fps === 0) {
+      if (counter % app.config.FPS === 0) {
         // app.controller.addPoint();
       }
 
       // lengthen the snake every second
-      if (elapsed > 3000) {
+      if (elapsed > 10000) {
         // app.snake.length += 10;
-        // app.controller.addPoint();
+        app.controller.addPoint();
         checkTime = now;
       }
 
