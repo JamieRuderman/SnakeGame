@@ -30,35 +30,8 @@ var SnakeGame = SnakeGame || {};
       end = $('.end');
     };
 
-    // TODO set state to options and store options in state obj
     self.select = function(event) {
-      switch (event.target.name) {
-        case 'small':
-          state.set({
-            stageSize: [20, 20],
-            scale: 20,
-            length: 5,
-            fps: 4
-          });
-          break;
-        case 'medium':
-          state.set({
-            stageSize: [40, 40],
-            scale: 10,
-            length: 10,
-            fps: 8
-          });
-          break;
-        case 'large':
-          state.set({
-            stageSize: [170, 170],
-            scale: 5,
-            length: 30,
-            grow: 30,
-            fps: 24
-          });
-          break;
-      }
+      state.set(event.target.name);
       start.hide();
       app.start();
     };
