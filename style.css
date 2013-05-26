@@ -26,8 +26,8 @@ hr {
   height: 400px;
   top: 50%;
   left: 50%;
-  margin-left: -200px;
-  margin-top: -200px;
+  margin-left: -225px; /* 1/2 width + padding */
+  margin-top: -225px;
 }
 
 /* -- elements -- */
@@ -37,9 +37,8 @@ hr {
   color: #0f0;
   text-align: center;
   line-height: 3em;
-}
-.screen {
   padding: 24px;
+  border: 1px dotted #030;
 }
 .game {
   position: absolute;

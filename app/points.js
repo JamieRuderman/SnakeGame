@@ -45,7 +45,6 @@ var SnakeGame = SnakeGame || {};
     };
 
     self.reset = function() {
-      console.log('reset points');
       self.points = [];
       app.controller.addPoint();
     };

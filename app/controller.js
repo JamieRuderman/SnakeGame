@@ -113,7 +113,7 @@ var SnakeGame = SnakeGame || {};
 
     self.checkHit = function(position) {
       if (self.hit('snake', position)) {
-        self.reset();
+        self.gameover();
       }
       if (self.hit('points', position)) {
         snake.length += state.grow;
@@ -159,11 +159,15 @@ var SnakeGame = SnakeGame || {};
       return total >= max;
     };
 
+    self.gameover = function() {
+      $(window).off('keydown', self.changeDirection);
+      app.timer.stop();
+      app.menu.gameover();
+    };
+
     self.reset = function() {
       self.center(snake);
-      direction = 'none';
       snake.reset();
-      app.timer.reset();
       state.score = 0;
       points.reset();
     };

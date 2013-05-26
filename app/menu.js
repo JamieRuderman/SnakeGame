@@ -13,20 +13,21 @@ var SnakeGame = SnakeGame || {};
 
 (function(app){
 
-  app.Menu = (function() {
+  app.menu = (function() {
 
     var self = {},
         state = app.state,
-        menu,
+        menu, end, start,
         kinds = [
           'start',
           'end'
         ];
 
     self.init = function() {
-      console.log('menu init');
       menu = $('.menu');
       menu.on('click', '.select', self.select);
+      start = $('.start');
+      end = $('.end');
     };
 
     // TODO set state to options and store options in state obj
@@ -50,15 +51,21 @@ var SnakeGame = SnakeGame || {};
           break;
         case 'large':
           state.set({
-            stageSize: [80, 80],
+            stageSize: [170, 170],
             scale: 5,
-            length: 20,
-            fps: 16
+            length: 30,
+            grow: 30,
+            fps: 24
           });
           break;
       }
-      menu.hide();
+      start.hide();
       app.start();
+    };
+
+    self.gameover = function() {
+      console.log('end show');
+      end.show();
     };
 
     $(document).ready(function() {

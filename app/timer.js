@@ -24,8 +24,6 @@ var SnakeGame = SnakeGame || {};
     };
 
     self.start = function() {
-            console.log(frameRate);
-
       timer = setInterval(self.frame, frameRate);
       self.ready = false;
     };
