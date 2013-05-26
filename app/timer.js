@@ -6,14 +6,15 @@ var SnakeGame = SnakeGame || {};
     var self = {
           ready: true
         },
-        frameRate = 1000 / app.config.FPS,
+        frameRate = 1000 / app.state.fps,
         startTime = new Date().getTime(),
         checkTime = startTime,
         counter = 0,
         timer;
 
     self.init = function() {
-      self.frame();
+      app.renderer.draw();
+      app.display.update();
     };
 
     self.frame = function() {
@@ -23,6 +24,8 @@ var SnakeGame = SnakeGame || {};
     };
 
     self.start = function() {
+            console.log(frameRate);
+
       timer = setInterval(self.frame, frameRate);
       self.ready = false;
     };
@@ -40,9 +43,16 @@ var SnakeGame = SnakeGame || {};
       }
     };
 
+    self.increase = function() {
+      frameRate /= app.state.fpsToIncrease;
+      self.stop();
+      self.start();
+    };
+
     self.reset = function() {
       self.stop();
       counter = 0,
+      frameRate = 1000 / app.state.fps;
       self.ready = true;
     };
 
@@ -53,7 +63,7 @@ var SnakeGame = SnakeGame || {};
       counter++;
 
       // advance frame
-      if (counter % app.config.FPM === 0) {
+      if (counter % app.state.fpm === 0) {
         app.controller.move();
       }
 
@@ -63,7 +73,7 @@ var SnakeGame = SnakeGame || {};
       }
 
       // every second
-      if (counter % app.config.FPS === 0) {
+      if (counter % app.state.fps === 0) {
         // app.controller.addPoint();
       }
 

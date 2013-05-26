@@ -51,13 +51,13 @@ var SnakeGame = SnakeGame || {};
 
     self.rotate = function(deg) {
       app.stage.context.translate(
-        app.stage.size[0] / 2 * app.config.SCALE,
-        app.stage.size[1] / 2 * app.config.SCALE
+        app.stage.size[0] / 2 * app.state.scale,
+        app.stage.size[1] / 2 * app.state.scale
       );
       app.stage.context.rotate(deg * Math.PI / 180);
       app.stage.context.translate(
-        -app.stage.size[0] / 2 * app.config.SCALE,
-        -app.stage.size[1] / 2 * app.config.SCALE
+        -app.stage.size[0] / 2 * app.state.scale,
+        -app.stage.size[1] / 2 * app.state.scale
       );
     };
 
@@ -79,7 +79,7 @@ var SnakeGame = SnakeGame || {};
     };
 
     scale = function(size) {
-      return Math.round(size * app.config.SCALE);
+      return Math.round(size * app.state.scale);
     };
 
     self.init();

@@ -2,8 +2,23 @@ body {
   background-color: black;
   font-family: 'Press Start 2P', sans-serif;
 }
+h1 {
+  margin-bottom: 20px;
+}
+hr {
+  border-color: #030;
+}
+
+/* -- global styles -- */
 .hidden {
   display: none;
+}
+.select {
+  cursor: pointer;
+  display: block;
+}
+.select:hover {
+  color: #fff;
 }
 .center {
   position: absolute;
@@ -14,17 +29,22 @@ body {
   margin-left: -200px;
   margin-top: -200px;
 }
+
+/* -- elements -- */
+
 .menu {
-  background-color: black;
+  background-color: rgba(0,0,0,0.8);
   color: #0f0;
   text-align: center;
-  border: 20px solid rgba(255, 255, 255, 0.1);
+  line-height: 3em;
+}
+.screen {
+  padding: 24px;
 }
 .game {
   position: absolute;
   top: 50%;
   left: 50%;
-
 }
 .controls {
   padding: 14px;

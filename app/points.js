@@ -7,7 +7,7 @@ var SnakeGame = SnakeGame || {};
       points: [],
 
       size: [1, 1],
-      length: app.config.LENGTH
+      length: app.state.length
     };
 
     /*

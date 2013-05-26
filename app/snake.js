@@ -7,7 +7,7 @@ var SnakeGame = SnakeGame || {};
       size: [1, 1],
       position: [0, 0],
       segments: [],
-      length: app.config.LENGTH
+      length: app.state.length
     };
 
     self.init = function() {};
@@ -35,7 +35,7 @@ var SnakeGame = SnakeGame || {};
     };
 
     self.reset = function() {
-      app.snake.length = app.config.LENGTH;
+      app.snake.length = app.state.length;
       self.segments = [];
     };
 

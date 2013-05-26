@@ -7,7 +7,8 @@ var SnakeGame = SnakeGame || {};
         stage = app.stage,
         snake = app.snake,
         points = app.points,
-        direction = app.config.DIRECTION,
+        state = app.state,
+        direction = state.direction,
         moving;
 
     self.init = function() {
@@ -115,10 +116,14 @@ var SnakeGame = SnakeGame || {};
         self.reset();
       }
       if (self.hit('points', position)) {
-        snake.length += app.config.GROW;
+        snake.length += state.grow;
         points.remove(snake.position);
         self.addPoint();
-        app.state.score += app.config.POINT_VALUE;
+        state.score += state.pointValue;
+        // every set number of go faster
+        if (state.score % (state.pointValue * state.pointsToIncreaseSpeed) === 0) {
+          app.timer.increase();
+        }
       }
     };
 
@@ -159,7 +164,7 @@ var SnakeGame = SnakeGame || {};
       direction = 'none';
       snake.reset();
       app.timer.reset();
-      app.state.score = 0;
+      state.score = 0;
       points.reset();
     };
 

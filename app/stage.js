@@ -6,11 +6,11 @@ var SnakeGame = SnakeGame || {};
 
     var self = {
       // width, height in blocks
-      size: app.config.STAGE_SIZE
+      size: app.state.stageSize
     };
 
     var body = $('body'),
-        scale = app.config.SCALE;
+        scale = app.state.scale;
 
     self.init = function() {
       self.el = $('.stage');
