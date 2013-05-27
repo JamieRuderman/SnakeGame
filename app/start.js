@@ -4,6 +4,7 @@ var SnakeGame = SnakeGame || {};
 
   app.start = function() {
     // start snake game
+    app.audio = new app.Audio();
     app.snake = new app.Snake();
     app.points = new app.Points();
     app.stage = new app.Stage();

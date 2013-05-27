@@ -5,38 +5,39 @@ var SnakeGame = SnakeGame || {};
   app.state = {
 
     // defaults
-    fps: 8, // frames per second
-    fpm: 1, // frames per move
     direction: 'right',
-    grow: 10,
-    scale: 10,
-    length: 10,
-    score: 0,
-    pointValue: 10,
-    pointsToIncreaseSpeed: 5,
+    fpm: 1, // frames per move
+    fps: 8, // frames per second
     fpsToIncrease: 1.5, // multiplier
+    grow: 10,
+    length: 10,
+    pointsToIncreaseSpeed: 5,
+    pointValue: 10,
+    scale: 10,
+    score: 0,
     stageSize: [40, 40],
 
     // presets
     preset: {
       small: {
-        stageSize: [20, 20],
-        scale: 20,
+        fps: 4,
         length: 5,
-        fps: 4
+        scale: 20,
+        stageSize: [20, 20]
       },
       medium: {
-        stageSize: [40, 40],
-        scale: 10,
+        fps: 8,
+        grow: 20,
         length: 10,
-        fps: 8
+        scale: 10,
+        stageSize: [40, 40]
       },
       large: {
-        stageSize: [170, 170],
-        scale: 5,
+        fps: 30,
+        grow: 40,
         length: 30,
-        grow: 30,
-        fps: 24
+        scale: 5,
+        stageSize: [170, 170]
       }
     },
 

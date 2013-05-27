@@ -4,6 +4,7 @@
 
   <script src="app/controller.js"></script>
   <script src="app/display.js"></script>
+  <script src="app/audio.js"></script>
   <script src="app/points.js"></script>
   <script src="app/renderer.js"></script>
   <script src="app/snake.js"></script>
@@ -15,18 +16,17 @@
 
   <link href='http://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet' type='text/css'>
 
-  <link href="reset.css" type="text/css" rel="stylesheet">
-  <link href="style.css" type="text/css" rel="stylesheet">
+  <link href="style/reset.css" type="text/css" rel="stylesheet">
+  <link href="style/style.css" type="text/css" rel="stylesheet">
 
 </head>
 <body bgcolor="black">
-  <div class="game">
 
+  <div class="game">
     <canvas class="stage"></canvas>
     <div class="controls">
       <span class="score"></span>
     </div>
-
   </div>
 
   <div class="start menu center">
@@ -45,6 +45,17 @@
       <li></li>
     </ul>
   </div>
+
+  <!-- Audio -->
+  <audio class="music" loop>
+    <source src="audio/background_loop.mp3" type="audio/mp3" />
+    <source src="audio/background_loop.ogg" type="audio/ogg"/>
+  </audio>
+
+  <audio class="score">
+    <source src="audio/score.mp3" type="audio/mp3" />
+    <source src="audio/score.ogg" type="audio/ogg"/>
+  </audio>
 
 </body>
 </html>

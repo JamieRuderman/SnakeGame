@@ -16,6 +16,7 @@ var SnakeGame = SnakeGame || {};
       self.center(snake);
       snake.addSegment(snake.position);
       self.addPoint();
+      app.audio.start();
     };
 
     self.move = function() {
@@ -120,6 +121,7 @@ var SnakeGame = SnakeGame || {};
         points.remove(snake.position);
         self.addPoint();
         state.score += state.pointValue;
+        app.audio.score();
         // every set number of go faster
         if (state.score % (state.pointValue * state.pointsToIncreaseSpeed) === 0) {
           app.timer.increase();
@@ -163,6 +165,7 @@ var SnakeGame = SnakeGame || {};
       $(window).off('keydown', self.changeDirection);
       app.timer.stop();
       app.menu.gameover();
+      app.audio.gameover();
     };
 
     self.reset = function() {
@@ -170,6 +173,7 @@ var SnakeGame = SnakeGame || {};
       snake.reset();
       state.score = 0;
       points.reset();
+      app.audio.reset();
     };
 
     self.init();
