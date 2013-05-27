@@ -12,11 +12,7 @@ var SnakeGame = SnakeGame || {};
         moving;
 
     self.init = function() {
-      $(window).on('keydown', self.changeDirection);
-      self.center(snake);
-      snake.addSegment(snake.position);
-      self.addPoint();
-      app.audio.start();
+      self.reset();
     };
 
     self.move = function() {
@@ -169,11 +165,16 @@ var SnakeGame = SnakeGame || {};
     };
 
     self.reset = function() {
+      $(window).on('keydown', self.changeDirection);
+      state.score = 0;
       self.center(snake);
       snake.reset();
-      state.score = 0;
+      snake.addSegment(snake.position);
       points.reset();
+      self.addPoint();
+      app.timer.reset();
       app.audio.reset();
+      app.audio.start();
     };
 
     self.init();

@@ -10,8 +10,8 @@ var SnakeGame = SnakeGame || {};
     app.stage = new app.Stage();
     app.renderer = new app.Renderer();
     app.display = new app.Display();
-    app.controller = new app.Controller();
     app.timer = new app.Timer();
+    app.controller = new app.Controller();
   };
 
 })(SnakeGame);

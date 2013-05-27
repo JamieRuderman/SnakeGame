@@ -9,6 +9,8 @@ var SnakeGame = SnakeGame || {};
     surround?
     obstacles
     shooting
+
+    clear levels. to advance.
 */
 
 (function(app){
@@ -25,20 +27,35 @@ var SnakeGame = SnakeGame || {};
 
     self.init = function() {
       menu = $('.menu');
-      menu.on('click', '.select', self.select);
       start = $('.start');
+      start.on('click', '.select', self.startHandler);
       end = $('.end');
+      end.on('click', '.select', self.endHandler);
     };
 
-    self.select = function(event) {
-      state.set(event.target.name);
-      start.hide();
-      app.start();
+    self.start = function() {
+      start.show();
     };
 
     self.gameover = function() {
       console.log('end show');
       end.show();
+    };
+
+    self.startHandler = function(event) {
+      state.set(event.target.name);
+      start.hide();
+      app.start();
+    };
+
+    self.endHandler = function(event) {
+      if (event.target.name == 'restart') {
+        app.controller.reset();
+      }
+      else if (event.target.name == 'menu') {
+        self.start();
+      }
+      end.hide();
     };
 
     $(document).ready(function() {
