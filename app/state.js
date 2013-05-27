@@ -8,10 +8,10 @@ var SnakeGame = SnakeGame || {};
     direction: 'right',
     fpm: 1, // frames per move
     fps: 8, // frames per second
-    fpsToIncrease: 1.5, // multiplier
-    grow: 10,
+    fpsToIncrease: 0.2, //addition
+    grow: 5,
     length: 10,
-    pointsToIncreaseSpeed: 5,
+    pointsToIncreaseSpeed: 1,
     pointValue: 10,
     scale: 10,
     score: 0,
@@ -27,14 +27,14 @@ var SnakeGame = SnakeGame || {};
       },
       medium: {
         fps: 8,
-        grow: 20,
+        grow: 10,
         length: 10,
         scale: 10,
         stageSize: [40, 40]
       },
       large: {
         fps: 30,
-        grow: 40,
+        grow: 30,
         length: 30,
         scale: 5,
         stageSize: [170, 170]

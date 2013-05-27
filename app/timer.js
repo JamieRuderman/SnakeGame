@@ -42,9 +42,10 @@ var SnakeGame = SnakeGame || {};
     };
 
     self.increase = function() {
-      frameRate /= app.state.fpsToIncrease;
+      frameRate -= (1000 / app.state.fps) / app.state.fps * app.state.fpsToIncrease;
       self.stop();
       self.start();
+
     };
 
     self.reset = function() {
