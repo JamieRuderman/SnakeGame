@@ -21,6 +21,10 @@ var SnakeGame = SnakeGame || {};
       self.checkTime();
       app.renderer.draw();
       app.display.update();
+      if (frameRate > 40) {
+        // audio can't render higher frame rates
+        app.audio.step();
+      }
     };
 
     self.start = function() {
@@ -45,7 +49,6 @@ var SnakeGame = SnakeGame || {};
       frameRate -= (1000 / app.state.fps) / app.state.fps * app.state.fpsToIncrease;
       self.stop();
       self.start();
-
     };
 
     self.reset = function() {

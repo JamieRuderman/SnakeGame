@@ -2,39 +2,54 @@ var SnakeGame = SnakeGame || {};
 
 (function(app){
 
-  app.Audio = function() {
+  app.audio = (function() {
 
     var self = {},
-        music;
+        file = {};
 
     self.init = function() {
-      music = $('audio.music')[0];
-      music.volume = 0.1;
-      score = $('audio.score')[0];
-      score.volume = 0.1;
+      $('audio').each(function(index, el) {
+        file[el.id] = el;
+        if (app.state.volume[el.id]) {
+          file[el.id].volume = app.state.volume[el.id];
+        }
+      });
     };
 
     self.start = function() {
-      music.play();
+      file.music.play();
+    };
+
+    self.pause = function() {
+      if (file.music.paused) {
+        file.music.play();
+      }
+      else {
+        file.music.pause();
+      }
+    };
+
+    self.step = function() {
+      file.step.currentTime = 0;
+      file.step.play();
     };
 
     self.score = function() {
-      score.currentTime = 0;
-      score.play();
+      file.score.currentTime = 0;
+      file.score.play();
     };
 
     self.gameover = function() {
-      music.pause();
+      file.gameover.play();
+      file.music.pause();
     };
 
     self.reset = function() {
-      music.currentTime = 0;
+      file.music.currentTime = 0;
     };
-
-    self.init();
 
     return self;
 
-  };
+  })();
 
 })(SnakeGame);

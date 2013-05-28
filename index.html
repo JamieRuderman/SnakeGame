@@ -43,7 +43,7 @@
     <h1>GAME OVER</h1>
     <hr />
     <h2>SCORE</h2>
-    <h3 class="score"></h3>   
+    <h3 class="score"></h3>
     <hr />
     <ul>
       <li><a class="select" name="restart">Restart</a></li>
@@ -52,14 +52,24 @@
   </div>
 
   <!-- Audio -->
-  <audio class="music" loop>
+  <audio id="music" loop>
     <source src="audio/background_loop.mp3" type="audio/mp3" />
     <source src="audio/background_loop.ogg" type="audio/ogg"/>
   </audio>
 
-  <audio class="score">
+  <audio id="score">
     <source src="audio/score.mp3" type="audio/mp3" />
     <source src="audio/score.ogg" type="audio/ogg"/>
+  </audio>
+
+  <audio id="gameover">
+    <source src="audio/end.mp3" type="audio/mp3" />
+    <source src="audio/end.ogg" type="audio/ogg"/>
+  </audio>
+
+  <audio id="step">
+    <source src="audio/bip.mp3" type="audio/mp3" />
+    <source src="audio/bip.ogg" type="audio/ogg"/>
   </audio>
 
 </body>

@@ -78,6 +78,7 @@ var SnakeGame = SnakeGame || {};
         case 32: // space
         case 27: // esc
           app.timer.pause();
+          app.audio.pause();
           break;
       }
     };

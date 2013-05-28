@@ -16,6 +16,12 @@ var SnakeGame = SnakeGame || {};
     scale: 10,
     score: 0,
     stageSize: [40, 40],
+    volume: {
+      music: 0.05,
+      step: 0.1,
+      score: 0.3,
+      gameover: 0.3
+    },
 
     // presets
     preset: {
@@ -30,11 +36,11 @@ var SnakeGame = SnakeGame || {};
         grow: 10,
         length: 10,
         scale: 10,
-        stageSize: [40, 40]
+        stageSize: [50, 50]
       },
       large: {
         fps: 30,
-        grow: 30,
+        grow: 50,
         length: 30,
         scale: 5,
         stageSize: [170, 170]

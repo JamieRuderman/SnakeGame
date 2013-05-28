@@ -32,7 +32,7 @@ var SnakeGame = SnakeGame || {};
     self.points = function() {
       context.fillStyle = '#00ffff';
       points.each(function(point) {
-        block(point, points.size);
+        circle(point, points.size);
       });
     };
 
@@ -76,6 +76,20 @@ var SnakeGame = SnakeGame || {};
         scale(size[0]) - 1,
         scale(size[1]) - 1
       );
+    };
+
+    circle = function(position, size) {
+      var radius = scale(size[0]) / 2;
+      context.beginPath();
+      context.arc(
+        scale(position[0]) + radius,
+        scale(position[1]) + radius,
+        radius,
+        0, Math.PI * 2, true
+      );
+      context.closePath();
+      context.fill();
+      context.stroke();
     };
 
     scale = function(size) {

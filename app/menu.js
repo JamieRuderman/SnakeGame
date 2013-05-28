@@ -45,7 +45,7 @@ var SnakeGame = SnakeGame || {};
     self.startHandler = function(event) {
       state.set(event.target.name);
       start.hide();
-      app.start();
+      app.start.game();
     };
 
     self.endHandler = function(event) {
@@ -57,10 +57,6 @@ var SnakeGame = SnakeGame || {};
       }
       end.hide();
     };
-
-    $(document).ready(function() {
-      self.init();
-    });
 
     return self;
 
