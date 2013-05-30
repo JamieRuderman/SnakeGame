@@ -84,12 +84,31 @@ var SnakeGame = SnakeGame || {};
     };
 
     self.addPoint = function() {
-      if (self.full()) {
-        app.timer.stop();
-        console.log('GAME OVER');
+      if (app.hit.full()) {
+        self.gameover();
       }
       else {
-        points.add(stage.size, self.occupied);
+        points.add(app.hit.randomFree());
+      }
+    };
+
+    self.checkHit = function(position) {
+      if (app.hit.check('snake', position)) {
+        self.gameover();
+      }
+      if (app.hit.check('obstacle', position)) {
+        self.gameover();
+      }
+      if (app.hit.check('points', position)) {
+        snake.length += state.grow;
+        points.remove(snake.position);
+        self.addPoint();
+        state.score += state.pointValue;
+        app.audio.score();
+        // every set number of points go faster
+        if (state.score % (state.pointValue * state.pointsToIncreaseSpeed) === 0) {
+          app.timer.increase();
+        }
       }
     };
 
@@ -107,55 +126,6 @@ var SnakeGame = SnakeGame || {};
       } else if (snake.position[1] >= stage.size[1]) {
         snake.position[1] = 0;
       }
-    };
-
-    self.checkHit = function(position) {
-      if (self.hit('snake', position)) {
-        self.gameover();
-      }
-      if (self.hit('points', position)) {
-        snake.length += state.grow;
-        points.remove(snake.position);
-        self.addPoint();
-        state.score += state.pointValue;
-        app.audio.score();
-        // every set number of points go faster
-        if (state.score % (state.pointValue * state.pointsToIncreaseSpeed) === 0) {
-          app.timer.increase();
-        }
-      }
-    };
-
-    self.hit = function(typeName, position) {
-      var type = app[typeName],
-          hit = false;
-
-      type.each(function(item) {
-        if (item[0] == position[0] && item[1] == position[1]) {
-          hit = true;
-        }
-      });
-
-      return hit;
-    };
-
-    self.occupied = function(position) {
-      var types = ['snake', 'points'],
-          occupied = false;
-
-      for (var i = types.length - 1; i >= 0; i--) {
-        if (self.hit(types[i], position)) {
-          occupied = true;
-          break;
-        }
-      }
-      return occupied;
-    };
-
-    self.full = function() {
-      var max = stage.size[0] * stage.size[1],
-          total = points.points.length + snake.segments.length;
-      return total >= max;
     };
 
     self.gameover = function() {

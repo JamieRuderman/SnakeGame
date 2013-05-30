@@ -38,7 +38,6 @@ var SnakeGame = SnakeGame || {};
     };
 
     self.gameover = function() {
-      console.log('end show');
       end.show();
     };
 

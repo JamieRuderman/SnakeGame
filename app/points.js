@@ -10,22 +10,8 @@ var SnakeGame = SnakeGame || {};
       length: app.state.length
     };
 
-    /*
-      @param max array [x max value, y max value]
-      @param occupiedCallback function add validation callback
-    */
-    self.add = function(max, occupiedCallback) {
-      var point = [
-        Math.round(Math.random() * (max[0] -1)),
-        Math.round(Math.random() * (max[1] -1))
-      ];
-
-      if (occupiedCallback(point)) {
-        self.add(max, occupiedCallback);
-      }
-      else {
-        self.points.push(point);
-      }
+    self.add = function(point) {
+      self.points.push(point);
     };
 
     self.remove = function(position) {

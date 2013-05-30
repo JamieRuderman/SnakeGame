@@ -18,7 +18,7 @@ var SnakeGame = SnakeGame || {};
     stageSize: [40, 40],
     volume: {
       music: 0.05,
-      step: 0.1,
+      step: 0.05,
       score: 0.3,
       gameover: 0.3
     },

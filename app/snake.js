@@ -35,7 +35,7 @@ var SnakeGame = SnakeGame || {};
     };
 
     self.reset = function() {
-      app.snake.length = app.state.length;
+      self.length = app.state.length;
       self.segments = [];
     };
 

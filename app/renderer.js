@@ -19,6 +19,7 @@ var SnakeGame = SnakeGame || {};
       self.clear();
       self.snake();
       self.points();
+      if (app.obstacle) self.obstacle();
     };
 
     self.snake = function() {
@@ -33,6 +34,14 @@ var SnakeGame = SnakeGame || {};
       context.fillStyle = '#00ffff';
       points.each(function(point) {
         circle(point, points.size);
+      });
+    };
+
+    self.obstacle = function() {
+      context.fillStyle = '#ffff00';
+      context.strokeStyle = '#000';
+      app.obstacle.each(function(part) {
+        block(part, app.obstacle.size);
       });
     };
 
