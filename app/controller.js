@@ -16,34 +16,11 @@ var SnakeGame = SnakeGame || {};
     };
 
     self.move = function() {
-      self.noReverse();
-
-      switch (direction) {
-        case 'left':
-          snake.position[0] -= 1;
-          break;
-        case 'right':
-          snake.position[0] += 1;
-          break;
-        case 'up':
-          snake.position[1] -= 1;
-          break;
-        case 'down':
-          snake.position[1] += 1;
-          break;
-      }
-
-      self.checkBorder();
+      direction = app.hit.noReverse(moving, direction);
+      moving = direction;
+      snake.position = app.hit.move(direction, snake.position);
       self.checkHit(snake.position);
       snake.advance();
-    };
-
-    self.noReverse = function() {
-      if (moving == 'left' && direction =='right') direction = 'left';
-      else if (moving == 'right' && direction =='left') direction = 'right';
-      else if (moving == 'up' && direction =='down') direction = 'up';
-      else if (moving == 'down' && direction =='up') direction = 'down';
-      moving = direction;
     };
 
     self.center = function(sprite) {
@@ -77,6 +54,7 @@ var SnakeGame = SnakeGame || {};
           break;
         case 32: // space
         case 27: // esc
+        console.log('pause');
           app.timer.pause();
           app.audio.pause();
           break;
@@ -112,23 +90,8 @@ var SnakeGame = SnakeGame || {};
       }
     };
 
-    self.checkBorder = function() {
-      // left / right
-      if (snake.position[0] < 0) {
-        snake.position[0] = stage.size[0] -1;
-      } else if (snake.position[0] >= stage.size[0]) {
-        snake.position[0] = 0;
-      }
-
-      // up / down
-      if (snake.position[1] < 0) {
-        snake.position[1] = stage.size[1] -1;
-      } else if (snake.position[1] >= stage.size[1]) {
-        snake.position[1] = 0;
-      }
-    };
-
     self.gameover = function() {
+      console.log('gameover');
       $(window).off('keydown', self.changeDirection);
       app.timer.stop();
       app.menu.gameover();
@@ -136,6 +99,7 @@ var SnakeGame = SnakeGame || {};
     };
 
     self.reset = function() {
+      console.log('reset');
       $(window).on('keydown', self.changeDirection);
       state.score = 0;
       self.center(snake);

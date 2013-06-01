@@ -7,8 +7,11 @@ var SnakeGame = SnakeGame || {};
           size: [1, 1],
           position: null,
           segments: [],
-          length: 20
-        };
+          length: 40
+        },
+        direction = null;
+
+    var TURN_CHANCE = 0.75;
 
     self.init = function() {
       self.create();
@@ -22,17 +25,28 @@ var SnakeGame = SnakeGame || {};
 
     self.growSegment = function(from) {
       var position = from || app.hit.randomFree(),
-          seed = Math.random();
+          seed = Math.random(),
+          change;
 
-      if (seed > 0.5) {
-        position[0] += (seed > 0.75) ? -1 : 1;
-      }
-      else {
-        position[1] += (seed > 0.25) ? -1 : 1;
+      if (!direction) {
+        direction = self.pickDirection();
       }
 
-      self.position = position;
+      if (seed > TURN_CHANCE) {
+        change = self.pickDirection();
+        direction = app.hit.noReverse(direction, change);
+      }
+
+      self.position = app.hit.move(direction, position);
       self.addSegment();
+    };
+
+    self.pickDirection = function() {
+      var seed = Math.random();
+      if (seed > 0.75) return 'left';
+      else if (seed > 0.5) return 'right';
+      else if (seed > 0.25) return 'up';
+      else return 'down';
     };
 
     self.addSegment = function() {

@@ -8,10 +8,10 @@ var SnakeGame = SnakeGame || {};
     direction: 'right',
     fpm: 1, // frames per move
     fps: 8, // frames per second
-    fpsToIncrease: 0.2, //addition
+    fpsToIncrease: 0.5, // addition
     grow: 5,
     length: 10,
-    pointsToIncreaseSpeed: 1,
+    pointsToIncreaseSpeed: 5,
     pointValue: 10,
     scale: 10,
     score: 0,

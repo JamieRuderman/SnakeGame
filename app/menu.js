@@ -19,42 +19,56 @@ var SnakeGame = SnakeGame || {};
 
     var self = {},
         state = app.state,
-        menu, end, start,
-        kinds = [
-          'start',
-          'end'
-        ];
+        menu, gameover, begin;
 
     self.init = function() {
       menu = $('.menu');
-      start = $('.start');
-      start.on('click', '.select', self.startHandler);
-      end = $('.end');
-      end.on('click', '.select', self.endHandler);
+      begin = $('.begin');
+      gameover = $('.gameover');
+      self.begin();
     };
 
-    self.start = function() {
-      start.show();
+    // show start menu
+    self.begin = function() {
+      begin.show();
+      gameover.hide();
+      eventsOn();
     };
 
+    // show gameover menu
     self.gameover = function() {
-      end.show();
+      gameover.show();
+      eventsOn();
     };
 
-    self.startHandler = function(event) {
+    /* Private -------------- */
+
+    beginHandler = function(event) {
+      begin.hide();
+      eventsOff();
       state.set(event.target.name);
-      start.hide();
-      app.start.game();
+      app.start.newgame();
     };
 
-    self.endHandler = function(event) {
+    gameoverHandler = function(event) {
+      gameover.hide();
+      eventsOff();
       if (event.target.name == 'restart') {
         app.controller.reset();
       }
       else if (event.target.name == 'menu') {
-        self.start();
+        self.begin();
       }
-      end.hide();
+    };
+
+    eventsOn = function() {
+      begin.on('click', '.select', beginHandler);
+      gameover.on('click', '.select', gameoverHandler);
+    };
+
+    eventsOff = function() {
+      begin.off('click', '.select', beginHandler);
+      gameover.off('click', '.select', gameoverHandler);
     };
 
     return self;

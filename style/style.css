@@ -15,10 +15,12 @@ hr {
 }
 .select {
   cursor: pointer;
-  display: block;
+  padding: 0px 20px;
+  color: #0f0;
 }
-.select:hover {
-  color: #fff;
+.select:hover,
+.select:focus {
+  outline: 1px dotted #050;
 }
 .center {
   position: absolute;

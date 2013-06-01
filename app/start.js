@@ -11,7 +11,7 @@ var SnakeGame = SnakeGame || {};
       app.audio.init();
     };
 
-    self.game = function() {
+    self.newgame = function() {
       // start snake game
       app.snake      = new app.Snake();
       app.points     = new app.Points();
