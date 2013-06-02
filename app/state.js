@@ -5,7 +5,7 @@ var SnakeGame = SnakeGame || {};
   app.state = {
 
     // defaults
-    direction: 'right',
+    direction: 'none',
     fpm: 1, // frames per move
     fps: 8, // frames per second
     fpsToIncrease: 0.5, // addition
@@ -15,6 +15,8 @@ var SnakeGame = SnakeGame || {};
     pointValue: 10,
     scale: 10,
     score: 0,
+    obstacles: 5,
+    obstaclesLength: 15,
     stageSize: [40, 40],
     volume: {
       music: 0.05,

@@ -8,8 +8,7 @@ var SnakeGame = SnakeGame || {};
         snake = app.snake,
         points = app.points,
         state = app.state,
-        direction = state.direction,
-        moving;
+        direction, moving;
 
     self.init = function() {
       self.reset();
@@ -54,7 +53,6 @@ var SnakeGame = SnakeGame || {};
           break;
         case 32: // space
         case 27: // esc
-        console.log('pause');
           app.timer.pause();
           app.audio.pause();
           break;
@@ -74,7 +72,7 @@ var SnakeGame = SnakeGame || {};
       if (app.hit.check('snake', position)) {
         self.gameover();
       }
-      if (app.hit.check('obstacle', position)) {
+      if (app.hit.check('obstacles', position)) {
         self.gameover();
       }
       if (app.hit.check('points', position)) {
@@ -91,7 +89,6 @@ var SnakeGame = SnakeGame || {};
     };
 
     self.gameover = function() {
-      console.log('gameover');
       $(window).off('keydown', self.changeDirection);
       app.timer.stop();
       app.menu.gameover();
@@ -99,9 +96,9 @@ var SnakeGame = SnakeGame || {};
     };
 
     self.reset = function() {
-      console.log('reset');
       $(window).on('keydown', self.changeDirection);
       state.score = 0;
+      direction = state.direction;
       self.center(snake);
       snake.reset();
       snake.addSegment(snake.position);

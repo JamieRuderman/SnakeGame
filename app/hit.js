@@ -2,11 +2,9 @@ var SnakeGame = SnakeGame || {};
 
 (function(app){
 
-  app.Hit = function() {
+  app.hit = {
 
-    var self = {};
-
-    self.check = function(typeName, position) {
+    check: function(typeName, position) {
       var type = app[typeName],
           hit = false;
 
@@ -19,22 +17,22 @@ var SnakeGame = SnakeGame || {};
       });
 
       return hit;
-    };
+    },
 
-    self.occupied = function(position) {
-      var types = ['snake', 'points', 'obstacle'],
+    occupied: function(position) {
+      var types = ['snake', 'points', 'obstacles'],
           occupied = false;
 
-      for (var i = types.length - 1; i >= 0; i--) {
-        if (self.check(types[i], position)) {
+      for (var i = 0; i < types.length; i++) {
+        if (this.check(types[i], position)) {
           occupied = true;
           break;
         }
       }
       return occupied;
-    };
+    },
 
-    self.move = function(direction, position) {
+    move: function(direction, position) {
       switch (direction) {
         case 'left':
           position[0] -= 1;
@@ -49,10 +47,10 @@ var SnakeGame = SnakeGame || {};
           position[1] += 1;
           break;
       }
-      return self.wrap(position);
-    };
+      return this.wrap(position);
+    },
 
-    self.wrap = function(position) {
+    wrap: function(position) {
       // left / right
       if (position[0] < 0) {
         position[0] = app.stage.size[0] -1;
@@ -68,41 +66,40 @@ var SnakeGame = SnakeGame || {};
       }
 
       return position;
-    };
+    },
 
     /*
       @param max array [x max value, y max value]
       @param occupiedCallback function add validation callback
     */
-    self.randomFree = function() {
+    randomFree: function() {
       var point = [
         Math.round(Math.random() * (app.stage.size[0] -1)),
         Math.round(Math.random() * (app.stage.size[1] -1))
       ];
 
-      if (self.occupied(point)) {
-        return self.randomFree();
+      if (this.occupied(point)) {
+        return this.randomFree();
       }
       else {
         return point;
       }
-    };
+    },
 
-    self.noReverse = function(moving, direction) {
+    noReverse: function(moving, direction) {
       if (moving == 'left' && direction =='right') return 'left';
       else if (moving == 'right' && direction =='left') return 'right';
       else if (moving == 'up' && direction =='down') return 'up';
       else if (moving == 'down' && direction =='up') return 'down';
       return direction;
-    };
+    },
 
-    self.full = function() {
+    full: function() {
       var max = app.stage.size[0] * app.stage.size[1],
           total = app.points.points.length + app.snake.segments.length;
       return total >= max;
-    };
+    }
 
-    return self;
   };
 
 

@@ -17,16 +17,17 @@ var SnakeGame = SnakeGame || {};
 
     self.draw = function() {
       self.clear();
+      self.obstacles();
       self.snake();
       self.points();
-      if (app.obstacle) self.obstacle();
+      self.border();
     };
 
     self.snake = function() {
       context.fillStyle = '#00ff00';
       context.strokeStyle = '#000';
       snake.each(function(part) {
-        block(part, snake.size);
+        fillBlock(part, snake.size);
       });
     };
 
@@ -37,24 +38,30 @@ var SnakeGame = SnakeGame || {};
       });
     };
 
-    self.obstacle = function() {
-      context.fillStyle = '#ffff00';
-      context.strokeStyle = '#000';
-      app.obstacle.each(function(part) {
-        block(part, app.obstacle.size);
+    self.obstacles = function() {
+      var counter = 256, hex;
+
+      context.fillStyle = '#000';
+      app.obstacles.each(function(position, collectionIndex) {
+        hexR = (256 - (collectionIndex + 1) * 32).toString(16);
+        context.strokeStyle = '#'+ hexR +'0000';
+        strokeBlock(position, app.obstacles.size);
       });
     };
 
     self.clear = function() {
       context.fillStyle = 'black';
-      context.strokeStyle = 'green';
       context.fillRect(0, 0,
         scale(stage.size[0]),
         scale(stage.size[1])
       );
-      context.strokeRect(0, 0,
-        scale(stage.size[0]),
-        scale(stage.size[1])
+    };
+
+    self.border = function() {
+      context.strokeStyle = 'green';
+      context.strokeRect(0.5, 0.5,
+        scale(stage.size[0]) - 1,
+        scale(stage.size[1]) - 1
       );
     };
 
@@ -72,18 +79,21 @@ var SnakeGame = SnakeGame || {};
 
     // private
 
-    block = function(position, size) {
+    fillBlock = function(position, size) {
       context.fillRect(
         scale(position[0]),
         scale(position[1]),
-        scale(size[0]),
-        scale(size[1])
-      );
-      context.strokeRect(
-        scale(position[0]) + 0.5,
-        scale(position[1]) + 0.5,
         scale(size[0]) - 1,
         scale(size[1]) - 1
+      );
+    };
+
+    strokeBlock = function(position, size) {
+      context.strokeRect(
+        scale(position[0]) - 0.5,
+        scale(position[1]) - 0.5,
+        scale(size[0]),
+        scale(size[1])
       );
     };
 
@@ -93,7 +103,7 @@ var SnakeGame = SnakeGame || {};
       context.arc(
         scale(position[0]) + radius,
         scale(position[1]) + radius,
-        radius,
+        radius - 1,
         0, Math.PI * 2, true
       );
       context.closePath();

@@ -2,16 +2,47 @@ var SnakeGame = SnakeGame || {};
 
 (function(app){
 
+  /* Collection ------------------------ */
+  app.obstacles = {
+
+    array: [],
+    size: [1, 1],
+
+    collection: function(callback) {
+      for (var i = 0, len = this.array.length; i < len; i++) {
+        if (callback) callback(this.array[i], i);
+      }
+    },
+
+    each: function(callback) {
+      this.collection(function(obstacle, index) {
+        if (obstacle) {
+          obstacle.each(function(segment) {
+            callback(segment, index);
+          });
+        }
+      });
+    },
+
+    init: function() {
+      this.array = [];
+      for (var i = 0; i < app.state.obstacles; i++) {
+        this.array.push(new app.Obstacle());
+      }
+    }
+
+  };
+
+  /* Object ------------------------ */
   app.Obstacle = function() {
     var self = {
-          size: [1, 1],
           position: null,
           segments: [],
-          length: 40
+          length: app.state.obstaclesLength
         },
         direction = null;
 
-    var TURN_CHANCE = 0.75;
+    var TURN_CHANCE = 0.85;
 
     self.init = function() {
       self.create();
@@ -55,12 +86,11 @@ var SnakeGame = SnakeGame || {};
 
     self.each = function(callback) {
       for (var i = 0, len = self.length; i < len; i++) {
-        callback(self.segments[i]);
+        callback(self.segments[i], i);
       }
     };
 
     self.reset = function() {
-      app.snake.length = app.state.length;
       self.segments = [];
     };
 

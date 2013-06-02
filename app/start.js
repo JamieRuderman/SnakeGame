@@ -13,14 +13,14 @@ var SnakeGame = SnakeGame || {};
 
     self.newgame = function() {
       // start snake game
-      app.snake      = new app.Snake();
       app.points     = new app.Points();
       app.stage      = new app.Stage();
-      app.renderer   = new app.Renderer();
+      app.obstacles.init();
+      app.snake      = new app.Snake();
       app.display    = new app.Display();
+      // app.hit        = new app.Hit();
+      app.renderer   = new app.Renderer();
       app.timer      = new app.Timer();
-      app.hit        = new app.Hit();
-      app.obstacle   = new app.Obstacle();
       app.controller = new app.Controller();
     };
 
