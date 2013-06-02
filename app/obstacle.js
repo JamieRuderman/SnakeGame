@@ -42,7 +42,7 @@ var SnakeGame = SnakeGame || {};
         },
         direction = null;
 
-    var TURN_CHANCE = 0.85;
+    var TURN_CHANCE = 0.9;
 
     self.init = function() {
       self.create();

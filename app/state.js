@@ -29,7 +29,9 @@ var SnakeGame = SnakeGame || {};
     preset: {
       small: {
         fps: 4,
+        grow: 5,
         length: 5,
+        obstacles: 0,
         scale: 20,
         stageSize: [20, 20]
       },
@@ -37,6 +39,7 @@ var SnakeGame = SnakeGame || {};
         fps: 8,
         grow: 10,
         length: 10,
+        obstacles: 2,
         scale: 10,
         stageSize: [50, 50]
       },
@@ -44,6 +47,8 @@ var SnakeGame = SnakeGame || {};
         fps: 30,
         grow: 50,
         length: 30,
+        obstacles: 10,
+        obstaclesLength: 40,
         scale: 5,
         stageSize: [170, 170]
       }

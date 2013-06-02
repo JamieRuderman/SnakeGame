@@ -32,9 +32,10 @@ var SnakeGame = SnakeGame || {};
     };
 
     self.points = function() {
+      var style = (app.state.scale < 6) ? fillBlock : circle;
       context.fillStyle = '#00ffff';
       points.each(function(point) {
-        circle(point, points.size);
+        style(point, points.size);
       });
     };
 
@@ -43,7 +44,7 @@ var SnakeGame = SnakeGame || {};
 
       context.fillStyle = '#000';
       app.obstacles.each(function(position, collectionIndex) {
-        hexR = (256 - (collectionIndex + 1) * 32).toString(16);
+        hexR = (256 - (collectionIndex + 1) * 16).toString(16);
         context.strokeStyle = '#'+ hexR +'0000';
         strokeBlock(position, app.obstacles.size);
       });
