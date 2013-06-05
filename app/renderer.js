@@ -59,7 +59,7 @@ var SnakeGame = SnakeGame || {};
     };
 
     self.border = function() {
-      context.strokeStyle = 'green';
+      context.strokeStyle = '#003300';
       context.strokeRect(0.5, 0.5,
         scale(stage.size[0]) - 1,
         scale(stage.size[1]) - 1

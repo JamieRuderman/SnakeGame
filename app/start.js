@@ -18,7 +18,6 @@ var SnakeGame = SnakeGame || {};
       app.obstacles.init();
       app.snake      = new app.Snake();
       app.display    = new app.Display();
-      // app.hit        = new app.Hit();
       app.renderer   = new app.Renderer();
       app.timer      = new app.Timer();
       app.controller = new app.Controller();
