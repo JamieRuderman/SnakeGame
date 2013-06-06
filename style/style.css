@@ -1,5 +1,5 @@
 body {
-  background-color: black;
+  background-color: #000;
   font-family: 'Press Start 2P', sans-serif;
 }
 h1 {
@@ -49,8 +49,6 @@ hr {
 }
 .controls {
   padding: 14px;
-  background-color: #000;
-  /*border: 1px solid #020;*/
 }
 .score {
   color: #0ff;

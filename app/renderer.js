@@ -4,6 +4,7 @@ var SnakeGame = SnakeGame || {};
 
   app.Renderer = function() {
     var self = {},
+        color = app.state.color,
         stage = app.stage,
         points = app.points,
         context = stage.context,
@@ -24,8 +25,8 @@ var SnakeGame = SnakeGame || {};
     };
 
     self.snake = function() {
-      context.fillStyle = '#00ff00';
-      context.strokeStyle = '#000';
+      context.fillStyle = color.player;
+      context.strokeStyle = color.background;
       snake.each(function(part) {
         fillBlock(part, snake.size);
       });
@@ -33,7 +34,7 @@ var SnakeGame = SnakeGame || {};
 
     self.points = function() {
       var style = (app.state.scale < 6) ? fillBlock : circle;
-      context.fillStyle = '#00ffff';
+      context.fillStyle = color.points;
       points.each(function(point) {
         style(point, points.size);
       });
@@ -42,16 +43,16 @@ var SnakeGame = SnakeGame || {};
     self.obstacles = function() {
       var counter = 256, hex;
 
-      context.fillStyle = '#000';
+      context.fillStyle = color.background;
       app.obstacles.each(function(position, collectionIndex) {
         hexR = (256 - (collectionIndex + 1) * 16).toString(16);
-        context.strokeStyle = '#'+ hexR +'0000';
+        context.strokeStyle = '#'+ hexR + color.obstacles;
         strokeBlock(position, app.obstacles.size);
       });
     };
 
     self.clear = function() {
-      context.fillStyle = 'black';
+      context.fillStyle = color.background;
       context.fillRect(0, 0,
         scale(stage.size[0]),
         scale(stage.size[1])
@@ -59,7 +60,7 @@ var SnakeGame = SnakeGame || {};
     };
 
     self.border = function() {
-      context.strokeStyle = '#003300';
+      context.strokeStyle = color.border;
       context.strokeRect(0.5, 0.5,
         scale(stage.size[0]) - 1,
         scale(stage.size[1]) - 1

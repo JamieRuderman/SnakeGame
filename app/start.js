@@ -7,6 +7,7 @@ var SnakeGame = SnakeGame || {};
     var self = {};
 
     self.init = function() {
+      app.state.init();
       app.menu.init();
       app.audio.init();
     };
