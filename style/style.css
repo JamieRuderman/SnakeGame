@@ -49,7 +49,11 @@ hr {
 }
 .controls {
   padding: 14px;
-}
-.score {
   color: #0ff;
+}
+.score {}
+
+.fps {
+  float: right;
+  width: 50px;
 }

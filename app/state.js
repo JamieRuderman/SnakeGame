@@ -9,7 +9,8 @@ var SnakeGame = SnakeGame || {};
       direction: 'none',
       fpm: 1, // frames per move
       fps: 8, // frames per second
-      fpsToIncrease: 0.5, // addition
+      fpsToIncrease: 0.5,
+      fpsDisplay: false,
       grow: 5,
       length: 10,
       pointsToIncreaseSpeed: 5,
@@ -31,7 +32,7 @@ var SnakeGame = SnakeGame || {};
         obstacles: '0000', // R is dynamic
         points: '#00ffff',
         player: '#00ff00'
-      },
+      }
     },
 
     // presets
@@ -53,9 +54,9 @@ var SnakeGame = SnakeGame || {};
         stageSize: [50, 50],
         color: {
           border: '#003300',
-          background: '#ffffff',
-          obstacles: '0000', // R is dynamic
-          points: '#00bbbb',
+          background: '#ff0000',
+          obstacles: 'ffff', // R is dynamic
+          points: '#00ffff',
           player: '#00ff00'
         }
       },
@@ -75,7 +76,7 @@ var SnakeGame = SnakeGame || {};
     },
 
     set: function(preset) {
-      this.enable(this.defaults);
+      // this.enable(this.defaults);
       this.enable(this.preset[preset]);
     },
 
@@ -83,6 +84,10 @@ var SnakeGame = SnakeGame || {};
       for (var key in options) {
         this[key] = options[key];
       }
+    },
+
+    toggle: function(setting) {
+      this[setting] = this[setting] ? false : true;
     }
 
   };

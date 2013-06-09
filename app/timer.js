@@ -4,44 +4,58 @@ var SnakeGame = SnakeGame || {};
 
   app.Timer = function() {
     var self = {
-          ready: true
+          ready: true,
+          fps: null
         },
         frameRate = 1000 / app.state.fps,
-        startTime = new Date().getTime(),
-        checkTime = startTime,
+        interval = 0,
         counter = 0,
-        timer;
+        paused = false;
 
     self.init = function() {
       app.renderer.draw();
       app.display.update();
     };
 
-    self.frame = function() {
-      self.checkTime();
-      app.renderer.draw();
-      app.display.update();
+    self.frame = function(time) {
+      var elapsed = time - interval;
+
       if (frameRate > 40) {
         // audio can't render higher frame rates
         app.audio.step();
       }
+
+      // animation loop
+      if (elapsed > frameRate) {
+        interval = time;
+        self.checkTime(elapsed);
+        app.renderer.draw();
+        app.display.update();
+      }
+
+      // console.log('frame', time, elapsed, interval, frameRate);
+
+      if (!paused) {
+        requestAnimationFrame(self.frame);
+      }
     };
 
     self.start = function() {
-      timer = setInterval(self.frame, frameRate);
+      paused = false;
+      console.log('start');
+      requestAnimationFrame(self.frame);
       self.ready = false;
     };
 
     self.stop = function() {
-      clearInterval(timer);
-      timer = null;
+      paused = true;
     };
 
     self.pause = function() {
-      if (timer) {
-        self.stop();
-      } else {
+      if (paused) {
         self.start();
+      } else {
+        self.stop();
       }
     };
 
@@ -58,9 +72,9 @@ var SnakeGame = SnakeGame || {};
       self.ready = true;
     };
 
-    self.checkTime = function() {
-      var now = new Date().getTime(),
-          elapsed = now - checkTime;
+    self.checkTime = function(elapsed) {
+      // track fps
+      self.fps = Math.round(100000 / (elapsed)) / 100;
 
       counter++;
 
@@ -80,11 +94,11 @@ var SnakeGame = SnakeGame || {};
       }
 
       // lengthen the snake every second
-      if (elapsed > 10000) {
+      // if (elapsed > 10000) {
         // app.snake.length += 10;
         // app.controller.addPoint();
-        checkTime = now;
-      }
+        // checkTime = now;
+      // }
 
     };
 

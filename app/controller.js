@@ -30,11 +30,11 @@ var SnakeGame = SnakeGame || {};
     };
 
     self.changeDirection = function(event) {
-      if (app.timer.ready) {
-        app.timer.start();
-      }
 
       switch (event.keyCode) {
+        case 70: // f
+          app.state.toggle('fpsDisplay');
+          break;
         case 37: // left
         case 65: // a
           direction = 'left';
@@ -57,6 +57,11 @@ var SnakeGame = SnakeGame || {};
           app.audio.pause();
           break;
       }
+
+      if (app.timer.ready && direction != 'none') {
+        app.timer.start();
+      }
+
     };
 
     self.addPoint = function() {
