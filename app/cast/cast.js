@@ -2,7 +2,56 @@ var SnakeGame = SnakeGame || {};
 
 (function(app){
 
-  app.Obstacle = function() {
+  /*
+    Cast collection
+      @param options {
+        member: Member class object,
+        length: Number of objects in the collection
+      }
+  */
+  app.Cast = function(options) {
+
+    var self = {
+          array: [],
+          size: [1, 1],
+          name: null,  // member name
+          member: null // member object class
+        };
+
+    self.collection = function(callback) {
+      for (var i = 0, len = self.array.length; i < len; i++) {
+        if (callback) callback(self.array[i], i);
+      }
+    };
+
+    self.each = function(callback) {
+      self.collection(function(member, index) {
+        if (member) {
+          member.each(function(segment) {
+            callback(segment, index);
+          });
+        }
+      });
+    };
+
+    // Private -------------
+
+    init = function() {
+      $.extend(self, options);
+      self.array = [];
+      for (var i = 0; i < self.length; i++) {
+        self.array.push(new self.member());
+      }
+    };
+
+    init();
+
+    return self;
+
+  };
+
+  /* Object ------------------------ */
+  app.Member = function() {
     var self = {
           position: null,
           segments: [],
