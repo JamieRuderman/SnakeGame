@@ -54,6 +54,7 @@ hr {
 .score {}
 
 .fps {
+  font-size: 9px;
   float: right;
-  width: 50px;
+  width: 80px;
 }

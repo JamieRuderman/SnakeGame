@@ -10,6 +10,8 @@ var SnakeGame = SnakeGame || {};
         frameRate = 1000 / app.state.fps,
         interval = 0,
         counter = 0,
+        longest = 0,
+        shortest = Infinity,
         paused = false;
 
     self.init = function() {
@@ -17,37 +19,29 @@ var SnakeGame = SnakeGame || {};
       app.display.update();
     };
 
-    self.frame = function(time) {
+    self.loop = function(time) {
       var elapsed = time - interval;
 
-      if (frameRate > 40) {
-        // audio can't render higher frame rates
-        app.audio.step();
-      }
-
-      // animation loop
+      // frame
       if (elapsed > frameRate) {
         interval = time;
-        self.checkTime(elapsed);
-        app.renderer.draw();
-        app.display.update();
+        self.frame(elapsed);
       }
 
-      // console.log('frame', time, elapsed, interval, frameRate);
-
       if (!paused) {
-        requestAnimationFrame(self.frame);
+        requestAnimationFrame(self.loop);
       }
     };
 
     self.start = function() {
       paused = false;
       console.log('start');
-      requestAnimationFrame(self.frame);
+      requestAnimationFrame(self.loop);
       self.ready = false;
     };
 
     self.stop = function() {
+      counter = 0,
       paused = true;
     };
 
@@ -61,22 +55,34 @@ var SnakeGame = SnakeGame || {};
 
     self.increase = function() {
       frameRate -= (1000 / app.state.fps) / app.state.fps * app.state.fpsToIncrease;
-      self.stop();
-      self.start();
     };
 
     self.reset = function() {
       self.stop();
-      counter = 0,
       frameRate = 1000 / app.state.fps;
       self.ready = true;
     };
 
-    self.checkTime = function(elapsed) {
+    self.frame = function(elapsed) {
+
       // track fps
-      self.fps = Math.round(100000 / (elapsed)) / 100;
+      if (counter > 2) {
+        longest = Math.max(longest, elapsed);
+        shortest = Math.min(shortest, elapsed);
+      }
+
+      self.fps = {
+        cur: Math.round((1000 / elapsed) * 100) / 100,
+        min: Math.round((1000 / longest) * 100) / 100,
+        max: Math.round((1000 / shortest) * 100) / 100
+      };
 
       counter++;
+
+      if (frameRate > 40) {
+        // audio can't render higher frame rates
+        app.audio.step();
+      }
 
       // advance frame
       if (counter % app.state.fpm === 0) {
@@ -94,11 +100,13 @@ var SnakeGame = SnakeGame || {};
       }
 
       // lengthen the snake every second
-      // if (elapsed > 10000) {
+      if (elapsed > 10000) {
         // app.snake.length += 10;
         // app.controller.addPoint();
-        // checkTime = now;
-      // }
+      }
+
+      app.renderer.draw();
+      app.display.update();
 
     };
 

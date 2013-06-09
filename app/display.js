@@ -13,7 +13,7 @@ var SnakeGame = SnakeGame || {};
     /* updates an element if the value has changed */
     self.update = function() {
 
-      if (state.fpsDisplay) fps();
+      fps();
 
       for (var key in el) {
         // if changed
@@ -44,7 +44,11 @@ var SnakeGame = SnakeGame || {};
       if (changed('fpsDisplay')) {
         fpsEl.toggle(app.state.fpsDisplay);
       }
-      fpsEl.text(app.timer.fps);
+      if (state.fpsDisplay) {
+        fpsEl.text('fps:' + app.timer.fps.cur +
+                   ' min:' + app.timer.fps.min +
+                   ' max:' + app.timer.fps.max);
+      }
     };
 
     init();
