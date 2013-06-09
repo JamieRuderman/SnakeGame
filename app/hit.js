@@ -20,7 +20,7 @@ var SnakeGame = SnakeGame || {};
     },
 
     occupied: function(position) {
-      var types = ['snake', 'points', 'obstacles'],
+      var types = ['player', 'points', 'obstacles'],
           occupied = false;
 
       for (var i = 0; i < types.length; i++) {
@@ -96,7 +96,7 @@ var SnakeGame = SnakeGame || {};
 
     full: function() {
       var max = app.stage.size[0] * app.stage.size[1],
-          total = app.points.points.length + app.snake.segments.length;
+          total = app.points.points.length + app.player.segments.length;
       return total >= max;
     }
 

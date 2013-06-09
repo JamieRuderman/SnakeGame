@@ -2,8 +2,7 @@ var SnakeGame = SnakeGame || {};
 
 (function(app){
 
-  // @TODO rename Player
-  app.Snake = function() {
+  app.Player = function() {
     var self = {
       size: [1, 1],
       position: [0, 0],

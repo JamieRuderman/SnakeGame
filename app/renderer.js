@@ -8,7 +8,7 @@ var SnakeGame = SnakeGame || {};
         stage = app.stage,
         points = app.points,
         context = stage.context,
-        snake = app.snake;
+        player = app.player;
 
     self.init = function() {
       self.draw();
@@ -19,16 +19,16 @@ var SnakeGame = SnakeGame || {};
     self.draw = function() {
       self.clear();
       self.obstacles();
-      self.snake();
+      self.player();
       self.points();
       self.border();
     };
 
-    self.snake = function() {
+    self.player = function() {
       context.fillStyle = color.player;
       context.strokeStyle = color.background;
-      snake.each(function(part) {
-        fillBlock(part, snake.size);
+      player.each(function(part) {
+        fillBlock(part, player.size);
       });
     };
 

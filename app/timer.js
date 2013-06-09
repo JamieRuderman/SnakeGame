@@ -99,9 +99,9 @@ var SnakeGame = SnakeGame || {};
         // app.controller.addPoint();
       }
 
-      // lengthen the snake every second
+      // lengthen the player every second
       if (elapsed > 10000) {
-        // app.snake.length += 10;
+        // app.player.length += 10;
         // app.controller.addPoint();
       }
 

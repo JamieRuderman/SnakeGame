@@ -6,7 +6,7 @@ var SnakeGame = SnakeGame || {};
     events: {
       'render': [
         draw callback,
-        snake callback
+        player callback
       ]
     }
   */

@@ -18,6 +18,7 @@ var SnakeGame = SnakeGame || {};
       scale: 10,
       score: 0,
       obstacles: 5,
+      bots: 0,
       obstaclesLength: 15,
       stageSize: [40, 40],
       volume: {
@@ -50,6 +51,7 @@ var SnakeGame = SnakeGame || {};
         grow: 10,
         length: 10,
         obstacles: 2,
+        bots: 1,
         scale: 10,
         stageSize: [50, 50],
         color: {

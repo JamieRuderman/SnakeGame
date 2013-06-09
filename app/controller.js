@@ -5,7 +5,7 @@ var SnakeGame = SnakeGame || {};
   app.Controller = function() {
     var self = {},
         stage = app.stage,
-        snake = app.snake,
+        player = app.player,
         points = app.points,
         state = app.state,
         direction, moving;
@@ -17,9 +17,9 @@ var SnakeGame = SnakeGame || {};
     self.move = function() {
       direction = app.hit.noReverse(moving, direction);
       moving = direction;
-      snake.position = app.hit.move(direction, snake.position);
-      self.checkHit(snake.position);
-      snake.advance();
+      player.position = app.hit.move(direction, player.position);
+      self.checkHit(player.position);
+      player.advance();
     };
 
     self.center = function(sprite) {
@@ -74,15 +74,15 @@ var SnakeGame = SnakeGame || {};
     };
 
     self.checkHit = function(position) {
-      if (app.hit.check('snake', position)) {
+      if (app.hit.check('player', position)) {
         self.gameover();
       }
       if (app.hit.check('obstacles', position)) {
         self.gameover();
       }
       if (app.hit.check('points', position)) {
-        snake.length += state.grow;
-        points.remove(snake.position);
+        player.length += state.grow;
+        points.remove(player.position);
         self.addPoint();
         state.score += state.pointValue;
         app.audio.score();
@@ -104,9 +104,9 @@ var SnakeGame = SnakeGame || {};
       $(window).on('keydown', self.changeDirection);
       state.score = 0;
       direction = state.direction;
-      self.center(snake);
-      snake.reset();
-      snake.addSegment(snake.position);
+      self.center(player);
+      player.reset();
+      player.addSegment(player.position);
       points.reset();
       self.addPoint();
       app.timer.reset();
