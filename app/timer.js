@@ -23,13 +23,13 @@ var SnakeGame = SnakeGame || {};
       var elapsed = time - interval;
 
       // frame
-      if (elapsed > frameRate) {
-        interval = time;
-        self.frame(elapsed);
-      }
+      interval = time;
+      self.frame(elapsed);
 
       if (!paused) {
-        requestAnimationFrame(self.loop);
+        setTimeout(function() {
+          requestAnimationFrame(self.loop);
+        }, frameRate);
       }
     };
 

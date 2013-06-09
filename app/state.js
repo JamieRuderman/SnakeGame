@@ -76,7 +76,8 @@ var SnakeGame = SnakeGame || {};
     },
 
     set: function(preset) {
-      // this.enable(this.defaults);
+      // re-enable defaults to remove any existing presets
+      this.enable(this.defaults);
       this.enable(this.preset[preset]);
     },
 
