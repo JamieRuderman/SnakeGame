@@ -20,8 +20,11 @@ var SnakeGame = SnakeGame || {};
         member: app.Obstacle,
         length: app.state.obstacles
       });
-      // app.bots.init();
-      app.player      = new app.Player();
+      app.bots       = new app.Cast({
+        member: app.Bot,
+        length: app.state.bots
+      });
+      app.player     = new app.Player();
       app.display    = new app.Display();
       app.renderer   = new app.Renderer();
       app.timer      = new app.Timer();

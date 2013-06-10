@@ -19,6 +19,7 @@ var SnakeGame = SnakeGame || {};
     self.draw = function() {
       self.clear();
       self.obstacles();
+      self.bots();
       self.player();
       self.points();
       self.border();
@@ -48,6 +49,14 @@ var SnakeGame = SnakeGame || {};
         hexR = (256 - (collectionIndex + 1) * 16).toString(16);
         context.strokeStyle = '#'+ hexR + color.obstacles;
         strokeBlock(position, app.obstacles.size);
+      });
+    };
+
+    self.bots = function() {
+      context.fillStyle = color.bots;
+      app.bots.each(function(position, collectionIndex) {
+        context.strokeStyle = color.background;
+        fillBlock(position, app.bots.size);
       });
     };
 

@@ -32,7 +32,8 @@ var SnakeGame = SnakeGame || {};
         background: '#000000',
         obstacles: '0000', // R is dynamic
         points: '#00ffff',
-        player: '#00ff00'
+        player: '#00ff00',
+        bots: '#CCCCCC'
       }
     },
 
@@ -59,7 +60,8 @@ var SnakeGame = SnakeGame || {};
           background: '#ff0000',
           obstacles: 'ffff', // R is dynamic
           points: '#00ffff',
-          player: '#00ff00'
+          player: '#00ff00',
+          bots: '#666666'
         }
       },
       large: {
@@ -68,6 +70,7 @@ var SnakeGame = SnakeGame || {};
         length: 30,
         obstacles: 10,
         obstaclesLength: 40,
+        bots: 3,
         scale: 5,
         stageSize: [170, 170]
       }

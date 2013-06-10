@@ -14,8 +14,8 @@ var SnakeGame = SnakeGame || {};
     var self = {
           array: [],
           size: [1, 1],
-          name: null,  // member name
-          member: null // member object class
+          length: 1,   // {option} number of members
+          member: null // {option} member object class
         };
 
     self.collection = function(callback) {
@@ -50,16 +50,15 @@ var SnakeGame = SnakeGame || {};
 
   };
 
-  /* Object ------------------------ */
+  /* Parent Object ??????? @TODO -> implement */
   app.Member = function() {
     var self = {
           position: null,
           segments: [],
-          length: app.state.obstaclesLength
+          turnChance: 0.9,
+          length: app.state.obstaclesLength // {option} number of segments
         },
         direction = null;
-
-    var TURN_CHANCE = 0.9;
 
     self.init = function() {
       self.create();
@@ -77,7 +76,8 @@ var SnakeGame = SnakeGame || {};
           seed = Math.random(),
           change;
 
-      if (seed > TURN_CHANCE) {
+      if (seed > self.turnChance) {
+        console.log('picking direction', seed, self.turnChance);
         change = self.pickDirection();
         direction = app.hit.noReverse(direction, change);
       }
@@ -94,6 +94,20 @@ var SnakeGame = SnakeGame || {};
       else return 'down';
     };
 
+    // movement method
+    self.advance = function() {
+      self.growSegment(self.position);
+      self.checkLength();
+    };
+
+    // movement method
+    self.checkLength = function() {
+      if (self.segments.length > self.length) {
+        self.segments.pop();
+        self.checkLength();
+      }
+    };
+
     self.addSegment = function() {
       self.segments.unshift(self.position.slice());
     };
@@ -107,8 +121,6 @@ var SnakeGame = SnakeGame || {};
     self.reset = function() {
       self.segments = [];
     };
-
-    self.init();
 
     return self;
   };

@@ -20,6 +20,9 @@ var SnakeGame = SnakeGame || {};
       player.position = app.hit.move(direction, player.position);
       self.checkHit(player.position);
       player.advance();
+      app.bots.collection(function(bot){
+        bot.advance();
+      });
     };
 
     self.center = function(sprite) {
@@ -78,6 +81,9 @@ var SnakeGame = SnakeGame || {};
         self.gameover();
       }
       if (app.hit.check('obstacles', position)) {
+        self.gameover();
+      }
+      if (app.hit.check('bots', position)) {
         self.gameover();
       }
       if (app.hit.check('points', position)) {
