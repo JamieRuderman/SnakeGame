@@ -9,6 +9,7 @@ var SnakeGame = SnakeGame || {};
 
     self.size = [1, 1];
     self.length = app.state.length;
+    self.turnChance = 0.95;
 
     self.init();
 

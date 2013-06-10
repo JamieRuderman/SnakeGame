@@ -71,19 +71,24 @@ var SnakeGame = SnakeGame || {};
       });
     };
 
-    self.growSegment = function(from) {
-      var position = from || app.hit.randomFree(),
+    self.growSegment = function(from, turn) {
+      var position = from && from.slice() || app.hit.randomFree(),
           seed = Math.random(),
           change;
 
-      if (seed > self.turnChance) {
-        console.log('picking direction', seed, self.turnChance);
+      if (seed > self.turnChance || turn) {
         change = self.pickDirection();
         direction = app.hit.noReverse(direction, change);
       }
 
-      self.position = app.hit.move(direction, position);
-      self.addSegment();
+      position = app.hit.move(direction, position);
+
+      if (app.hit.occupied(position)) {
+        self.growSegment(self.position, true);
+      } else {
+        self.position = position;
+        self.addSegment();
+      }
     };
 
     self.pickDirection = function() {
