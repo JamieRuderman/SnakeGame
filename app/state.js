@@ -30,7 +30,7 @@ var SnakeGame = SnakeGame || {};
       color: {
         border: '#003300',
         background: '#000000',
-        obstacles: '0000', // R is dynamic
+        obstacles: '0000', // Red is dynamic
         points: '#00ffff',
         player: '#00ff00',
         bots: '#CCCCCC'
@@ -41,8 +41,9 @@ var SnakeGame = SnakeGame || {};
     preset: {
       small: {
         fps: 4,
-        grow: 5,
+        grow: 15,
         length: 5,
+        bots: 1,
         obstacles: 0,
         scale: 20,
         stageSize: [20, 20]
@@ -52,13 +53,14 @@ var SnakeGame = SnakeGame || {};
         grow: 10,
         length: 10,
         obstacles: 2,
+        obstaclesLength: 25,
         bots: 1,
         scale: 10,
         stageSize: [50, 50],
         color: {
           border: '#003300',
           background: '#ff0000',
-          obstacles: 'ffff', // R is dynamic
+          obstacles: 'ffff', // Red is dynamic
           points: '#00ffff',
           player: '#00ff00',
           bots: '#666666'
@@ -69,7 +71,7 @@ var SnakeGame = SnakeGame || {};
         grow: 50,
         length: 30,
         obstacles: 10,
-        obstaclesLength: 40,
+        obstaclesLength: 50,
         bots: 3,
         scale: 5,
         stageSize: [170, 170]

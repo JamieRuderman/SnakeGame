@@ -34,15 +34,15 @@ var SnakeGame = SnakeGame || {};
       });
     };
 
-    // Private -------------
+    /* Private -------------- */
 
-    init = function() {
+    function init() {
       $.extend(self, options);
       self.array = [];
       for (var i = 0; i < self.length; i++) {
         self.array.push(new self.member());
       }
-    };
+    }
 
     init();
 
@@ -58,50 +58,51 @@ var SnakeGame = SnakeGame || {};
           turnChance: 0.9,
           length: app.state.obstaclesLength // {option} number of segments
         },
+        directions = null,
         direction = null;
 
     self.init = function() {
+      self.reset();
       self.create();
     };
 
     self.create = function() {
-      direction = self.pickDirection();
-      self.each(function(segment) {
+      direction = pickDirection();
+      self.each(function() {
         self.growSegment(self.position);
       });
     };
 
     self.growSegment = function(from, turn) {
-      var position = from && from.slice() || app.hit.randomFree(),
+      var position = !!from && from.slice() || app.hit.randomFree(),
+          newDirection = direction,
           seed = Math.random(),
           change;
 
       if (seed > self.turnChance || turn) {
-        change = self.pickDirection();
-        direction = app.hit.noReverse(direction, change);
+        change = pickDirection();
+        newDirection = app.hit.noReverse(newDirection, change);
       }
 
-      position = app.hit.move(direction, position);
+      position = app.hit.move(newDirection, position);
 
       if (app.hit.occupied(position)) {
+        checkDirections();
         self.growSegment(self.position, true);
-      } else {
-        self.position = position;
-        self.addSegment();
       }
-    };
-
-    self.pickDirection = function() {
-      var seed = Math.random();
-      if (seed > 0.75) return 'left';
-      else if (seed > 0.5) return 'right';
-      else if (seed > 0.25) return 'up';
-      else return 'down';
+      else {
+        self.position = position;
+        direction = newDirection;
+        self.addSegment();
+        resetDirections();
+      }
     };
 
     // movement method
     self.advance = function() {
-      self.growSegment(self.position);
+      if (self.alive()) {
+        self.growSegment(self.position);
+      }
       self.checkLength();
     };
 
@@ -123,9 +124,43 @@ var SnakeGame = SnakeGame || {};
       }
     };
 
-    self.reset = function() {
-      self.segments = [];
+    self.die = function() {
+      self.length = 0;
     };
+
+    self.alive = function() {
+      return self.length !== 0;
+    };
+
+    self.reset = function() {
+      self.length = app.state.obstaclesLength;
+      self.segments = [];
+      resetDirections();
+    };
+
+    /* Private -------------- */
+
+    function pickDirection() {
+      var seed = Math.random(),
+          available = directions.length,
+          index = Math.ceil(seed * available) -1,
+          pick = null;
+
+      if (index >= 0) {
+        pick = directions[index];
+        directions.splice(index, 1);
+      }
+
+      return pick;
+    }
+
+    function resetDirections() {
+      directions = ['left', 'right', 'up', 'down'];
+    }
+
+    function checkDirections() {
+      if (directions.length === 0) self.die();
+    }
 
     return self;
   };

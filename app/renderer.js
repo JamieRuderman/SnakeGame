@@ -54,7 +54,7 @@ var SnakeGame = SnakeGame || {};
 
     self.bots = function() {
       context.fillStyle = color.bots;
-      app.bots.each(function(position, collectionIndex) {
+      app.bots.each(function(position) {
         context.strokeStyle = color.background;
         fillBlock(position, app.bots.size);
       });
@@ -88,27 +88,27 @@ var SnakeGame = SnakeGame || {};
       );
     };
 
-    // private
+    /* Private -------------- */
 
-    fillBlock = function(position, size) {
+    function fillBlock(position, size) {
       context.fillRect(
         scale(position[0]),
         scale(position[1]),
         scale(size[0]) - 1,
         scale(size[1]) - 1
       );
-    };
+    }
 
-    strokeBlock = function(position, size) {
+    function strokeBlock(position, size) {
       context.strokeRect(
         scale(position[0]) - 0.5,
         scale(position[1]) - 0.5,
         scale(size[0]),
         scale(size[1])
       );
-    };
+    }
 
-    circle = function(position, size) {
+    function circle(position, size) {
       var radius = scale(size[0]) / 2;
       context.beginPath();
       context.arc(
@@ -120,11 +120,11 @@ var SnakeGame = SnakeGame || {};
       context.closePath();
       context.fill();
       context.stroke();
-    };
+    }
 
-    scale = function(size) {
+    function scale(size) {
       return Math.round(size * app.state.scale);
-    };
+    }
 
     self.init();
 

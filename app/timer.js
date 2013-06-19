@@ -35,7 +35,6 @@ var SnakeGame = SnakeGame || {};
 
     self.start = function() {
       paused = false;
-      console.log('start');
       requestAnimationFrame(self.loop);
       self.ready = false;
     };

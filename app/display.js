@@ -23,16 +23,16 @@ var SnakeGame = SnakeGame || {};
       }
     };
 
-    // Private ----------------------------
+    /* Private -------------- */
 
-    init = function() {
+    function init() {
       el.score = $('.score');
       // independant of the el object for performance
       fpsEl = $('.fps');
       fpsEl.toggle(app.state.fpsDisplay);
-    };
+    }
 
-    changed = function(key) {
+    function changed(key) {
       if (value[key] !== state[key]) {
         value[key] = state[key];
         return true;
@@ -40,7 +40,7 @@ var SnakeGame = SnakeGame || {};
       return false;
     }
 
-    fps = function() {
+    function fps() {
       if (changed('fpsDisplay')) {
         fpsEl.toggle(app.state.fpsDisplay);
       }
@@ -49,7 +49,7 @@ var SnakeGame = SnakeGame || {};
                    ' min:' + app.timer.fps.min +
                    ' max:' + app.timer.fps.max);
       }
-    };
+    }
 
     init();
 

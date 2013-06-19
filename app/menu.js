@@ -43,14 +43,14 @@ var SnakeGame = SnakeGame || {};
 
     /* Private -------------- */
 
-    beginHandler = function(event) {
+    function beginHandler(event) {
       begin.hide();
       eventsOff();
       state.set(event.target.name);
       app.start.newgame();
-    };
+    }
 
-    gameoverHandler = function(event) {
+    function gameoverHandler(event) {
       gameover.hide();
       eventsOff();
       if (event.target.name == 'restart') {
@@ -59,17 +59,17 @@ var SnakeGame = SnakeGame || {};
       else if (event.target.name == 'menu') {
         self.begin();
       }
-    };
+    }
 
-    eventsOn = function() {
+    function eventsOn() {
       begin.on('click', '.select', beginHandler);
       gameover.on('click', '.select', gameoverHandler);
-    };
+    }
 
-    eventsOff = function() {
+    function eventsOff() {
       begin.off('click', '.select', beginHandler);
       gameover.off('click', '.select', gameoverHandler);
-    };
+    }
 
     return self;
 
