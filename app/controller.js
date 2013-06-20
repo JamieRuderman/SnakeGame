@@ -76,6 +76,7 @@ var SnakeGame = SnakeGame || {};
       }
     };
 
+    // @TODO - ask for a hit check and return what it hit.
     self.checkHit = function(position) {
       if (app.hit.check('player', position)) {
         self.gameover();
@@ -84,6 +85,9 @@ var SnakeGame = SnakeGame || {};
         self.gameover();
       }
       if (app.hit.check('bots', position)) {
+        self.gameover();
+      }
+      if (app.hit.check('border', position)) {
         self.gameover();
       }
       if (app.hit.check('points', position)) {
@@ -107,6 +111,7 @@ var SnakeGame = SnakeGame || {};
     };
 
     self.reset = function() {
+      // @TODO trigger and handle as event (reset)
       $(window).on('keydown', self.changeDirection);
       state.score = 0;
       direction = state.direction;

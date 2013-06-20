@@ -70,6 +70,12 @@ var SnakeGame = SnakeGame || {};
 
     self.border = function() {
       context.strokeStyle = color.border;
+      if (app.border) {
+        app.border.each(function(position) {
+          console.log(position.toString());
+          strokeBlock(position, app.border.size);
+        });
+      }
       context.strokeRect(0.5, 0.5,
         scale(stage.size[0]) - 1,
         scale(stage.size[1]) - 1

@@ -19,10 +19,9 @@ var SnakeGame = SnakeGame || {};
 
     var self = {},
         state = app.state,
-        menu, gameover, begin;
+        gameover, begin;
 
     self.init = function() {
-      menu = $('.menu');
       begin = $('.begin');
       gameover = $('.gameover');
       self.begin();

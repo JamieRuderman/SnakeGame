@@ -17,8 +17,9 @@ var SnakeGame = SnakeGame || {};
       pointValue: 10,
       scale: 10,
       score: 0,
-      obstacles: 5,
+      obstacles: 0,
       bots: 0,
+      border: false,
       obstaclesLength: 15,
       stageSize: [40, 40],
       volume: {
@@ -44,7 +45,6 @@ var SnakeGame = SnakeGame || {};
         grow: 15,
         length: 5,
         bots: 1,
-        obstacles: 0,
         scale: 20,
         stageSize: [20, 20]
       },
@@ -70,7 +70,7 @@ var SnakeGame = SnakeGame || {};
         fps: 30,
         grow: 50,
         length: 30,
-        obstacles: 10,
+        border: true,
         obstaclesLength: 50,
         bots: 3,
         scale: 5,

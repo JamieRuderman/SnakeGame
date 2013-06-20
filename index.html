@@ -15,6 +15,7 @@
   <script src="app/cast/player.js"></script>
   <script src="app/cast/bot.js"></script>
   <script src="app/cast/obstacle.js"></script>
+  <script src="app/cast/border.js"></script>
 
   <script src="app/stage.js"></script>
   <script src="app/state.js"></script>
@@ -38,26 +39,30 @@
     </div>
   </div>
 
-  <div class="begin menu center">
-    <h1>GAME SELECT</h1>
-    <hr />
-    <ul>
-      <li><button class="select" name="small">Small</button></li>
-      <li><button class="select" name="medium">Medium</button></li>
-      <li><button class="select" name="large">Large</button></li>
-    </ul>
+  <div class="begin menu">
+    <div class="center">
+      <h1>GAME SELECT</h1>
+      <hr />
+      <ul>
+        <li><button class="select" name="small">Small</button></li>
+        <li><button class="select" name="medium">Medium</button></li>
+        <li><button class="select" name="large">Large</button></li>
+      </ul>
+    </div>
   </div>
 
-  <div class="gameover menu center hidden">
-    <h1>GAME OVER</h1>
-    <hr />
-    <h2>SCORE</h2>
-    <h3 class="score"></h3>
-    <hr />
-    <ul>
-      <li><button class="select" name="restart">Restart</button></li>
-      <li><button class="select" name="menu">Menu</button></li>
-    </ul>
+  <div class="gameover menu hidden">
+    <div class="center">
+      <h1>GAME OVER</h1>
+      <hr />
+      <h2>SCORE</h2>
+      <h3 class="score"></h3>
+      <hr />
+      <ul>
+        <li><button class="select" name="restart">Restart</button></li>
+        <li><button class="select" name="menu">Menu</button></li>
+      </ul>
+    </div>
   </div>
 
   <!-- Audio -->

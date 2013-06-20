@@ -24,6 +24,9 @@ var SnakeGame = SnakeGame || {};
         member: app.Bot,
         length: app.state.bots
       });
+      if (app.state.border) {
+        app.border   = new app.Border();
+      }
       app.player     = new app.Player();
       app.display    = new app.Display();
       app.renderer   = new app.Renderer();

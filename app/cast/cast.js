@@ -55,6 +55,7 @@ var SnakeGame = SnakeGame || {};
     var self = {
           position: null,
           segments: [],
+          size: [1, 1],
           turnChance: 0.9,
           length: app.state.obstaclesLength // {option} number of segments
         },
