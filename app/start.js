@@ -16,17 +16,11 @@ var SnakeGame = SnakeGame || {};
       // start player game
       app.points     = new app.Points();
       app.stage      = new app.Stage();
-      app.obstacles  = new app.Cast({
-        member: app.Obstacle,
-        length: app.state.obstacles
-      });
-      app.bots       = new app.Cast({
-        member: app.Bot,
-        length: app.state.bots
-      });
       if (app.state.border) {
         app.border   = new app.Border();
       }
+      app.obstacles  = new app.Cast(app.Obstacle);
+      app.bots       = new app.Cast(app.Bot);
       app.player     = new app.Player();
       app.display    = new app.Display();
       app.renderer   = new app.Renderer();

@@ -6,9 +6,11 @@ var SnakeGame = SnakeGame || {};
 
     var self = new app.Member();
 
-    self.size = [1, 1];
-    self.length = app.state.length;
-    self.turnChance = 0.90;
+    $.extend(self, {
+      size: [1, 1],
+      length: app.state.length,
+      turnChance: 0.90
+    });
 
     self.init();
 

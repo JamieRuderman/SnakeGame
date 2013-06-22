@@ -6,6 +6,20 @@ var SnakeGame = SnakeGame || {};
 
     var self = new app.Member();
 
+    self.length = app.state.obstacles;
+
+    self.create = function() {
+      self.every(function() {
+        self.grow(self.position);
+      });
+    };
+
+    self.every = function(callback) {
+      for (var i = 0; i < self.length; i++) {
+        callback(self.segments[i], i);
+      }
+    };
+
     self.init();
 
     return self;
