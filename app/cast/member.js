@@ -2,10 +2,10 @@ var SnakeGame = SnakeGame || {};
 
 (function(app){
 
-  /* Parent Object ??????? @TODO -> implement */
-  app.Member = function() {
+  app.Member = function(options) {
     var self = {
-          position: [0, 0],
+          // events: app.events,
+          position: null,
           segments: [],
           size: [1, 1],
           turnChance: 0.9,
@@ -14,17 +14,18 @@ var SnakeGame = SnakeGame || {};
         directions = null,
         direction = null;
 
+    // implement event callbacks
+    $.extend(self, app.eventTriggers);
+
     self.init = function() {
+      $.extend(self, options);
       self.reset();
       self.create();
     };
 
     self.create = function() {
       direction = pickDirection();
-      // self.each(function() {
-        console.log('hey');
-        self.grow(self.position);
-      // });
+      // self.grow(self.position);
     };
 
     self.grow = function(from, turn) {
@@ -54,9 +55,7 @@ var SnakeGame = SnakeGame || {};
 
     // movement method
     self.advance = function() {
-      if (self.alive()) {
-        self.grow(self.position);
-      }
+      self.grow(self.position);
       self.checkLength();
     };
 
@@ -79,11 +78,11 @@ var SnakeGame = SnakeGame || {};
     };
 
     self.die = function() {
-      self.length = 0;
+      self.trigger('death', [self.id]);
     };
 
     self.alive = function() {
-      return self.length !== 0;
+      return self.segments.length > 0;
     };
 
     self.reset = function() {

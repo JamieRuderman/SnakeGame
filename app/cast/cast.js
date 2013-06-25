@@ -4,20 +4,24 @@ var SnakeGame = SnakeGame || {};
 
   /*
     Cast collection
-      @param member: Member class object
+      @param options {
+        member: Member class object,
+        length: Number of objects in the collection
+      }
   */
-  app.Cast = function(member) {
+  app.Cast = function(options) {
 
     var self = {
           array: [],
           size: [1, 1],
           length: 1,   // {option} number of members
           member: null // {option} member object class
-        };
+        },
+        serial = 0;
 
     self.collection = function(callback) {
       for (var i = 0, len = self.array.length; i < len; i++) {
-        if (callback) callback(self.array[i], i);
+        if (callback && self.array[i]) callback(self.array[i], i);
       }
     };
 
@@ -31,13 +35,26 @@ var SnakeGame = SnakeGame || {};
       });
     };
 
+    self.remove = function(id) {
+      var target = false;
+      self.collection(function(member, i) {
+        if (member.id == id) {
+          target = i;
+        }
+      });
+      if (target !== false) self.array.splice(target, 1);
+    };
+
     /* Private -------------- */
 
     function init() {
-      self.member = member || {};
+      $.extend(self, options);
       self.array = [];
       for (var i = 0; i < self.length; i++) {
-        self.array.push(new self.member());
+        self.array.push(new self.member({
+          id: ++serial,
+          onDeath: self.remove
+        }));
       }
     }
 

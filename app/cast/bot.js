@@ -2,9 +2,9 @@ var SnakeGame = SnakeGame || {};
 
 (function(app){
 
-  app.Bot = function() {
+  app.Bot = function(options) {
 
-    var self = new app.Member();
+    var self = new app.Member(options);
 
     $.extend(self, {
       size: [1, 1],

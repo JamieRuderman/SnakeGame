@@ -51,7 +51,7 @@ var SnakeGame = SnakeGame || {};
       medium: {
         fps: 8,
         grow: 10,
-        length: 10,
+        length: 30,
         obstacles: 2,
         obstaclesLength: 25,
         bots: 1,
