@@ -1,5 +1,3 @@
-var SnakeGame = SnakeGame || {};
-
 (function(app){
 
   app.state = {
@@ -44,6 +42,7 @@ var SnakeGame = SnakeGame || {};
         fps: 4,
         grow: 15,
         length: 5,
+        border: true,
         bots: 1,
         scale: 20,
         stageSize: [20, 20]
@@ -100,4 +99,4 @@ var SnakeGame = SnakeGame || {};
 
   };
 
-})(SnakeGame);
+})(SnakeGame || {});

@@ -12,6 +12,9 @@ var SnakeGame = SnakeGame || {};
       turnChance: 0.90
     });
 
+    // implements ai
+    self.ai = $.extend({}, app.ai);
+
     self.init();
 
     return self;

@@ -1,14 +1,10 @@
-var SnakeGame = SnakeGame || {};
-
 (function(app){
 
   app.Renderer = function() {
     var self = {},
         color = app.state.color,
         stage = app.stage,
-        points = app.points,
-        context = stage.context,
-        player = app.player;
+        context = stage.context;
 
     self.init = function() {
       self.draw();
@@ -16,48 +12,57 @@ var SnakeGame = SnakeGame || {};
       context.lineWidth = 1;
     };
 
+    // dev
+    self.path = function() {
+      var path = app.ai.find([1,1], [5,5]);
+
+      for (var i = path.length; i--;) {
+        hexR = (256 - (path[i][2] + 1) * 16).toString(16);
+        context.fillStyle = '#' + hexR + '0000';
+        fillBlock(path[i], [1, 1]);
+      }
+
+    };
+
     self.draw = function() {
       self.clear();
-      self.obstacles();
-      self.bots();
-      self.player();
-      self.points();
-      self.border();
+      app.grid.each(function(type, position) {
+        self[type](position);
+      });
     };
 
-    self.player = function() {
+    self.player = function(position) {
       context.fillStyle = color.player;
       context.strokeStyle = color.background;
-      player.each(function(part) {
-        fillBlock(part, player.size);
-      });
+      fillBlock(position, app.player.size);
     };
 
-    self.points = function() {
+    self.points = function(position) {
       var style = (app.state.scale < 6) ? fillBlock : circle;
       context.fillStyle = color.points;
-      points.each(function(point) {
-        style(point, points.size);
-      });
+      style(position, app.points.size);
     };
 
-    self.obstacles = function() {
-      var counter = 256, hex;
-
+    self.obstacles = function(position) {
       context.fillStyle = color.background;
-      app.obstacles.each(function(position, collectionIndex) {
-        hexR = (256 - (collectionIndex + 1) * 16).toString(16);
-        context.strokeStyle = '#'+ hexR + color.obstacles;
-        strokeBlock(position, app.obstacles.size);
-      });
+      strokeBlock(position, app.obstacles.size);
+      // var counter = 256, hex;
+      // app.obstacles.each(function(position, collectionIndex) {
+      //   hexR = (256 - (collectionIndex + 1) * 16).toString(16);
+      //   context.strokeStyle = '#'+ hexR + color.obstacles;
+      //   strokeBlock(position, app.obstacles.size);
+      // });
     };
 
-    self.bots = function() {
+    self.bots = function(position) {
       context.fillStyle = color.bots;
-      app.bots.each(function(position) {
-        context.strokeStyle = color.background;
-        fillBlock(position, app.bots.size);
-      });
+      context.strokeStyle = color.background;
+      fillBlock(position, app.bots.size);
+    };
+
+    self.border = function(position) {
+      context.strokeStyle = color.border;
+      strokeBlock(position, app.border.size);
     };
 
     self.clear = function() {
@@ -66,16 +71,7 @@ var SnakeGame = SnakeGame || {};
         scale(stage.size[0]),
         scale(stage.size[1])
       );
-    };
-
-    self.border = function() {
-      context.strokeStyle = color.border;
-      if (app.border) {
-        app.border.each(function(position) {
-          console.log(position.toString());
-          strokeBlock(position, app.border.size);
-        });
-      }
+      // outline stage
       context.strokeRect(0.5, 0.5,
         scale(stage.size[0]) - 1,
         scale(stage.size[1]) - 1
@@ -137,4 +133,4 @@ var SnakeGame = SnakeGame || {};
     return self;
   };
 
-})(SnakeGame);
+})(SnakeGame || {});

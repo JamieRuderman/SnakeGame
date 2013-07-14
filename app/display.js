@@ -1,5 +1,3 @@
-var SnakeGame = SnakeGame || {};
-
 (function(app){
 
   app.Display = function() {
@@ -56,4 +54,4 @@ var SnakeGame = SnakeGame || {};
     return self;
   };
 
-})(SnakeGame);
+})(SnakeGame || {});

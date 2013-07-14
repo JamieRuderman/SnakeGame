@@ -1,5 +1,3 @@
-var SnakeGame = SnakeGame || {};
-
 (function(app){
 
   app.Member = function(options) {
@@ -15,7 +13,7 @@ var SnakeGame = SnakeGame || {};
         direction = null;
 
     // implement event callbacks
-    $.extend(self, app.eventTriggers);
+    $.extend(self, app.eventTriggers);// unused?
 
     self.init = function() {
       $.extend(self, options);
@@ -78,6 +76,7 @@ var SnakeGame = SnakeGame || {};
     };
 
     self.die = function() {
+      // unused?
       self.trigger('death', [self.id]);
     };
 
@@ -118,4 +117,4 @@ var SnakeGame = SnakeGame || {};
     return self;
   };
 
-})(SnakeGame);
+})(SnakeGame || {});

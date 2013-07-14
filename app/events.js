@@ -1,5 +1,3 @@
-var SnakeGame = SnakeGame || {};
-
 (function(app){
 
   /*
@@ -15,22 +13,25 @@ var SnakeGame = SnakeGame || {};
     events: {},
 
     on: function(name, callback) {
-      var ev = this.events[name];
-      this.events[name] = ev || [];
-      this.events[name].push(callback);
+      var ev = events[name];
+      if (typeof callback == 'function') {
+        events[name] = ev || [];
+        events[name].push(callback);
+      }
     },
 
     off: function(name, callback) {
-      var ev = this.events[name],
-          index = ev.indexOf(callback);
-      ev.splice(index, 1);
+      var ev = events[name];
+      if (callback && ev) ev.splice(ev.indexOf(callback), 1);
+      if (!callback || ev.length === 0) delete events[name];
     },
 
-    trigger: function(name, args) {
-      var ev = this.events[name];
+    trigger: function(name) {
+      var ev = events[name],
+          args = Array.prototype.slice.call(arguments, 1);
       if (ev) {
         for (i = 0, len = ev.length; i < len; i++) {
-          ev[i](args);
+          ev[i].apply(ev, args);
         }
       }
     }
@@ -69,4 +70,4 @@ var SnakeGame = SnakeGame || {};
   };
 
 
-})(SnakeGame);
+})(SnakeGame || {});

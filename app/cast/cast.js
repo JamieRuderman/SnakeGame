@@ -1,5 +1,3 @@
-var SnakeGame = SnakeGame || {};
-
 (function(app){
 
   /*
@@ -64,4 +62,4 @@ var SnakeGame = SnakeGame || {};
 
   };
 
-})(SnakeGame);
+})(SnakeGame || {});

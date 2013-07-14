@@ -15,6 +15,7 @@ var SnakeGame = SnakeGame || {};
         paused = false;
 
     self.init = function() {
+      app.grid.make();
       app.renderer.draw();
       app.display.update();
     };
@@ -104,6 +105,7 @@ var SnakeGame = SnakeGame || {};
         // app.controller.addPoint();
       }
 
+      app.grid.make();
       app.renderer.draw();
       app.display.update();
 

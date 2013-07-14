@@ -123,6 +123,7 @@ var SnakeGame = SnakeGame || {};
       app.timer.reset();
       app.audio.reset();
       app.audio.start();
+      app.grid.make();
       app.renderer.draw();
       app.display.update();
     };
@@ -132,4 +133,4 @@ var SnakeGame = SnakeGame || {};
     return self;
   };
 
-})(SnakeGame);
+})(SnakeGame || {});
