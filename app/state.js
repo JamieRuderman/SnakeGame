@@ -4,27 +4,29 @@
 
     // defaults
     defaults: {
+      border: false,
+      bots: 0,
       direction: 'none',
       fpm: 1, // frames per move
       fps: 8, // frames per second
-      fpsToIncrease: 0.5,
       fpsDisplay: false,
+      fpsToIncrease: 0.5,
       grow: 5,
       length: 10,
+      obstacles: 0,
+      obstaclesLength: 15,
       pointsToIncreaseSpeed: 5,
-      pointValue: 10,
+      scorePointValue: 10,
+      killPointValue: 40,
       scale: 10,
       score: 0,
-      obstacles: 0,
-      bots: 0,
-      border: false,
-      obstaclesLength: 15,
       stageSize: [40, 40],
       volume: {
         music: 0.05,
         step: 0.05,
         score: 0.3,
-        gameover: 0.3
+        gameover: 0.3,
+        kill: 0.3
       },
       color: {
         border: '#003300',
@@ -43,7 +45,7 @@
         grow: 15,
         length: 5,
         border: true,
-        bots: 1,
+        bots: 3,
         scale: 20,
         stageSize: [20, 20]
       },

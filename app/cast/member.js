@@ -76,7 +76,6 @@
     };
 
     self.die = function() {
-      // unused?
       self.trigger('death', [self.id]);
     };
 

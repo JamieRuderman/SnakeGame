@@ -44,6 +44,11 @@ var SnakeGame = SnakeGame || {};
       file.music.pause();
     };
 
+    self.kill = function() {
+      file.kill.currentTime = 0;
+      file.kill.play();
+    };
+
     self.reset = function() {
       file.music.currentTime = 0;
     };

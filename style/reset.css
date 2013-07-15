@@ -49,6 +49,35 @@ button {
   background: none;
   border: none;
 }
-h1 {
-  font-size: 1.6em;
+
+/* Fonts */
+@font-face{
+  font-family: 'BentonSans';
+  src: url('BentonSansExtraLight.woff') format('woff');
+  font-weight: 100;
+  font-style: normal;
+}
+@font-face{
+  font-family: 'BentonSans';
+  src: url('BentonSansLight.woff') format('woff');
+  font-weight: 200;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'BentonSans';
+  src: url('BentonSansRegular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal
+}
+@font-face{
+  font-family: 'BentonSans';
+  src: url('BentonSansBold.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face{
+  font-family: 'BentonSans';
+  src: url('BentonSansBlack.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
 }

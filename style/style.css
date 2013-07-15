@@ -1,9 +1,13 @@
 body {
   background-color: #000;
-  font-family: /*'Inconsolata', */'Press Start 2P', sans-serif;
+  font-family: 'BentonSans', 'Press Start 2P', sans-serif;
+  font-weight: 200;
 }
 h1 {
   margin-bottom: 20px;
+  font-size: 3.6em;
+  font-weight: 100;
+  letter-spacing: -2px
 }
 hr {
   border-color: #030;
@@ -35,7 +39,7 @@ hr {
 /* -- elements -- */
 
 .menu {
-  background-color: rgba(0,0,0,0.7);
+  background-color: rgba(0,0,0,0.9);
   border: 1px dotted #030;
   bottom: 0;
   color: #0f0;
@@ -47,6 +51,10 @@ hr {
   text-align: center;
   top: 0;
 }
+  .menu li {
+    display: inline;
+  }
+
 .game {
   position: absolute;
   top: 50%;

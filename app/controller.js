@@ -94,10 +94,10 @@ var SnakeGame = SnakeGame || {};
         player.length += state.grow;
         points.remove(player.position);
         self.addPoint();
-        state.score += state.pointValue;
+        state.score += state.scorePointValue;
         app.audio.score();
         // every set number of points go faster
-        if (state.score % (state.pointValue * state.pointsToIncreaseSpeed) === 0) {
+        if (state.score % (state.scorePointValue * state.pointsToIncreaseSpeed) === 0) {
           app.timer.increase();
         }
       }
