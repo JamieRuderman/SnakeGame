@@ -22,11 +22,12 @@
       score: 0,
       stageSize: [40, 40],
       volume: {
-        music: 0.05,
-        step: 0.05,
-        score: 0.3,
         gameover: 0.3,
-        kill: 0.3
+        kill: 0.3,
+        music: 0.05,
+        score: 0.3,
+        steal: 0.6,
+        step: 0.04
       },
       color: {
         border: '#003300',
@@ -42,10 +43,10 @@
     preset: {
       small: {
         fps: 4,
-        grow: 15,
+        grow: 5,
         length: 5,
         border: true,
-        bots: 3,
+        bots: 2,
         scale: 20,
         stageSize: [20, 20]
       },
@@ -59,12 +60,12 @@
         scale: 10,
         stageSize: [50, 50],
         color: {
-          border: '#003300',
+          border: '#003333',
           background: '#ff0000',
-          obstacles: 'ffff', // Red is dynamic
+          obstacles: '0000', // Red is dynamic
           points: '#00ffff',
-          player: '#00ff00',
-          bots: '#666666'
+          player: '#ff9900',
+          bots: '#990000'
         }
       },
       large: {

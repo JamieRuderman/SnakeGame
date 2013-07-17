@@ -16,7 +16,7 @@ var SnakeGame = SnakeGame || {};
     self.ai = $.extend({}, app.ai);
 
     self.die = function() {
-      app.audio.kill();
+      app.audio.play('kill');
       app.state.score += app.state.killPointValue;
       self.trigger('death', [self.id]);
     };

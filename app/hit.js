@@ -4,6 +4,7 @@ var SnakeGame = SnakeGame || {};
 
   app.hit = {
 
+    // @TODO - fix this so that it uses the grid
     check: function(typeName, position) {
       var type = app[typeName],
           hit = false;
@@ -20,7 +21,7 @@ var SnakeGame = SnakeGame || {};
     },
 
     occupied: function(position) {
-      var types = ['player', 'points', 'obstacles', 'bots', 'border'],
+      var types = ['player', 'obstacles', 'bots', 'border'],
           occupied = false;
 
       for (var i = 0; i < types.length; i++) {

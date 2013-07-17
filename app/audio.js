@@ -29,24 +29,14 @@ var SnakeGame = SnakeGame || {};
       }
     };
 
-    self.step = function() {
-      file.step.currentTime = 0;
-      file.step.play();
-    };
-
-    self.score = function() {
-      file.score.currentTime = 0;
-      file.score.play();
+    self.play = function(sound) {
+      file[sound].currentTime = 0;
+      file[sound].play();
     };
 
     self.gameover = function() {
       file.gameover.play();
       file.music.pause();
-    };
-
-    self.kill = function() {
-      file.kill.currentTime = 0;
-      file.kill.play();
     };
 
     self.reset = function() {

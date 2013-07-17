@@ -10,8 +10,16 @@ var SnakeGame = SnakeGame || {};
       length: app.state.length
     };
 
+    self.score = function(position) {
+      self.remove(position);
+      self.add();
+    };
+
     self.add = function(point) {
-      self.points.push(point);
+      if (app.hit.full())
+        app.controller.gameover();
+      else
+        self.points.push(point || app.hit.randomFree());
     };
 
     self.remove = function(position) {

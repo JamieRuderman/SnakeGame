@@ -9,6 +9,10 @@ h1 {
   font-weight: 100;
   letter-spacing: -2px
 }
+h2 {
+  font-size: 2.4em;
+  color: #fff;
+}
 hr {
   border-color: #030;
 }
@@ -65,9 +69,8 @@ hr {
   color: #0ff;
 }
 .score {}
-
 .fps {
-  font-size: 9px;
+  font-size: 0.8em;
   float: right;
   width: 80px;
 }

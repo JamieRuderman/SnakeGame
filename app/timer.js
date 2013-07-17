@@ -80,8 +80,8 @@ var SnakeGame = SnakeGame || {};
       counter++;
 
       if (frameRate > 40) {
-        // audio can't render higher frame rates
-        app.audio.step();
+        // audio can't render faster frame rates
+        app.audio.play('step');
       }
 
       // advance frame

@@ -15,13 +15,11 @@
     // dev
     self.path = function() {
       var path = app.ai.find([1,1], [5,5]);
-
       for (var i = path.length; i--;) {
         hexR = (256 - (path[i][2] + 1) * 16).toString(16);
         context.fillStyle = '#' + hexR + '0000';
         fillBlock(path[i], [1, 1]);
       }
-
     };
 
     self.draw = function() {
@@ -45,6 +43,7 @@
 
     self.obstacles = function(position) {
       context.fillStyle = color.background;
+      context.strokeStyle = '#88' + color.obstacles;
       strokeBlock(position, app.obstacles.size);
       // var counter = 256, hex;
       // app.obstacles.each(function(position, collectionIndex) {
@@ -66,6 +65,7 @@
     };
 
     self.clear = function() {
+      context.strokeStyle = color.border;
       context.fillStyle = color.background;
       context.fillRect(0, 0,
         scale(stage.size[0]),

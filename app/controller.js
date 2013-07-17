@@ -67,15 +67,6 @@ var SnakeGame = SnakeGame || {};
 
     };
 
-    self.addPoint = function() {
-      if (app.hit.full()) {
-        self.gameover();
-      }
-      else {
-        points.add(app.hit.randomFree());
-      }
-    };
-
     // @TODO - ask for a hit check and return what it hit.
     self.checkHit = function(position) {
       if (app.hit.check('player', position)) {
@@ -92,10 +83,9 @@ var SnakeGame = SnakeGame || {};
       }
       if (app.hit.check('points', position)) {
         player.length += state.grow;
-        points.remove(player.position);
-        self.addPoint();
+        points.score(position);
         state.score += state.scorePointValue;
-        app.audio.score();
+        app.audio.play('score');
         // every set number of points go faster
         if (state.score % (state.scorePointValue * state.pointsToIncreaseSpeed) === 0) {
           app.timer.increase();
@@ -119,7 +109,7 @@ var SnakeGame = SnakeGame || {};
       player.reset();
       player.addSegment(player.position);
       points.reset();
-      self.addPoint();
+      points.add();
       app.timer.reset();
       app.audio.reset();
       app.audio.start();

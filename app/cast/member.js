@@ -39,11 +39,19 @@
 
       position = app.hit.move(newDirection, position);
 
+      // avoid occupied
       if (app.hit.occupied(position)) {
         checkDirections();
-        self.grow(self.position, true);
+        self.grow(self.position, true); // recursion
       }
+      // move
       else {
+        // point
+        if (app.hit.check('points', position)) {
+          app.points.score(position);
+          app.state.score -= app.state.scorePointValue;
+          app.audio.play('steal');
+        }
         self.position = position;
         direction = newDirection;
         self.addSegment();

@@ -6,7 +6,7 @@ var SnakeGame = SnakeGame || {};
 
     var self = new app.Member();
 
-    self.length = app.state.obstacles;
+    self.length = app.state.obstaclesLength;
 
     self.create = function() {
       self.every(function() {
