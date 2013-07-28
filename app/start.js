@@ -16,7 +16,7 @@
       app.stage      = new app.Stage();
       app.grid       = new app.Grid();
 
-      // @TODO cast can contain all members of all types
+      // TODO: cast can contain all members of all types
 
       if (app.state.border) {
         app.border   = new app.Border();

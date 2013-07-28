@@ -2,7 +2,7 @@ var Snake = Snake || {};
 
 (function(app){
 
-// @TODO = implement a fully rendered grid to search on and render from.
+// TODO: = implement a fully rendered grid to search on and render from.
 
   app.ai = {
 

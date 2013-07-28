@@ -61,7 +61,7 @@ var Snake = Snake || {};
 
     };
 
-    // @TODO - ask for a hit check and return what it hit.
+    // TODO: combine this hit check with the member hit checking...
     self.checkHit = function(position) {
       var cell = app.grid.occupied(position);
 

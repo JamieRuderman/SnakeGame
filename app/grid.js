@@ -30,7 +30,7 @@
       }
     };
 
-    // @TODO combine get and occupied?
+    // TODO: combine get and occupied?
     self.get = function() {
       return grid;
     };
