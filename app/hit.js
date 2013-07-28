@@ -1,37 +1,8 @@
-var SnakeGame = SnakeGame || {};
+var Snake = Snake || {};
 
 (function(app){
 
   app.hit = {
-
-    // @TODO - fix this so that it uses the grid
-    check: function(typeName, position) {
-      var type = app[typeName],
-          hit = false;
-
-      if (!type) return hit;
-
-      type.each(function(item) {
-        if (item[0] == position[0] && item[1] == position[1]) {
-          hit = true;
-        }
-      });
-
-      return hit;
-    },
-
-    occupied: function(position) {
-      var types = ['player', 'obstacles', 'bots', 'border'],
-          occupied = false;
-
-      for (var i = 0; i < types.length; i++) {
-        if (this.check(types[i], position)) {
-          occupied = true;
-          break;
-        }
-      }
-      return occupied;
-    },
 
     move: function(direction, position) {
       switch (direction) {
@@ -74,17 +45,11 @@ var SnakeGame = SnakeGame || {};
       @param occupiedCallback function add validation callback
     */
     randomFree: function() {
-      var point = [
+      var position = [
         Math.round(Math.random() * (app.stage.size[0] -1)),
         Math.round(Math.random() * (app.stage.size[1] -1))
       ];
-
-      if (this.occupied(point)) {
-        return this.randomFree();
-      }
-      else {
-        return point;
-      }
+      return (app.grid.occupied(position)) ? this.randomFree() : position;
     },
 
     noReverse: function(moving, direction) {
@@ -95,6 +60,7 @@ var SnakeGame = SnakeGame || {};
       return direction;
     },
 
+    // fixme use grid
     full: function() {
       var max = app.stage.size[0] * app.stage.size[1],
           total = app.points.points.length + app.player.segments.length;
@@ -104,4 +70,4 @@ var SnakeGame = SnakeGame || {};
   };
 
 
-})(SnakeGame);
+})(Snake);

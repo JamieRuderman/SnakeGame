@@ -30,7 +30,7 @@
       var position = !!from && from.slice() || app.hit.randomFree(),
           newDirection = direction,
           seed = Math.random(),
-          change;
+          change, cell;
 
       if (seed > self.turnChance || turn) {
         change = pickDirection();
@@ -38,16 +38,20 @@
       }
 
       position = app.hit.move(newDirection, position);
+      cell = app.grid.occupied(position);
 
       // avoid occupied
-      if (app.hit.occupied(position)) {
-        checkDirections();
-        self.grow(self.position, true); // recursion
+      if (cell && cell != 'points') {
+        if (dead()) {
+          self.die();
+        } else {
+          self.grow(self.position, true); // recursion
+        }
       }
       // move
       else {
         // point
-        if (app.hit.check('points', position)) {
+        if (cell == 'points') {
           app.points.score(position);
           app.state.score -= app.state.scorePointValue;
           app.audio.play('steal');
@@ -117,11 +121,11 @@
       directions = ['left', 'right', 'up', 'down'];
     }
 
-    function checkDirections() {
-      if (directions.length === 0) self.die();
+    function dead() {
+      return directions.length === 0;
     }
 
     return self;
   };
 
-})(SnakeGame || {});
+})(Snake || {});

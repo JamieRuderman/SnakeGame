@@ -52,13 +52,15 @@
       },
       medium: {
         fps: 8,
+        fpsToIncrease: 1,
+        pointsToIncreaseSpeed: 1,
         grow: 10,
         length: 30,
         obstacles: 2,
         obstaclesLength: 25,
-        bots: 1,
+        bots: 2,
         scale: 10,
-        stageSize: [50, 50],
+        stageSize: [60, 60],
         color: {
           border: '#003333',
           background: '#ff0000',
@@ -102,4 +104,4 @@
 
   };
 
-})(SnakeGame || {});
+})(Snake || {});

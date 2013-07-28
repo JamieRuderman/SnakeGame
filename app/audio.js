@@ -1,13 +1,15 @@
-var SnakeGame = SnakeGame || {};
+var Snake = Snake || {};
 
 (function(app){
 
   app.audio = (function() {
 
     var self = {},
-        file = {};
+        file = {},
+        handle = {};
 
     self.init = function() {
+      app.events.register(handle);
       $('audio').each(function(index, el) {
         file[el.id] = el;
         if (app.state.volume[el.id]) {
@@ -39,12 +41,17 @@ var SnakeGame = SnakeGame || {};
       file.music.pause();
     };
 
-    self.reset = function() {
+    handle.ready = function() {
+      self.start();
+    };
+
+    handle.reset = function() {
       file.music.currentTime = 0;
+      self.start();
     };
 
     return self;
 
   })();
 
-})(SnakeGame);
+})(Snake);

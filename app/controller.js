@@ -1,4 +1,4 @@
-var SnakeGame = SnakeGame || {};
+var Snake = Snake || {};
 
 (function(app){
 
@@ -12,6 +12,7 @@ var SnakeGame = SnakeGame || {};
 
     self.init = function() {
       self.reset();
+      app.events.on('reset', self.reset);
     };
 
     self.move = function() {
@@ -23,13 +24,6 @@ var SnakeGame = SnakeGame || {};
       app.bots.collection(function(bot){
         bot.advance();
       });
-    };
-
-    self.center = function(sprite) {
-      sprite.position = [
-        Math.round(stage.size[0] / 2) - 1,
-        Math.round(stage.size[1] / 2) - 1
-      ];
     };
 
     self.changeDirection = function(event) {
@@ -69,27 +63,24 @@ var SnakeGame = SnakeGame || {};
 
     // @TODO - ask for a hit check and return what it hit.
     self.checkHit = function(position) {
-      if (app.hit.check('player', position)) {
-        self.gameover();
-      }
-      if (app.hit.check('obstacles', position)) {
-        self.gameover();
-      }
-      if (app.hit.check('bots', position)) {
-        self.gameover();
-      }
-      if (app.hit.check('border', position)) {
-        self.gameover();
-      }
-      if (app.hit.check('points', position)) {
-        player.length += state.grow;
-        points.score(position);
-        state.score += state.scorePointValue;
-        app.audio.play('score');
-        // every set number of points go faster
-        if (state.score % (state.scorePointValue * state.pointsToIncreaseSpeed) === 0) {
-          app.timer.increase();
-        }
+      var cell = app.grid.occupied(position);
+
+      switch (cell) {
+        case 'player':
+        case 'obstacles':
+        case 'bots':
+        case 'border':
+          self.gameover();
+          break;
+        case 'points':
+          player.length += state.grow;
+          points.score(position);
+          state.score += state.scorePointValue;
+          app.audio.play('score');
+          // every set number of points go faster
+          if (state.score % (state.scorePointValue * state.pointsToIncreaseSpeed) === 0) {
+            app.timer.increase();
+          }
       }
     };
 
@@ -101,21 +92,9 @@ var SnakeGame = SnakeGame || {};
     };
 
     self.reset = function() {
-      // @TODO trigger and handle as event (reset)
       $(window).on('keydown', self.changeDirection);
       state.score = 0;
       direction = state.direction;
-      self.center(player);
-      player.reset();
-      player.addSegment(player.position);
-      points.reset();
-      points.add();
-      app.timer.reset();
-      app.audio.reset();
-      app.audio.start();
-      app.grid.make();
-      app.renderer.draw();
-      app.display.update();
     };
 
     self.init();
@@ -123,4 +102,4 @@ var SnakeGame = SnakeGame || {};
     return self;
   };
 
-})(SnakeGame || {});
+})(Snake || {});

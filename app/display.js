@@ -54,4 +54,4 @@
     return self;
   };
 
-})(SnakeGame || {});
+})(Snake || {});

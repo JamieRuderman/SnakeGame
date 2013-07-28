@@ -36,9 +36,10 @@
     };
 
     self.points = function(position) {
-      var style = (app.state.scale < 6) ? fillBlock : circle;
+      // var style = (app.state.scale < 6) ? fillBlock : circle;
       context.fillStyle = color.points;
-      style(position, app.points.size);
+      context.strokeStyle = color.points;
+      fillBlock(position, app.points.size);
     };
 
     self.obstacles = function(position) {
@@ -133,4 +134,4 @@
     return self;
   };
 
-})(SnakeGame || {});
+})(Snake || {});

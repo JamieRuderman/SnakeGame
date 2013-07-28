@@ -1,13 +1,18 @@
-var SnakeGame = SnakeGame || {};
+var Snake = Snake || {};
 
 (function(app){
 
   app.Points = function() {
-    var self = {
-      points: [],
 
-      size: [1, 1],
-      length: app.state.length
+    var self = {
+          points: [],
+          size: [1, 1],
+          length: app.state.length
+        },
+        handle = {};
+
+    self.init = function() {
+      app.events.register(handle);
     };
 
     self.score = function(position) {
@@ -38,11 +43,19 @@ var SnakeGame = SnakeGame || {};
       }
     };
 
-    self.reset = function() {
-      self.points = [];
+    handle.ready = function() {
+      console.log('ready');
+      self.add();
     };
+
+    handle.reset = function() {
+      self.points = [];
+      self.add();
+    };
+
+    self.init();
 
     return self;
   };
 
-})(SnakeGame);
+})(Snake);

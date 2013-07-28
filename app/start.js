@@ -14,6 +14,7 @@
       // start player game
       app.points     = new app.Points();
       app.stage      = new app.Stage();
+      app.grid       = new app.Grid();
 
       // @TODO cast can contain all members of all types
 
@@ -28,12 +29,14 @@
         member: app.Bot,
         length: app.state.bots
       });
+
       app.player     = new app.Player();
       app.display    = new app.Display();
-      app.grid       = new app.Grid();
       app.renderer   = new app.Renderer();
       app.timer      = new app.Timer();
       app.controller = new app.Controller();
+
+      app.events.trigger('ready');
     };
 
     $(document).ready(function() {
@@ -44,4 +47,4 @@
 
   })();
 
-})(SnakeGame || {});
+})(Snake || {});

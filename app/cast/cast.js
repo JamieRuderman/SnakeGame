@@ -3,8 +3,8 @@
   /*
     Cast collection
       @param options {
-        member: Member class object,
-        length: Number of objects in the collection
+        member: Member class object added to the cast,
+        length: Number of objects to be added to the collection
       }
   */
   app.Cast = function(options) {
@@ -62,4 +62,4 @@
 
   };
 
-})(SnakeGame || {});
+})(Snake || {});

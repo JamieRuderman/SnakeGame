@@ -1,4 +1,4 @@
-var SnakeGame = SnakeGame || {};
+var Snake = Snake || {};
 
 (function(app){
 
@@ -26,4 +26,4 @@ var SnakeGame = SnakeGame || {};
     return self;
   };
 
-})(SnakeGame);
+})(Snake);

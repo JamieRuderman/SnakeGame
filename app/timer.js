@@ -1,4 +1,4 @@
-var SnakeGame = SnakeGame || {};
+var Snake = Snake || {};
 
 (function(app){
 
@@ -15,28 +15,13 @@ var SnakeGame = SnakeGame || {};
         paused = false;
 
     self.init = function() {
-      app.grid.make();
-      app.renderer.draw();
-      app.display.update();
-    };
-
-    self.loop = function(time) {
-      var elapsed = time - interval;
-
-      // frame
-      interval = time;
-      self.frame(elapsed);
-
-      if (!paused) {
-        setTimeout(function() {
-          requestAnimationFrame(self.loop);
-        }, frameRate);
-      }
+      app.events.on('reset', reset);
+      refresh();
     };
 
     self.start = function() {
       paused = false;
-      requestAnimationFrame(self.loop);
+      requestAnimationFrame(loop);
       self.ready = false;
     };
 
@@ -57,13 +42,30 @@ var SnakeGame = SnakeGame || {};
       frameRate -= (1000 / app.state.fps) / app.state.fps * app.state.fpsToIncrease;
     };
 
-    self.reset = function() {
+    // private ----------------------------------
+
+    function reset() {
       self.stop();
       frameRate = 1000 / app.state.fps;
       self.ready = true;
+      refresh();
     };
 
-    self.frame = function(elapsed) {
+    function loop(time) {
+      var elapsed = time - interval;
+
+      // frame
+      interval = time;
+      frame(elapsed);
+
+      if (!paused) {
+        setTimeout(function() {
+          requestAnimationFrame(loop);
+        }, frameRate);
+      }
+    };
+
+    function frame(elapsed) {
 
       // track fps
       if (counter > 2) {
@@ -105,15 +107,19 @@ var SnakeGame = SnakeGame || {};
         // app.controller.addPoint();
       }
 
+      refresh();
+
+    };
+
+    function refresh() {
       app.grid.make();
       app.renderer.draw();
       app.display.update();
-
-    };
+    }
 
     self.init();
 
     return self;
   };
 
-})(SnakeGame);
+})(Snake);

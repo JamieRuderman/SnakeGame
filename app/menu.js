@@ -1,4 +1,4 @@
-var SnakeGame = SnakeGame || {};
+var Snake = Snake || {};
 
 /*
   game modes ideas
@@ -53,7 +53,7 @@ var SnakeGame = SnakeGame || {};
       gameover.hide();
       eventsOff();
       if (event.target.name == 'restart') {
-        app.controller.reset();
+        app.events.trigger('reset');
       }
       else if (event.target.name == 'menu') {
         self.begin();
@@ -74,4 +74,4 @@ var SnakeGame = SnakeGame || {};
 
   })();
 
-})(SnakeGame);
+})(Snake);

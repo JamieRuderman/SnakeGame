@@ -1,55 +1,48 @@
 (function(app){
 
   /*
-    events: {
-      'render': [
-        draw callback,
-        player callback
-      ]
-    }
+    Global event handling
   */
   app.events = {
 
     events: {},
 
     on: function(name, callback) {
-      var ev = events[name];
+      var ev = this.events[name];
       if (typeof callback == 'function') {
-        events[name] = ev || [];
-        events[name].push(callback);
+        this.events[name] = ev || [];
+        this.events[name].push(callback);
       }
     },
 
     off: function(name, callback) {
-      var ev = events[name];
+      var ev = this.events[name];
       if (callback && ev) ev.splice(ev.indexOf(callback), 1);
-      if (!callback || ev.length === 0) delete events[name];
+      if (!callback || ev.length === 0) delete this.events[name];
     },
 
     trigger: function(name) {
-      var ev = events[name],
+      var ev = this.events[name],
           args = Array.prototype.slice.call(arguments, 1);
       if (ev) {
         for (i = 0, len = ev.length; i < len; i++) {
           ev[i].apply(ev, args);
         }
       }
-    }
+    },
 
-  };
-
-  /*
-    Auto bind event callbacks by handle.callbackname
-  */
-  app.eventHandler = {
-
-    init: function() {
-      for(var handle in this) {
-        if (handle !== 'init') {
-          app.events.on(handle, event[handle]);
-          console.log('init:', handle);
-        }
+    register: function(handles) {
+      for (var handle in handles) {
+        this.on(handle, handles[handle]);
       }
+    },
+
+    list: function() {
+      var list = [];
+      for (var key in this.events) {
+        list.push(key);
+      }
+      return list;
     }
 
   };
@@ -69,5 +62,25 @@
 
   };
 
+  /*
+    Auto bind global event callbacks by handle.callbackname
+      Add to module:
+        var handle = app.eventHandler;
+        self.init = function() { handle.init() };
+        handle.reset = function() { ... };
+  */
+  // app.eventHandler = {
 
-})(SnakeGame || {});
+  //   init: function() {
+  //     for (var handle in this) {
+  //       if (handle !== 'init') {
+  //         app.events.on(handle, this[handle]);
+  //         console.log('Event: handle.' + handle, this.self);
+  //       }
+  //     }
+  //   }
+
+  // };
+
+
+})(Snake || {});

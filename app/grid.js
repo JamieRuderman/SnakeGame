@@ -5,10 +5,10 @@
     var self = {},
         grid = [[]]; // two dimensional array
         cast = [
-          'obstacles',
-          'bots',
           'player',
+          'bots',
           'points',
+          'obstacles',
           'border'
         ];
 
@@ -30,8 +30,13 @@
       }
     };
 
+    // @TODO combine get and occupied?
     self.get = function() {
       return grid;
+    };
+
+    self.occupied = function(p) {
+      return grid[p[0]] && grid[p[0]][p[1]] || false;
     };
 
     /* Add position to grid */
@@ -40,8 +45,12 @@
       grid[p[0]][p[1]] = type;
     }
 
+    function remove(p, type) {
+      // remove from grid
+    }
+
     return self;
 
   };
 
-})(SnakeGame || {});
+})(Snake || {});
