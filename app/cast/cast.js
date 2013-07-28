@@ -40,7 +40,10 @@
           target = i;
         }
       });
-      if (target !== false) self.array.splice(target, 1);
+      if (target !== false) {
+        delete self.array[target];
+        self.array.splice(target, 1);
+      }
     };
 
     /* Private -------------- */
