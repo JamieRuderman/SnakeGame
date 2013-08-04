@@ -19,40 +19,53 @@ var Snake = Snake || {};
 
     var self = {},
         handle = {},
-        state = app.state,
-        gameover, begin;
+        menus = {},
+        paused;
 
     self.init = function() {
-      begin = $('.begin');
-      gameover = $('.gameover');
+      menus.begin = $('.begin');
+      menus.gameover = $('.gameover');
+      menus.pause = $('.pause');
       self.begin();
       app.events.register(handle);
     };
 
     // show start menu
     self.begin = function() {
-      begin.show();
-      gameover.hide();
+      menus.begin.show();
       eventsOn();
     };
 
     // show gameover menu
     handle.gameover = function() {
-      gameover.show();
+      menus.gameover.show();
       eventsOn();
+    };
+
+    handle.pause = function() {
+      if (paused) {
+        paused = false;
+        menus.pause.hide();
+        eventsOff();
+      }
+      else {
+        paused = true;
+        menus.pause.show();
+        eventsOn();
+      }
     };
 
     /* Private -------------- */
 
-    function beginHandler(event) {
-      begin.hide();
+    function beginSelect(event) {
+      menus.begin.hide();
       eventsOff();
-      state.set(event.target.name);
+      app.state.set(event.target.name);
       app.start.newgame();
     }
 
-    function gameoverHandler(event) {
-      gameover.hide();
+    function gameoverSelect(event) {
+      menus.gameover.hide();
       eventsOff();
       if (event.target.name == 'restart') {
         app.events.trigger('reset');
@@ -62,14 +75,26 @@ var Snake = Snake || {};
       }
     }
 
+    function pauseSelect(event) {
+      if (event.target.name == 'resume') {
+        app.events.trigger('pause');
+      }
+      else if (event.target.name == 'quit') {
+        menus.pause.hide();
+        app.events.trigger('gameover');
+      }
+    }
+
     function eventsOn() {
-      begin.on('click', '.select', beginHandler);
-      gameover.on('click', '.select', gameoverHandler);
+      menus.begin.on('click', '.select', beginSelect);
+      menus.gameover.on('click', '.select', gameoverSelect);
+      menus.pause.on('click', '.select', pauseSelect);
     }
 
     function eventsOff() {
-      begin.off('click', '.select', beginHandler);
-      gameover.off('click', '.select', gameoverHandler);
+      menus.begin.off('click', '.select', beginSelect);
+      menus.gameover.off('click', '.select', gameoverSelect);
+      menus.pause.off('click', '.select', pauseSelect);
     }
 
     return self;
