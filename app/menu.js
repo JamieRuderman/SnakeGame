@@ -18,6 +18,7 @@ var Snake = Snake || {};
   app.menu = (function() {
 
     var self = {},
+        handle = {},
         state = app.state,
         gameover, begin;
 
@@ -25,6 +26,7 @@ var Snake = Snake || {};
       begin = $('.begin');
       gameover = $('.gameover');
       self.begin();
+      app.events.register(handle);
     };
 
     // show start menu
@@ -35,7 +37,7 @@ var Snake = Snake || {};
     };
 
     // show gameover menu
-    self.gameover = function() {
+    handle.gameover = function() {
       gameover.show();
       eventsOn();
     };

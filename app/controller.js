@@ -4,15 +4,12 @@ var Snake = Snake || {};
 
   app.Controller = function() {
     var self = {},
-        stage = app.stage,
-        players = app.players,
-        points = app.points,
-        state = app.state,
+        handle = {},
         direction, moving;
 
     self.init = function() {
-      self.reset();
-      app.events.on('reset', self.reset);
+      handle.reset();
+      app.events.register(handle);
     };
 
     self.move = function() {
@@ -50,8 +47,7 @@ var Snake = Snake || {};
           break;
         case 32: // space
         case 27: // esc
-          app.timer.pause();
-          app.audio.pause();
+          app.events.trigger('pause');
           break;
       }
 
@@ -61,40 +57,14 @@ var Snake = Snake || {};
 
     };
 
-    // TODO: combine this hit check with the member hit checking...
-    // self.checkHit = function(position) {
-    //   var cell = app.grid.occupied(position);
-
-    //   switch (cell) {
-    //     case 'players':
-    //     case 'obstacles':
-    //     case 'bots':
-    //     case 'borders':
-    //       self.gameover();
-    //       break;
-    //     case 'points':
-    //       players.length += state.grow;
-    //       points.score(position);
-    //       state.score += state.scorePointValue;
-    //       app.audio.play('score');
-    //       // every set number of points go faster
-    //       if (state.score % (state.scorePointValue * state.pointsToIncreaseSpeed) === 0) {
-    //         app.timer.increase();
-    //       }
-    //   }
-    // };
-
-    self.gameover = function() {
+    handle.gameover = function() {
       $(window).off('keydown', self.changeDirection);
-      app.timer.stop();
-      app.menu.gameover();
-      app.audio.gameover();
     };
 
-    self.reset = function() {
+    handle.reset = function() {
       $(window).on('keydown', self.changeDirection);
-      state.score = 0;
-      direction = state.direction;
+      app.state.score = 0;
+      direction = app.state.direction;
     };
 
     self.init();

@@ -41,7 +41,7 @@ var Snake = Snake || {};
         case 'obstacles':
         case 'bots':
         case 'borders':
-          // self.gameover();// trigger gameover?
+          app.events.trigger('gameover');
           break;
         case 'points':
           self.length += app.state.grow;

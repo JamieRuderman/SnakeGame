@@ -7,13 +7,13 @@ var Snake = Snake || {};
           ready: true,
           fps: null
         },
+        handle = {},
         frameRate = 1000 / app.state.fps,
         interval = 0,
         counter = 0,
         longest = 0,
         shortest = Infinity,
-        paused = false,
-        handle = {};
+        paused = false;
 
     self.init = function() {
       app.events.register(handle);
@@ -31,16 +31,16 @@ var Snake = Snake || {};
       paused = true;
     };
 
-    self.pause = function() {
+    self.increase = function() {
+      frameRate -= (1000 / app.state.fps) / app.state.fps * app.state.fpsToIncrease;
+    };
+
+    handle.pause = function() {
       if (paused) {
         self.start();
       } else {
         self.stop();
       }
-    };
-
-    self.increase = function() {
-      frameRate -= (1000 / app.state.fps) / app.state.fps * app.state.fpsToIncrease;
     };
 
     handle.score = function() {
@@ -55,6 +55,10 @@ var Snake = Snake || {};
       frameRate = 1000 / app.state.fps;
       self.ready = true;
       refresh();
+    };
+
+    handle.gameover = function() {
+      self.stop();
     };
 
     // private ----------------------------------

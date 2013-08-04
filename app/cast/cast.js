@@ -77,12 +77,8 @@
         }));
       }
 
-      console.log('casting', count, constructor, members);
-
       // add to the cast
       self.array = self.array.concat(members);
-
-      console.log('cast is', self.array);
 
       // assign global name shortcuts
       app[type] = members;
