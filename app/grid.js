@@ -4,22 +4,21 @@
 
     var self = {},
         grid = [[]]; // two dimensional array
-        cast = [
-          'player',
-          'bots',
-          'points',
-          'obstacles',
-          'border'
-        ];
 
     /* Add cast member positions to grid */
     self.make = function() {
       grid = [];
-      for (var i = cast.length; i--;) {
-        if (app[cast[i]]) app[cast[i]].each(function(position) {
-          add(position, cast[i]);
+
+      app.cast.collection(function(member) {
+        member.each(function(p) {
+          add(p, member.type);
         });
-      }
+      });
+
+      // FIXME: points should be part of cast
+      app.points.each(function(p) {
+        add(p, app.points.type);
+      });
     };
 
     self.each = function(callback) {

@@ -6,6 +6,7 @@ var Snake = Snake || {};
 
     var self = new app.Member();
 
+    self.type = 'obstacles';
     self.length = app.state.obstaclesLength;
 
     self.create = function() {

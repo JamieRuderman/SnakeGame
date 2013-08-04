@@ -7,6 +7,7 @@ var Snake = Snake || {};
     var self = new app.Member(options);
 
     $.extend(self, {
+      type:'bots',
       size: [1, 1],
       length: app.state.length,
       turnChance: 0.90

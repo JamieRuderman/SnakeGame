@@ -50,6 +50,10 @@ var Snake = Snake || {};
       self.start();
     };
 
+    handle.score = function() {
+      self.play('score');
+    };
+
     return self;
 
   })();

@@ -2,9 +2,10 @@ var Snake = Snake || {};
 
 (function(app){
 
-  app.Points = function() {
+  app.Point = function() {
 
     var self = {
+          type: 'points',
           points: [],
           size: [1, 1],
           length: app.state.length
@@ -41,6 +42,16 @@ var Snake = Snake || {};
           callback(self.points[i], i);
         }
       }
+    };
+
+    handle.score = function(position) {
+      self.each(function(point) {
+        // hit
+        if (position[0] == point[0] && position[1] == point[1]) {
+          self.score(position);
+          app.state.score += app.state.scorePointValue;
+        }
+      });
     };
 
     handle.ready = function() {

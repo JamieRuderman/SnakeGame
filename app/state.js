@@ -4,8 +4,9 @@
 
     // defaults
     defaults: {
-      border: false,
+      borders: 0,
       bots: 0,
+      points: 1,
       direction: 'none',
       fpm: 1, // frames per move
       fps: 8, // frames per second
@@ -16,6 +17,7 @@
       obstacles: 0,
       obstaclesLength: 15,
       pointsToIncreaseSpeed: 5,
+      players: 1,
       scorePointValue: 10,
       killPointValue: 40,
       scale: 10,
@@ -30,12 +32,12 @@
         step: 0.04
       },
       color: {
-        border: '#003300',
+        borders: '#003300',
         background: '#000000',
         obstacles: '0000', // Red is dynamic
         points: '#00ffff',
-        player: '#00ff00',
-        bots: '#CCCCCC'
+        players: '#00ff00',
+        bots: '#AAAAAA'
       }
     },
 
@@ -45,7 +47,7 @@
         fps: 4,
         grow: 5,
         length: 5,
-        border: true,
+        borders: 1,
         bots: 2,
         scale: 20,
         stageSize: [20, 20]
@@ -62,11 +64,11 @@
         scale: 10,
         stageSize: [60, 60],
         color: {
-          border: '#003333',
+          borders: '#003333',
           background: '#ff0000',
           obstacles: '0000', // Red is dynamic
           points: '#00ffff',
-          player: '#ff9900',
+          players: '#ff9900',
           bots: '#990000'
         }
       },
@@ -74,7 +76,7 @@
         fps: 30,
         grow: 50,
         length: 30,
-        border: true,
+        borders: 1,
         obstaclesLength: 50,
         bots: 3,
         scale: 5,

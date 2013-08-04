@@ -5,7 +5,7 @@ var Snake = Snake || {};
   app.Controller = function() {
     var self = {},
         stage = app.stage,
-        player = app.player,
+        players = app.players,
         points = app.points,
         state = app.state,
         direction, moving;
@@ -18,10 +18,10 @@ var Snake = Snake || {};
     self.move = function() {
       direction = app.hit.noReverse(moving, direction);
       moving = direction;
-      player.position = app.hit.move(direction, player.position);
-      self.checkHit(player.position);
-      player.advance();
-      app.bots.collection(function(bot){
+      app.players.collection(function(player) {
+        player.advance(direction);
+      });
+      app.bots.collection(function(bot) {
         bot.advance();
       });
     };
@@ -62,27 +62,27 @@ var Snake = Snake || {};
     };
 
     // TODO: combine this hit check with the member hit checking...
-    self.checkHit = function(position) {
-      var cell = app.grid.occupied(position);
+    // self.checkHit = function(position) {
+    //   var cell = app.grid.occupied(position);
 
-      switch (cell) {
-        case 'player':
-        case 'obstacles':
-        case 'bots':
-        case 'border':
-          self.gameover();
-          break;
-        case 'points':
-          player.length += state.grow;
-          points.score(position);
-          state.score += state.scorePointValue;
-          app.audio.play('score');
-          // every set number of points go faster
-          if (state.score % (state.scorePointValue * state.pointsToIncreaseSpeed) === 0) {
-            app.timer.increase();
-          }
-      }
-    };
+    //   switch (cell) {
+    //     case 'players':
+    //     case 'obstacles':
+    //     case 'bots':
+    //     case 'borders':
+    //       self.gameover();
+    //       break;
+    //     case 'points':
+    //       players.length += state.grow;
+    //       points.score(position);
+    //       state.score += state.scorePointValue;
+    //       app.audio.play('score');
+    //       // every set number of points go faster
+    //       if (state.score % (state.scorePointValue * state.pointsToIncreaseSpeed) === 0) {
+    //         app.timer.increase();
+    //       }
+    //   }
+    // };
 
     self.gameover = function() {
       $(window).off('keydown', self.changeDirection);

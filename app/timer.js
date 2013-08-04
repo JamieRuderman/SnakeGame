@@ -12,10 +12,11 @@ var Snake = Snake || {};
         counter = 0,
         longest = 0,
         shortest = Infinity,
-        paused = false;
+        paused = false,
+        handle = {};
 
     self.init = function() {
-      app.events.on('reset', reset);
+      app.events.register(handle);
       refresh();
     };
 
@@ -42,14 +43,21 @@ var Snake = Snake || {};
       frameRate -= (1000 / app.state.fps) / app.state.fps * app.state.fpsToIncrease;
     };
 
-    // private ----------------------------------
+    handle.score = function() {
+      // every set number of points go faster
+      if (app.state.score % (app.state.scorePointValue * app.state.pointsToIncreaseSpeed) === 0) {
+        self.increase();
+      }
+    };
 
-    function reset() {
+    handle.reset = function() {
       self.stop();
       frameRate = 1000 / app.state.fps;
       self.ready = true;
       refresh();
     };
+
+    // private ----------------------------------
 
     function loop(time) {
       var elapsed = time - interval;

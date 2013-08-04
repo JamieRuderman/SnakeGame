@@ -18,7 +18,7 @@
       for (var i = path.length; i--;) {
         hexR = (256 - (path[i][2] + 1) * 16).toString(16);
         context.fillStyle = '#' + hexR + '0000';
-        fillBlock(path[i], [1, 1]);
+        fillBlock(path[i], [1,1]);
       }
     };
 
@@ -29,45 +29,46 @@
       });
     };
 
-    self.player = function(position) {
-      context.fillStyle = color.player;
+    self.players = function(position) {
+      context.fillStyle = color.players;
       context.strokeStyle = color.background;
-      fillBlock(position, app.player.size);
+      fillBlock(position, [1,1]);
     };
 
     self.points = function(position) {
       // var style = (app.state.scale < 6) ? fillBlock : circle;
       context.fillStyle = color.points;
       context.strokeStyle = color.points;
-      fillBlock(position, app.points.size);
+      fillBlock(position, [1,1]);
     };
 
     self.obstacles = function(position) {
       context.fillStyle = color.background;
       context.strokeStyle = '#88' + color.obstacles;
-      strokeBlock(position, app.obstacles.size);
+      strokeBlock(position, [1,1]);
       // var counter = 256, hex;
       // app.obstacles.each(function(position, collectionIndex) {
       //   hexR = (256 - (collectionIndex + 1) * 16).toString(16);
       //   context.strokeStyle = '#'+ hexR + color.obstacles;
       //   strokeBlock(position, app.obstacles.size);
-      // });
+      // });`
     };
 
     self.bots = function(position) {
       context.fillStyle = color.bots;
       context.strokeStyle = color.background;
-      fillBlock(position, app.bots.size);
+      fillBlock(position, [1,1]);
     };
 
-    self.border = function(position) {
-      context.strokeStyle = color.border;
-      strokeBlock(position, app.border.size);
+    self.borders = function(position) {
+      context.fillStyle = color.background;
+      context.strokeStyle = color.borders;
+      strokeBlock(position, [1,1]);
     };
 
     self.clear = function() {
-      context.strokeStyle = color.border;
       context.fillStyle = color.background;
+      context.strokeStyle = color.borders;
       context.fillRect(0, 0,
         scale(stage.size[0]),
         scale(stage.size[1])

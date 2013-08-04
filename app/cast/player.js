@@ -7,6 +7,7 @@ var Snake = Snake || {};
         handle = {};
 
     $.extend(self, {
+      type: 'players',
       size: [1, 1],
       position: [0, 0],
       segments: [],
@@ -16,9 +17,11 @@ var Snake = Snake || {};
     function init() {
       app.events.register(handle);
       self.center();
-    };
+    }
 
-    self.advance = function() {
+    self.advance = function(direction) {
+      self.position = app.hit.move(direction, self.position);
+      self.checkHit();
       self.addSegment();
       self.checkLength();
     };
@@ -28,6 +31,22 @@ var Snake = Snake || {};
         Math.round(app.stage.size[0] / 2) - 1,
         Math.round(app.stage.size[1] / 2) - 1
       ];
+    };
+
+    self.checkHit = function() {
+      var cell = app.grid.occupied(self.position);
+
+      switch (cell) {
+        case 'players':
+        case 'obstacles':
+        case 'bots':
+        case 'borders':
+          // self.gameover();// trigger gameover?
+          break;
+        case 'points':
+          self.length += app.state.grow;
+          app.events.trigger('score', self.position);
+      }
     };
 
     handle.reset = function() {

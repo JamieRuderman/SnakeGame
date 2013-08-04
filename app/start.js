@@ -11,29 +11,20 @@
     };
 
     self.newgame = function() {
-      // start player game
-      app.points     = new app.Points();
-      app.stage      = new app.Stage();
-      app.grid       = new app.Grid();
+      app.stage = new app.Stage();
+      app.grid = new app.Grid();
+      app.points = new app.Point();
 
-      // TODO: cast can contain all members of all types
+      app.cast = new app.Cast([
+        'borders',
+        'players',
+        'obstacles',
+        'bots'
+      ]);
 
-      if (app.state.border) {
-        app.border   = new app.Border();
-      }
-      app.obstacles  = new app.Cast({
-        member: app.Obstacle,
-        length: app.state.obstacles
-      });
-      app.bots       = new app.Cast({
-        member: app.Bot,
-        length: app.state.bots
-      });
-
-      app.player     = new app.Player();
-      app.display    = new app.Display();
-      app.renderer   = new app.Renderer();
-      app.timer      = new app.Timer();
+      app.display = new app.Display();
+      app.renderer = new app.Renderer();
+      app.timer = new app.Timer();
       app.controller = new app.Controller();
 
       app.events.trigger('ready');
