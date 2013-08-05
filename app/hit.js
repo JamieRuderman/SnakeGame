@@ -62,9 +62,9 @@ var Snake = Snake || {};
 
     // fixme use grid
     full: function() {
-      // var max = app.stage.size[0] * app.stage.size[1],
-      //     total = app.points.points.length + app.players.segments.length;
-      // return total >= max;
+      var occupied = app.grid.length(),
+          possible = app.state.stageSize[0] * app.state.stageSize[1];
+      return occupied >= possible;
     }
 
   };

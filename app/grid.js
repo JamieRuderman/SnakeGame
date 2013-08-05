@@ -22,9 +22,9 @@
     };
 
     self.each = function(callback) {
-      for (var i = 0; i < app.state.stageSize[0]; i++) {
-        for (var ii = 0; ii < app.state.stageSize[1]; ii++) {
-          if (grid[i] && grid[i][ii]) callback(grid[i][ii], [i, ii]);
+      for (var x in grid) {
+        for (var y in grid[x]) {
+          callback(grid[x][y], [x, y]);
         }
       }
     };
@@ -36,6 +36,14 @@
 
     self.occupied = function(p) {
       return grid[p[0]] && grid[p[0]][p[1]] || false;
+    };
+
+    self.length = function() {
+      var length = 0;
+      self.each(function() {
+        length++;
+      });
+      return length;
     };
 
     /* Add position to grid */

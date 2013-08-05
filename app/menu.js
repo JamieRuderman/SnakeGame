@@ -21,7 +21,7 @@ var Snake = Snake || {};
         handle = {},
         menus = {},
         select = {},
-        paused;
+        paused = false;
 
     self.init = function() {
       menus = {
@@ -37,6 +37,10 @@ var Snake = Snake || {};
 
     handle.gameover = function() {
       show('gameover');
+    };
+
+    handle.reset = function() {
+      paused = false;
     };
 
     handle.pause = function() {

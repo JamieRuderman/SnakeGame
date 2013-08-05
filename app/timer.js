@@ -21,14 +21,12 @@ var Snake = Snake || {};
     };
 
     self.start = function() {
-      paused = false;
       requestAnimationFrame(loop);
       self.ready = false;
     };
 
     self.stop = function() {
-      counter = 0,
-      paused = true;
+      counter = 0;
     };
 
     self.increase = function() {
@@ -37,8 +35,10 @@ var Snake = Snake || {};
 
     handle.pause = function() {
       if (paused) {
+        paused = false;
         self.start();
       } else {
+        paused = true;
         self.stop();
       }
     };
@@ -52,6 +52,7 @@ var Snake = Snake || {};
 
     handle.reset = function() {
       self.stop();
+      paused = false;
       frameRate = 1000 / app.state.fps;
       self.ready = true;
       refresh();
