@@ -23,10 +23,12 @@ var Snake = Snake || {};
     self.start = function() {
       requestAnimationFrame(loop);
       self.ready = false;
+      paused = false;
     };
 
     self.stop = function() {
       counter = 0;
+      paused = true;
     };
 
     self.increase = function() {
@@ -35,10 +37,8 @@ var Snake = Snake || {};
 
     handle.pause = function() {
       if (paused) {
-        paused = false;
         self.start();
       } else {
-        paused = true;
         self.stop();
       }
     };
