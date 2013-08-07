@@ -43,7 +43,7 @@ var Snake = Snake || {};
       paused = false;
     };
 
-    handle.pause = function() {
+    handle.xpause = function() {
       if (paused) {
         paused = false;
         hide('pause');

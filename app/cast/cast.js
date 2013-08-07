@@ -11,7 +11,6 @@
 
     var self = {
           array: [],
-          size: [1, 1],
           count: 1,    // (option) number of members to create
           member: null // {option} member object class
         },

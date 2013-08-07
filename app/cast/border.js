@@ -8,6 +8,10 @@ var Snake = Snake || {};
 
     self.type = 'borders';
 
+    self.init = function() {
+      self.create();
+    };
+
     self.create = function() {
       var size = app.state.stageSize;
 

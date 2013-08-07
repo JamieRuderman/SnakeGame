@@ -22,20 +22,18 @@
     };
 
     self.each = function(callback) {
-      for (var x in grid) {
-        for (var y in grid[x]) {
-          callback(grid[x][y], [x, y]);
+      for (var y in grid) {
+        for (var x in grid[y]) {
+          callback(grid[y][x], [x, y]);
         }
       }
     };
 
-    // TODO: combine get and occupied?
-    self.get = function() {
-      return grid;
-    };
-
-    self.occupied = function(p) {
-      return grid[p[0]] && grid[p[0]][p[1]] || false;
+    self.get = function(p) {
+      if (!p)
+        return grid;
+      else
+        return grid[p[1]] && grid[p[1]][p[0]] || false;
     };
 
     self.length = function() {
@@ -46,10 +44,23 @@
       return length;
     };
 
+    /* build y, x matrix for pathfinding */
+    self.matrix = function() {
+      var matrix = [];
+      for (var y = 0; y < app.state.stageSize[1]; y++) {
+        matrix[y] = [];
+        for (var x = 0; x < app.state.stageSize[0]; x++) {
+          matrix[y][x] = self.get([x, y]) ? 1 : 0;
+        }
+        // console.log(matrix[y]);
+      }
+      return matrix;
+    };
+
     /* Add position to grid */
     function add(p, type) {
-      if (grid[p[0]] == undefined) grid[p[0]] = [];
-      grid[p[0]][p[1]] = type;
+      if (grid[p[1]] == undefined) grid[p[1]] = [];
+      grid[p[1]][p[0]] = type;
     }
 
     function remove(p, type) {

@@ -8,7 +8,6 @@ var Snake = Snake || {};
 
     $.extend(self, {
       type: 'players',
-      size: [1, 1],
       position: [0, 0],
       segments: [],
       length: app.state.length
@@ -34,7 +33,7 @@ var Snake = Snake || {};
     };
 
     self.checkHit = function() {
-      var cell = app.grid.occupied(self.position);
+      var cell = app.grid.get(self.position);
 
       switch (cell) {
         case 'players':

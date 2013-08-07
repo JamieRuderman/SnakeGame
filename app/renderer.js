@@ -13,17 +13,22 @@
     };
 
     // dev
-    self.path = function() {
-      var path = app.ai.find([1,1], [5,5]);
-      for (var i = path.length; i--;) {
-        hexR = (256 - (path[i][2] + 1) * 16).toString(16);
-        context.fillStyle = '#' + hexR + '0000';
-        fillBlock(path[i], [1,1]);
-      }
+    self.path = function(position) {
+      context.globalAlpha = 0.1;
+      context.fillStyle = color.points;
+      fillBlock(position, [1,1]);
+      context.globalAlpha = 1;
     };
 
     self.draw = function() {
       self.clear();
+      // dev
+      app.bots.collection(function(bot) {
+        bot.eachPath(function(position) {
+          self.path(position);
+        });
+      });
+      // main
       app.grid.each(function(type, position) {
         self[type](position);
       });
@@ -64,6 +69,9 @@
       context.fillStyle = color.background;
       context.strokeStyle = color.borders;
       strokeBlock(position, [1,1]);
+      // context.font = '9pt Inconsolata';
+      // context.fillStyle = color.players;
+      // context.fillText(position[0] + '-' + position[1], scale(position[0]), scale(position[1]) + 12);
     };
 
     self.clear = function() {

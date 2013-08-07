@@ -21,6 +21,43 @@ var Snake = Snake || {};
       }
     };
 
+    self.grow = function(from, turn) {
+      var position = !!from && from.slice() || app.hit.randomFree(),
+          newDirection = direction,
+          seed = Math.random(),
+          change, cell, point;
+
+      if (seed > self.turnChance || turn) {
+        change = pickDirection();
+        newDirection = app.hit.noReverse(newDirection, change);
+      }
+
+      position = app.hit.move(newDirection, position);
+      cell = app.grid.get(position);
+
+      // avoid occupied
+      if (cell && cell != 'points') {
+        if (dead()) {
+          self.die();
+        } else {
+          self.grow(self.position, true); // recursion
+        }
+      }
+      // move
+      else {
+        // point
+        if (cell == 'points') {
+          app.points.score(position);
+          app.state.score -= app.state.scorePointValue;
+          app.audio.play('steal');
+        }
+        self.position = position;
+        direction = newDirection;
+        self.addSegment();
+        self.resetDirections();
+      }
+    };
+
     self.init();
 
     return self;

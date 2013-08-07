@@ -7,7 +7,6 @@ var Snake = Snake || {};
     var self = {
           type: 'points',
           points: [],
-          size: [1, 1],
           length: app.state.length
         },
         handle = {};
@@ -16,7 +15,7 @@ var Snake = Snake || {};
       app.events.register(handle);
     };
 
-    self.score = function(position) {
+    self.hit = function(position) {
       self.remove(position);
       self.add();
     };
@@ -44,14 +43,23 @@ var Snake = Snake || {};
       }
     };
 
-    handle.score = function(position) {
-      self.each(function(point) {
-        // hit
-        if (position[0] == point[0] && position[1] == point[1]) {
-          self.score(position);
-          app.state.score += app.state.scorePointValue;
-        }
+    /* TODO: Find closest point to a position */
+    self.getClosest = function(position) {
+      var point = false;
+      self.each(function(p) {
+        point = p;
       });
+      return point;
+    };
+
+    handle.score = function(position) {
+      app.state.score += app.state.scorePointValue;
+      self.hit(position);
+    };
+
+    handle.steal = function(position) {
+      app.state.score -= app.state.stealPointValue;
+      self.hit(position);
     };
 
     handle.ready = function() {

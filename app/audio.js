@@ -19,7 +19,7 @@ var Snake = Snake || {};
     };
 
     self.start = function() {
-      file.music.play();
+      // file.music.play();
     };
 
     self.play = function(sound) {
@@ -50,8 +50,16 @@ var Snake = Snake || {};
       self.start();
     };
 
+    handle.death = function() {
+      file.kill.play();
+    };
+
     handle.score = function() {
       file.score.play();
+    };
+
+    handle.steal = function() {
+      file.steal.play();
     };
 
     return self;

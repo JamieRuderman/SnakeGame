@@ -5,68 +5,16 @@
           // events: app.events,
           position: null,
           segments: [],
-          size: [1, 1],
           turnChance: 0.9,
           length: app.state.obstaclesLength // {option} number of segments
-        },
-        directions = null,
-        direction = null;
+        };
 
     // implement event callbacks
-    $.extend(self, app.eventTriggers);// unused?
+    $.extend(self, app.eventTriggers);
 
     self.init = function() {
       $.extend(self, options);
       self.reset();
-      self.create();
-    };
-
-    self.create = function() {
-      direction = pickDirection();
-      // self.grow(self.position);
-    };
-
-    self.grow = function(from, turn) {
-      var position = !!from && from.slice() || app.hit.randomFree(),
-          newDirection = direction,
-          seed = Math.random(),
-          change, cell;
-
-      if (seed > self.turnChance || turn) {
-        change = pickDirection();
-        newDirection = app.hit.noReverse(newDirection, change);
-      }
-
-      position = app.hit.move(newDirection, position);
-      cell = app.grid.occupied(position);
-
-      // avoid occupied
-      if (cell && cell != 'points') {
-        if (dead()) {
-          self.die();
-        } else {
-          self.grow(self.position, true); // recursion
-        }
-      }
-      // move
-      else {
-        // point
-        if (cell == 'points') {
-          app.points.score(position);
-          app.state.score -= app.state.scorePointValue;
-          app.audio.play('steal');
-        }
-        self.position = position;
-        direction = newDirection;
-        self.addSegment();
-        resetDirections();
-      }
-    };
-
-    // movement method
-    self.advance = function() {
-      self.grow(self.position);
-      self.checkLength();
     };
 
     // movement method
@@ -87,43 +35,14 @@
       }
     };
 
-    self.die = function() {
-      self.trigger('death', [self.id]);
-    };
-
     self.alive = function() {
       return self.segments.length > 0;
     };
 
     self.reset = function() {
-      self.length = app.state.obstaclesLength;
+      self.length = app.state.length;
       self.segments = [];
-      resetDirections();
     };
-
-    /* Private -------------- */
-
-    function pickDirection() {
-      var seed = Math.random(),
-          available = directions.length,
-          index = Math.ceil(seed * available) -1,
-          pick = null;
-
-      if (index >= 0) {
-        pick = directions[index];
-        directions.splice(index, 1);
-      }
-
-      return pick;
-    }
-
-    function resetDirections() {
-      directions = ['left', 'right', 'up', 'down'];
-    }
-
-    function dead() {
-      return directions.length === 0;
-    }
 
     return self;
   };

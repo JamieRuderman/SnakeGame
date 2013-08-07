@@ -49,7 +49,7 @@ var Snake = Snake || {};
         Math.round(Math.random() * (app.stage.size[0] -1)),
         Math.round(Math.random() * (app.stage.size[1] -1))
       ];
-      return (app.grid.occupied(position)) ? this.randomFree() : position;
+      return (app.grid.get(position)) ? this.randomFree() : position;
     },
 
     noReverse: function(moving, direction) {
