@@ -20,7 +20,7 @@
       players: 1,
       scorePointValue: 10,
       stealPointValue: 5,
-      killPointValue: 40,
+      killPointValue: 30,
       scale: 10,
       score: 0,
       stageSize: [40, 40],
@@ -56,7 +56,7 @@
       },
       medium: {
         fps: 8,
-        fpsToIncrease: 1,
+        fpsToIncrease: 0.01,
         pointsToIncreaseSpeed: 1,
         grow: 10,
         length: 30,

@@ -35,6 +35,14 @@ var Snake = Snake || {};
       frameRate -= (1000 / app.state.fps) / app.state.fps * app.state.fpsToIncrease;
     };
 
+    self.accelerate = function() {
+      frameRate -= 5;
+    };
+
+    self.deccelerate = function() {
+      frameRate += 5;
+    };
+
     handle.pause = function() {
       if (paused) {
         self.start();

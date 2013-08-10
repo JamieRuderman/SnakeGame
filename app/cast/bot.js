@@ -28,18 +28,24 @@ var Snake = Snake || {};
     self.advance = function(noSwitch) {
       var result;
 
+      // GENERAL AI
       switch (self.aiMode) {
         case 'search':
           result = self.search();
-          if (result)
-            this.position = result;
-          else if (!noSwitch)
-            this.setAi('wander');
+          if (result) {
+            self.position = result;
+          }
+          else if (!noSwitch) {
+            self.setAi('wander');
+            self.advance(true);
+          }
           break;
         case 'wander':
           result = self.wander(self.position);
-          if (!result && !noSwitch)
-            this.setAi('search');
+          if (!result && !noSwitch && self.closeBy()) {
+            self.setAi('search');
+            self.advance(true);
+          }
           break;
       }
 
@@ -48,11 +54,29 @@ var Snake = Snake || {};
       self.checkLength();
     };
 
-    //GENERAL AI FUNCTION
+    // GENERAL AI
     self.setAi = function(mode) {
-      console.log('set ai', mode);
-      this.aiMode = mode;
-      this.advance(true);
+      // console.log(this.id, 'set ai', mode);
+      // clear the current path to trigger a new one
+      self.path = [];
+      self.resetDirections();
+      self.aiMode = mode;
+    };
+
+    // GENERAL AI
+    self.closeBy = function() {
+      var stage = (app.state.stageSize[0] + app.state.stageSize[1]) / 2,
+          close = stage / 2, // 50% of stage is close
+          point = app.points.getClosest(),
+          distance = self.distance(self.position, point);
+      return close > distance;
+    };
+
+    // GENERAL AI - euclidean distance calculation
+    self.distance = function(a, b) {
+      var x = a[0] - b[0],
+          y = a[1] - b[1];
+      return Math.sqrt(x * x + y * y);
     };
 
     self.checkHit = function() {
@@ -67,7 +91,7 @@ var Snake = Snake || {};
             self.die();
           break;
         case 'points':
-          // self.length += app.state.grow;
+          self.length += app.state.grow;
           app.events.trigger('steal', self.position);
       }
     };
@@ -78,9 +102,16 @@ var Snake = Snake || {};
       self.trigger('death', [self.id]);
     };
 
-    handle.score = function() {
-      // clear the current path to trigger a new one
-      self.path = [];
+    // GENERAL AI
+    handle.steal = handle.score = function() {
+      // only if they are within 33% of the stage size
+      if (self.closeBy()) {
+        self.setAi('search');
+      }
+      else {
+        self.setAi('wander');
+      }
+
     };
 
     handle.reset = function() {

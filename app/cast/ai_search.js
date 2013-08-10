@@ -4,7 +4,10 @@ var Snake = Snake || {};
 
   app.aiSearch = {
 
-    finder: new PF.AStarFinder(),
+    // finder: new PF.AStarFinder(),
+    finder: new PF.BestFirstFinder({
+      heuristic: PF.Heuristic.manhattan
+    }),
     pathIndex: 0,
     path: [],
 

@@ -32,8 +32,7 @@ var Snake = Snake || {};
         if (this.dead()) {
           this.die();
         } else {
-          if (this.directions.length < 3) console.log(this.directions.length);
-          if (this.directions.length < 3) this.worried = true;
+          if (this.directions.length < 4) this.worried = true;
           this.wander(this.position, true); // recursion - stay wandering
           return this.worried;
         }

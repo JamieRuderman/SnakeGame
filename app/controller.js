@@ -5,6 +5,7 @@ var Snake = Snake || {};
   app.Controller = function() {
     var self = {},
         handle = {},
+        keydown = false,
         direction, moving;
 
     self.init = function() {
@@ -13,18 +14,30 @@ var Snake = Snake || {};
     };
 
     self.move = function() {
+      self.speedCheck();
       direction = app.hit.noReverse(moving, direction);
-      moving = direction;
+      moving = direction || moving;
       app.players.collection(function(player) {
-        player.advance(direction);
+        player.advance(moving);
       });
       app.bots.collection(function(bot) {
         bot.advance();
       });
+      direction = null;
     };
 
-    self.changeDirection = function(event) {
+    /* prevent same key autorepeat */
+    self.keyHandler = function(event) {
+      if (event.type == 'keydown' && keydown != event.keyCode) {
+        keydown = event.keyCode;
+        self.keydown(event);
+      }
+      else if (event.type == 'keyup') {
+        keydown = false;
+      }
+    };
 
+    self.keydown = function(event) {
       switch (event.keyCode) {
         case 70: // f
           app.state.toggle('fpsDisplay');
@@ -57,12 +70,28 @@ var Snake = Snake || {};
 
     };
 
+    self.speedCheck = function() {
+      var speed = false;
+      if (moving == direction)
+        app.timer.accelerate();
+      else if (
+        (moving == 'left' && direction =='right') ||
+        (moving == 'right' && direction =='left') ||
+        (moving == 'up' && direction =='down') ||
+        (moving == 'down' && direction =='up')
+      ) {
+        app.timer.deccelerate();
+      }
+    };
+
     handle.gameover = function() {
-      $(window).off('keydown', self.changeDirection);
+      $(window).off('keydown', self.keyHandler);
+      $(window).off('keyup', self.keyHandler);
     };
 
     handle.reset = function() {
-      $(window).on('keydown', self.changeDirection);
+      $(window).on('keydown', self.keyHandler);
+      $(window).on('keyup', self.keyHandler);
       app.state.score = 0;
       direction = app.state.direction;
     };
