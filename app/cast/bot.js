@@ -10,6 +10,7 @@ var Snake = Snake || {};
 
     $.extend(self, {
       type:'bots',
+      display: 'Bot',
       length: app.state.length,
       turnChance: 0.90,
       aiMode: 'wander'  // search || wander
@@ -22,7 +23,7 @@ var Snake = Snake || {};
 
     self.init = function() {
       parent.init();
-      app.events.register(handle);
+      app.events.register(handle,'game');
     };
 
     self.advance = function(noSwitch) {
@@ -92,13 +93,14 @@ var Snake = Snake || {};
           break;
         case 'points':
           self.length += app.state.grow;
+          app.state.scores[self.id] += app.state.stealPointValue;
+          console.log('steal', app.state.scores[self.id]);
           app.events.trigger('steal', self.position);
       }
     };
 
     self.die = function() {
       app.audio.play('kill');
-      app.state.score += app.state.killPointValue;
       self.trigger('death', [self.id]);
     };
 
@@ -115,6 +117,7 @@ var Snake = Snake || {};
     };
 
     handle.reset = function() {
+      app.state.scores[self.id] = 0;
       self.length = app.state.length;
       self.segments = [];
       self.path = [];

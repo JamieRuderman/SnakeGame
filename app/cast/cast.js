@@ -23,16 +23,18 @@
       }
     };
 
+    /* Iterates over all segments in all members of cast UNUSED? */
     self.each = function(callback) {
       self.collection(function(member, index) {
-        if (member) { // really?
+        // if (member) { // really?
           member.each(function(segment) {
             callback(segment, index);
           });
-        }
+        // }
       });
     };
 
+    /* Iterate over selected type of members in cast */
     self.select = function(type, callback) {
       self.collection(function(member) {
         if (member.type == type) {
@@ -41,6 +43,7 @@
       });
     };
 
+    /* Removes a member of the cast */
     self.remove = function(id) {
       var target = false;
       self.collection(function(member, i) {
@@ -62,7 +65,7 @@
       }
     }
 
-    /* add members to cast and provide global name */
+    /* Add members to cast and provide global name */
     function cast(type) {
       var members = [],
           count = app.state[type],
@@ -83,7 +86,8 @@
       app[type] = members;
       app[type].collection = function(callback) {
         self.select(type, callback);
-      }
+      };
+
     }
 
     init();

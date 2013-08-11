@@ -12,7 +12,7 @@ var Snake = Snake || {};
         handle = {};
 
     self.init = function() {
-      app.events.register(handle);
+      app.events.register(handle,'game');
     };
 
     self.hit = function(position) {
@@ -52,18 +52,15 @@ var Snake = Snake || {};
       return point;
     };
 
-    handle.score = function(position) {
-      app.state.score += app.state.scorePointValue;
+    handle.score = function(position, id) {
       self.hit(position);
     };
 
-    handle.steal = function(position) {
-      app.state.score -= app.state.stealPointValue;
+    handle.steal = function(position, id) {
       self.hit(position);
     };
 
     handle.ready = function() {
-      console.log('ready');
       self.add();
     };
 

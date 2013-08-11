@@ -2,19 +2,21 @@ var Snake = Snake || {};
 
 (function(app){
 
-  app.Player = function() {
-    var self = new app.Member(),
+  app.Player = function(options) {
+    var self = new app.Member(options),
         handle = {};
 
     $.extend(self, {
       type: 'players',
+      display: 'Player',
       position: [0, 0],
       segments: [],
       length: app.state.length
     });
 
     function init() {
-      app.events.register(handle);
+      $.extend(self, options);
+      app.events.register(handle,'game');
       self.center();
     }
 
@@ -44,11 +46,13 @@ var Snake = Snake || {};
           break;
         case 'points':
           self.length += app.state.grow;
+          app.state.scores[self.id] += app.state.scorePointValue;
           app.events.trigger('score', self.position);
       }
     };
 
     handle.reset = function() {
+      app.state.scores[self.id] = 0;
       self.length = app.state.length;
       self.segments = [];
       self.center();

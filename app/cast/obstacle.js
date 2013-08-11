@@ -36,7 +36,7 @@ var Snake = Snake || {};
       cell = app.grid.get(position);
 
       // avoid occupied
-      if (cell && cell != 'points') {
+      if (cell) {
         if (dead()) {
           self.die();
         } else {
@@ -45,12 +45,6 @@ var Snake = Snake || {};
       }
       // move
       else {
-        // point
-        if (cell == 'points') {
-          app.points.score(position);
-          app.state.score -= app.state.scorePointValue;
-          app.audio.play('steal');
-        }
         self.position = position;
         direction = newDirection;
         self.addSegment();

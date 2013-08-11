@@ -12,23 +12,23 @@ var Snake = Snake || {};
         interval = 0,
         counter = 0,
         longest = 0,
-        shortest = Infinity,
-        paused = false;
+        shortest = Infinity;
 
     self.init = function() {
-      app.events.register(handle);
+      app.events.register(handle,'game');
+      app.state.paused = false;
       refresh();
     };
 
     self.start = function() {
+      app.state.paused = false;
       requestAnimationFrame(loop);
       self.ready = false;
-      paused = false;
     };
 
     self.stop = function() {
+      app.state.paused = true;
       counter = 0;
-      paused = true;
     };
 
     self.increase = function() {
@@ -44,7 +44,8 @@ var Snake = Snake || {};
     };
 
     handle.pause = function() {
-      if (paused) {
+      console.log('pause', app.state.paused);
+      if (app.state.paused) {
         self.start();
       } else {
         self.stop();
@@ -53,14 +54,17 @@ var Snake = Snake || {};
 
     handle.score = function() {
       // every set number of points go faster
-      if (app.state.score % (app.state.scorePointValue * app.state.pointsToIncreaseSpeed) === 0) {
-        self.increase();
-      }
+
+      // TODO: refactor to count score events...
+
+      // if (app.state.scores % (app.state.scorePointValue * app.state.pointsToIncreaseSpeed) === 0) {
+      //   self.increase();
+      // }
     };
 
     handle.reset = function() {
       self.stop();
-      paused = false;
+      app.state.paused = false;
       frameRate = 1000 / app.state.fps;
       self.ready = true;
       refresh();
@@ -79,12 +83,12 @@ var Snake = Snake || {};
       interval = time;
       frame(elapsed);
 
-      if (!paused) {
+      if (!app.state.paused) {
         setTimeout(function() {
           requestAnimationFrame(loop);
         }, frameRate);
       }
-    };
+    }
 
     function frame(elapsed) {
 
@@ -130,12 +134,12 @@ var Snake = Snake || {};
 
       refresh();
 
-    };
+    }
 
     function refresh() {
       app.grid.make();
       app.renderer.draw();
-      app.display.update();
+      app.display.refresh();
     }
 
     self.init();

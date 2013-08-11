@@ -8,9 +8,13 @@
       app.state.init();
       app.menu.init();
       app.audio.init();
+      app.input.init();
     };
 
     self.newgame = function() {
+      // removes an existing game events
+      app.events.deregister('game');
+
       app.stage = new app.Stage();
       app.grid = new app.Grid();
       app.points = new app.Point();
@@ -27,7 +31,7 @@
       app.timer = new app.Timer();
       app.controller = new app.Controller();
 
-      app.events.trigger('ready');
+      app.events.trigger('reset');
     };
 
     $(document).ready(function() {

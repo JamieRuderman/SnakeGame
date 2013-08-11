@@ -1,5 +1,3 @@
-var Snake = Snake || {};
-
 /*
   game modes ideas
     adventure - explore and find items
@@ -20,8 +18,7 @@ var Snake = Snake || {};
     var self = {},
         handle = {},
         menus = {},
-        select = {},
-        paused = false;
+        select = {};
 
     self.init = function() {
       menus = {
@@ -43,20 +40,21 @@ var Snake = Snake || {};
       paused = false;
     };
 
-    handle.xpause = function() {
-      if (paused) {
-        paused = false;
+    handle.pause = function() {
+      if (app.state.paused) {
         hide('pause');
       }
       else {
-        paused = true;
         show('pause');
       }
     };
 
+    /* menu button selection handlers */
+
     select.begin = function(event) {
       hide('begin');
       app.state.set(event.target.name);
+
       app.start.newgame();
     };
 
@@ -94,4 +92,4 @@ var Snake = Snake || {};
 
   })();
 
-})(Snake);
+})(Snake || {});

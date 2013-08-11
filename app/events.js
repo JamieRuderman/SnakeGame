@@ -7,18 +7,18 @@
 
     events: {},
 
-    on: function(name, callback) {
+    on: function(name, callback, tag) {
       var ev = this.events[name];
       if (typeof callback == 'function') {
         this.events[name] = ev || [];
-        this.events[name].push(callback);
+        this.events[name].push({tag: tag || 'none', callback: callback});
       }
     },
 
     off: function(name, callback) {
       var ev = this.events[name];
       if (callback && ev) ev.splice(ev.indexOf(callback), 1);
-      if (!callback || ev.length === 0) delete this.events[name];
+      if (!callback || (ev && ev.length === 0)) delete this.events[name];
     },
 
     trigger: function(name) {
@@ -26,14 +26,30 @@
           args = Array.prototype.slice.call(arguments, 1);
       if (ev) {
         for (i = 0, len = ev.length; i < len; i++) {
-          ev[i].apply(ev, args);
+          ev[i].callback.apply(ev, args);
         }
       }
     },
 
-    register: function(handles) {
+    register: function(handles, tag) {
       for (var handle in handles) {
-        this.on(handle, handles[handle]);
+        this.on(handle, handles[handle], tag);
+      }
+    },
+
+    deregister: function(tag) {
+      var ev = this.events;
+      if (tag) {
+        for (var name in this.events) {
+          for (var i = ev[name].length; i--;) {
+            if (ev[name][i].tag == tag) {
+              ev[name].splice(i, 1);
+            }
+          }
+        }
+      }
+      else {
+        this.events = {};
       }
     },
 

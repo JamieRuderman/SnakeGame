@@ -5,42 +5,61 @@
     var self = {},
         value = {},
         el = {},
+        handle = {},
         fpsEl,
         state = app.state;
 
-    /* updates an element if the value has changed */
-    self.update = function() {
-
+    self.refresh = function() {
       fps();
+      // scores
+      update(state.scores);
+    };
 
-      for (var key in el) {
-        // if changed
-        if (changed(key)) {
-          el[key].text(state[key]);
-        }
-      }
+    self.add = function(target, selector, label) {
+      el[selector] = $('<span></span>');
+      $('.'+ target).append(label).append(el[selector]);
     };
 
     /* Private -------------- */
 
     function init() {
-      el.score = $('.score');
+      // Create scores display on the el obj
+      $('.scores').empty();
+      app.cast.collection(function(member) {
+        if (member.type == 'bots' || member.type == 'players') {
+          self.add('scores', member.id, member.display);
+          state.scores[member.id] = 0;
+        }
+      });
+
+      self.add('controls', 'paused');
+
       // independant of the el object for performance
       fpsEl = $('.fps');
       fpsEl.toggle(app.state.fpsDisplay);
     }
 
-    function changed(key) {
-      if (value[key] !== state[key]) {
-        value[key] = state[key];
+    /* updates an element if the value has changed in the state */
+    function update(path) {
+      for (var key in el) {
+        // if changed
+        if (changed(path, key)) {
+          el[key].text(path[key]);
+        }
+      }
+    }
+
+    function changed(path, key) {
+      if (value[key] !== path[key]) {
+        value[key] = path[key];
         return true;
       }
       return false;
     }
 
     function fps() {
-      if (changed('fpsDisplay')) {
-        fpsEl.toggle(app.state.fpsDisplay);
+      if (changed(state, 'fpsDisplay')) {
+        fpsEl.toggle(state.fpsDisplay);
       }
       if (state.fpsDisplay) {
         fpsEl.text('fps:' + app.timer.fps.cur +

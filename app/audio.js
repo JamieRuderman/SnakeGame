@@ -19,7 +19,7 @@ var Snake = Snake || {};
     };
 
     self.start = function() {
-      // file.music.play();
+      self.play('music');
     };
 
     self.play = function(sound) {
@@ -27,9 +27,11 @@ var Snake = Snake || {};
       file[sound].play();
     };
 
+    /* Event handling ------ */
+
     handle.pause = function() {
-      if (file.music.paused) {
-        file.music.play();
+      if (app.state.paused) {
+        self.play('music');
       }
       else {
         file.music.pause();
@@ -37,7 +39,7 @@ var Snake = Snake || {};
     };
 
     handle.gameover = function() {
-      file.gameover.play();
+      self.play('gameover');
       file.music.pause();
     };
 
@@ -51,15 +53,15 @@ var Snake = Snake || {};
     };
 
     handle.death = function() {
-      file.kill.play();
+      self.play('kill');
     };
 
     handle.score = function() {
-      file.score.play();
+      self.play('score');
     };
 
     handle.steal = function() {
-      file.steal.play();
+      self.play('steal');
     };
 
     return self;

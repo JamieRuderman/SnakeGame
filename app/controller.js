@@ -1,16 +1,15 @@
-var Snake = Snake || {};
-
 (function(app){
 
   app.Controller = function() {
     var self = {},
         handle = {},
         keydown = false,
+        locked = false,
         direction, moving;
 
     self.init = function() {
       handle.reset();
-      app.events.register(handle);
+      app.events.register(handle,'game');
     };
 
     self.move = function() {
@@ -24,17 +23,6 @@ var Snake = Snake || {};
         bot.advance();
       });
       direction = null;
-    };
-
-    /* prevent same key autorepeat */
-    self.keyHandler = function(event) {
-      if (event.type == 'keydown' && keydown != event.keyCode) {
-        keydown = event.keyCode;
-        self.keydown(event);
-      }
-      else if (event.type == 'keyup') {
-        keydown = false;
-      }
     };
 
     self.keydown = function(event) {
@@ -84,21 +72,34 @@ var Snake = Snake || {};
       }
     };
 
+    /* Event handling ----- */
+
+    /* Prevent same key autorepeat */
+    handle.keydown = handle.keyup = function(event) {
+      if (locked) return;
+
+      if (event.type == 'keydown' && keydown != event.keyCode) {
+        keydown = event.keyCode;
+        self.keydown(event);
+      }
+      else if (event.type == 'keyup') {
+        keydown = false;
+      }
+    };
+
     handle.gameover = function() {
-      $(window).off('keydown', self.keyHandler);
-      $(window).off('keyup', self.keyHandler);
+      locked = true;
     };
 
     handle.reset = function() {
-      $(window).on('keydown', self.keyHandler);
-      $(window).on('keyup', self.keyHandler);
-      app.state.score = 0;
+      locked = false;
       direction = app.state.direction;
     };
 
     self.init();
 
     return self;
+
   };
 
 })(Snake || {});

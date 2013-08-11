@@ -65,10 +65,17 @@ hr {
   left: 50%;
 }
 .controls {
-  padding: 14px;
   color: #0ff;
 }
-.score {}
+.scores span {
+  padding: 2px 6px;
+  font-weight: 800;
+  line-height: 24px;
+  margin-right: 20px;
+}
+  .scores span + span {
+    border-left: none;
+  }
 .fps {
   font-size: 0.8em;
   float: right;
