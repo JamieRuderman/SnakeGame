@@ -26,7 +26,7 @@
     };
 
     self.addSegment = function() {
-      self.segments.unshift(self.position.slice());
+      self.position && self.segments.unshift(self.position.slice());
     };
 
     self.each = function(callback) {

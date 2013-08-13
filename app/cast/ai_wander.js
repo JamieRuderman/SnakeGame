@@ -15,7 +15,6 @@ var Snake = Snake || {};
           change, cell, point;
 
       if (!position) {
-        console.log('random position!');
         position = app.hit.randomFree();
       }
 
@@ -29,7 +28,7 @@ var Snake = Snake || {};
 
       // avoid occupied
       if (cell && cell != 'points') {
-        if (this.dead()) {
+        if (this.noMoves()) {
           this.die();
         } else {
           if (this.directions.length < 4) this.worried = true;
@@ -48,7 +47,7 @@ var Snake = Snake || {};
       }
     },
 
-    dead: function() {
+    noMoves: function() {
       return this.directions.length === 0;
     },
 

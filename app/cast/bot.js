@@ -2,82 +2,53 @@ var Snake = Snake || {};
 
 (function(app){
 
+// TODO: make defaults settings and apply defaults method
+
   app.Bot = function(options) {
 
     var self = new app.Member(options),
         handle = {},
-        size = app.state.stageSize;
+        size = app.state.stageSize,
+        respawnCount = 0;
 
     $.extend(self, {
       type:'bots',
       display: 'Bot',
       length: app.state.length,
       turnChance: 0.90,
-      aiMode: 'wander'  // search || wander
+      dead: false,
+      respawn: true
     });
 
     // implements ai
-    $.extend(self, app.aiSearch, app.aiWander);
+    $.extend(self, app.ai, app.aiSearch, app.aiWander);
 
     parent.init = self.init;
 
     self.init = function() {
+      console.log('bot init', self);
       parent.init();
       app.events.register(handle,'game');
     };
 
     self.advance = function(noSwitch) {
-      var result;
+      if (self.respawning()) return;
 
-      // GENERAL AI
-      switch (self.aiMode) {
-        case 'search':
-          result = self.search();
-          if (result) {
-            self.position = result;
-          }
-          else if (!noSwitch) {
-            self.setAi('wander');
-            self.advance(true);
-          }
-          break;
-        case 'wander':
-          result = self.wander(self.position);
-          if (!result && !noSwitch && self.closeBy()) {
-            self.setAi('search');
-            self.advance(true);
-          }
-          break;
-      }
-
+      self.aiAdvance();
       self.checkHit();
       self.addSegment();
       self.checkLength();
     };
 
-    // GENERAL AI
-    self.setAi = function(mode) {
-      // console.log(this.id, 'set ai', mode);
-      // clear the current path to trigger a new one
-      self.path = [];
-      self.resetDirections();
-      self.aiMode = mode;
-    };
+    self.respawning = function() {
+      if (!self.dead) return false;
 
-    // GENERAL AI
-    self.closeBy = function() {
-      var stage = (app.state.stageSize[0] + app.state.stageSize[1]) / 2,
-          close = stage / 2, // 50% of stage is close
-          point = app.points.getClosest(),
-          distance = self.distance(self.position, point);
-      return close > distance;
-    };
+      if (++respawnCount > app.state.respawnFrameDelay) {
+        respawnCount = 0;
+        self.dead = false;
+      }
 
-    // GENERAL AI - euclidean distance calculation
-    self.distance = function(a, b) {
-      var x = a[0] - b[0],
-          y = a[1] - b[1];
-      return Math.sqrt(x * x + y * y);
+      return true;
     };
 
     self.checkHit = function() {
@@ -88,32 +59,33 @@ var Snake = Snake || {};
         case 'obstacles':
         case 'bots':
         case 'borders':
-            console.log('die');
             self.die();
           break;
         case 'points':
           self.length += app.state.grow;
           app.state.scores[self.id] += app.state.stealPointValue;
-          console.log('steal', app.state.scores[self.id]);
           app.events.trigger('steal', self.position);
       }
     };
 
     self.die = function() {
       app.audio.play('kill');
-      self.trigger('death', [self.id]);
+      self.dead = true;
+      self.awareness += ((Math.PI/2) - self.awareness) * 0.5;
+      handle.reset();
     };
 
-    // GENERAL AI
+    /* Event handling ----- */
+
     handle.steal = handle.score = function() {
-      // only if they are within 33% of the stage size
+      if (self.dead) return;
+
       if (self.closeBy()) {
-        self.setAi('search');
+        self.aiSet('search');
       }
       else {
-        self.setAi('wander');
+        self.aiSet('wander');
       }
-
     };
 
     handle.reset = function() {
@@ -121,6 +93,7 @@ var Snake = Snake || {};
       self.length = app.state.length;
       self.segments = [];
       self.path = [];
+      self.position = null;
     };
 
     self.init();
@@ -129,13 +102,3 @@ var Snake = Snake || {};
   };
 
 })(Snake);
-
-
-/*
-
-    self.create = function() {
-      direction = pickDirection();
-    };
-
-
-*/

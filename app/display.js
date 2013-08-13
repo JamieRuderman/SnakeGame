@@ -20,9 +20,22 @@
       $('.'+ target).append(label).append(el[selector]);
     };
 
+    /* Event handling ----- */
+
+    handle.gameover = function() {
+      $('.finalscores').empty();
+      app.cast.collection(function(member) {
+        if (member.type == 'bots' || member.type == 'players') {
+          $('.finalscores').append(member.display).append('<span>'+ state.scores[member.id] +'</span>');
+        }
+      });
+    };
+
     /* Private -------------- */
 
     function init() {
+      app.events.register(handle);
+
       // Create scores display on the el obj
       $('.scores').empty();
       app.cast.collection(function(member) {
@@ -31,8 +44,6 @@
           state.scores[member.id] = 0;
         }
       });
-
-      self.add('controls', 'paused');
 
       // independant of the el object for performance
       fpsEl = $('.fps');

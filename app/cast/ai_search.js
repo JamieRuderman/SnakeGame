@@ -23,13 +23,7 @@ var Snake = Snake || {};
         nextPos = this.followPath();
       }
 
-      if (!nextPos || this.positionOccupied(nextPos)) {
-        // this.deathCheck();
-        return false;
-      }
-      else {
-        return nextPos;
-      }
+      return (!nextPos || this.positionOccupied(nextPos)) ? false : nextPos;
     },
 
     /* Uses https://github.com/qiao/PathFinding.js */

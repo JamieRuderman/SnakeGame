@@ -44,7 +44,6 @@ var Snake = Snake || {};
     };
 
     handle.pause = function() {
-      console.log('pause', app.state.paused);
       if (app.state.paused) {
         self.start();
       } else {

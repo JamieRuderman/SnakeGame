@@ -22,6 +22,7 @@
       scorePointValue: 10,
       stealPointValue: 10,
       killPointValue: 30,
+      respawnFrameDelay: 20,
       scale: 10,
       scores: {},
       stageSize: [40, 40],

@@ -27,20 +27,24 @@ var Snake = Snake || {};
       file[sound].play();
     };
 
+    self.stop = function() {
+      file.music.pause();
+    };
+
     /* Event handling ------ */
 
     handle.pause = function() {
       if (app.state.paused) {
-        self.play('music');
+        self.start();
       }
       else {
-        file.music.pause();
+        self.stop();
       }
     };
 
     handle.gameover = function() {
       self.play('gameover');
-      file.music.pause();
+      self.stop();
     };
 
     handle.ready = function() {
