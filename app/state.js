@@ -54,7 +54,7 @@
         borders: 1,
         bots: 1,
         scale: 20,
-        stageSize: [20, 20]
+        stageSize: [30, 30]
       },
       medium: {
         fps: 8,

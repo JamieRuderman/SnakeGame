@@ -26,7 +26,6 @@ var Snake = Snake || {};
     parent.init = self.init;
 
     self.init = function() {
-      console.log('bot init', self);
       parent.init();
       app.events.register(handle,'game');
     };
@@ -69,10 +68,14 @@ var Snake = Snake || {};
     };
 
     self.die = function() {
-      app.audio.play('kill');
       self.dead = true;
+      app.audio.play('kill');
+      app.state.scores[self.id] -= app.state.stealPointValue;
       self.awareness += ((Math.PI/2) - self.awareness) * 0.5;
-      handle.reset();
+      self.length = app.state.length;
+      self.segments = [];
+      self.path = [];
+      self.position = null;
     };
 
     /* Event handling ----- */

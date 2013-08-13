@@ -26,7 +26,7 @@
       $('.finalscores').empty();
       app.cast.collection(function(member) {
         if (member.type == 'bots' || member.type == 'players') {
-          $('.finalscores').append(member.display).append('<span>'+ state.scores[member.id] +'</span>');
+          $('.finalscores').append(member.display).append('<span>'+ state.scores[member.id] +'</span> &nbsp;');
         }
       });
     };

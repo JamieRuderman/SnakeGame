@@ -84,8 +84,9 @@ hr {
 
 .finalscores {
   font-size: 160%;
+  font-weight: 200;
 }
   .finalscores span {
-    font-weight: 400;
-    margin: 0 18px 0 4px;
+    font-weight: 500;
+    margin: 0 10px 0 10px;
   }
