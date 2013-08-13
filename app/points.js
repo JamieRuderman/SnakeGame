@@ -22,7 +22,7 @@ var Snake = Snake || {};
 
     self.add = function(point) {
       if (app.hit.full())
-        app.controller.gameover();
+        app.events.trigger('gameover');
       else
         self.points.push(point || app.hit.randomFree());
     };

@@ -7,7 +7,7 @@
 
     /* Add cast member positions to grid */
     self.make = function() {
-      grid = [];
+      grid = app.digitizer.map('map').slice();
 
       app.cast.collection(function(member) {
         member.each(function(p) {

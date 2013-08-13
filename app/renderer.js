@@ -74,6 +74,12 @@
       // context.fillText(position[0] + '-' + position[1], scale(position[0]), scale(position[1]) + 12);
     };
 
+    self.wall = function(position) {
+      context.fillStyle = color.borders;
+      context.strokeStyle = color.borders;
+      strokeBlock(position, [1,1]);
+    };
+
     self.clear = function() {
       context.fillStyle = color.background;
       context.strokeStyle = color.borders;

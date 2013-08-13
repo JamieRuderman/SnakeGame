@@ -9,6 +9,7 @@
       app.menu.init();
       app.audio.init();
       app.input.init();
+      app.digitizer.init();
     };
 
     self.newgame = function() {
