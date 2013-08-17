@@ -1,11 +1,16 @@
 (function(app){
 
+  /*
+    Members are made up of segments
+      position [x, y, d]
+        x position
+        y position
+        d direction (up, right, down, left)
+  */
   app.Member = function(options) {
     var self = {
-          // events: app.events,
           position: null,
           segments: [],
-          turnChance: 0.9,
           length: app.state.obstaclesLength // {option} number of segments
         };
 

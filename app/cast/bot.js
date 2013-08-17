@@ -15,7 +15,6 @@ var Snake = Snake || {};
       type:'bots',
       display: 'Bot',
       length: app.state.length,
-      turnChance: 0.90,
       dead: false,
       respawn: true
     });
@@ -27,7 +26,7 @@ var Snake = Snake || {};
 
     self.init = function() {
       parent.init();
-      app.events.register(handle,'game');
+      app.events.register(handle, 'game');
     };
 
     self.advance = function(noSwitch) {
@@ -53,7 +52,7 @@ var Snake = Snake || {};
     self.checkHit = function() {
       var cell = app.grid.get(self.position);
 
-      switch (cell) {
+      switch (cell[1]) {
         case 'players':
         case 'obstacles':
         case 'bots':
@@ -96,7 +95,7 @@ var Snake = Snake || {};
       self.length = app.state.length;
       self.segments = [];
       self.path = [];
-      self.position = null;
+      self.position = app.hit.randomFree();
     };
 
     self.init();

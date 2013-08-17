@@ -24,7 +24,7 @@
     };
 
     /* Iterates over all segments in all members of cast UNUSED? */
-    self.each = function(callback) {
+/*    self.each = function(callback) {
       self.collection(function(member, index) {
         // if (member) { // really?
           member.each(function(segment) {
@@ -32,7 +32,7 @@
           });
         // }
       });
-    };
+    };*/
 
     /* Iterate over selected type of members in cast */
     self.select = function(type, callback) {

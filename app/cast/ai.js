@@ -14,7 +14,7 @@ var Snake = Snake || {};
         case 'search':
           result = this.search();
           if (result) {
-            this.position = result;
+            this.position = app.hit.moveTo(this.position, result);
           }
           else if (!noSwitch) {
             this.aiSet('wander');

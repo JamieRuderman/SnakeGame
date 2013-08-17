@@ -1,5 +1,4 @@
 body {
-  background-color: #000;
   font-family: 'BentonSans', 'Press Start 2P', sans-serif;
   font-weight: 200;
 }
@@ -11,10 +10,10 @@ h1 {
 }
 h2 {
   font-size: 2.4em;
-  color: #fff;
 }
 hr {
-  border-color: #030;
+  border-style: none;
+  height: 1px;
 }
 
 /* -- global styles -- */
@@ -23,13 +22,14 @@ hr {
 }
 .select {
   cursor: pointer;
+  font-weight: 800;
   padding: 0px 20px;
-  color: #0f0;
+  margin: 6px;
+  line-height: 30px;
 }
 .select:hover,
-.select:focus {
-  outline: 1px dotted #050;
-}
+.select:focus {}
+
 .center {
   position: absolute;
   width: 400px;
@@ -43,10 +43,8 @@ hr {
 /* -- elements -- */
 
 .menu {
-  background-color: rgba(0,0,0,0.9);
   border: 1px dotted #030;
   bottom: 0;
-  color: #0f0;
   left: 0;
   line-height: 3em;
   padding: 24px;
@@ -64,18 +62,16 @@ hr {
   top: 50%;
   left: 50%;
 }
-.controls {
-  color: #0ff;
-}
+.controls {}
 .scores span {
   padding: 2px 6px;
   font-weight: 800;
   line-height: 24px;
   margin-right: 20px;
 }
-  .scores span + span {
-    border-left: none;
-  }
+.scores span + span {
+  border-left: none;
+}
 .fps {
   font-size: 0.8em;
   float: right;
@@ -86,7 +82,7 @@ hr {
   font-size: 160%;
   font-weight: 200;
 }
-  .finalscores span {
-    font-weight: 500;
-    margin: 0 10px 0 10px;
-  }
+.finalscores span {
+  font-weight: 500;
+  margin: 0 10px 0 10px;
+}

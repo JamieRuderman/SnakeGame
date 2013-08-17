@@ -4,13 +4,13 @@ var Snake = Snake || {};
 
   app.aiWander = {
 
-    directions: ['left', 'right', 'up', 'down'],
-    direction: null,
+    directions: null,
+    turnChance: 0.9,
     worried: false, // worrying triggers wanting different ai mode
 
     wander: function(from, turn) {
       var position = !!from && from.slice(),
-          newDirection = this.direction,
+          // newDirection = this.direction,
           seed = Math.random(),
           change, cell, point;
 
@@ -19,15 +19,14 @@ var Snake = Snake || {};
       }
 
       if (seed > this.turnChance || turn) {
-        change = this.pickDirection();
-        newDirection = app.hit.noReverse(newDirection, change);
+        position[2] = this.pickDirection(position[2]);
       }
 
-      position = app.hit.move(newDirection, position);
+      position = app.hit.move(position);
       cell = app.grid.get(position);
 
       // avoid occupied
-      if (cell && cell != 'points') {
+      if (cell && cell[1] != 'points') {
         if (this.noMoves()) {
           this.die();
         } else {
@@ -40,7 +39,6 @@ var Snake = Snake || {};
       else {
         this.worried = false;
         this.position = position;
-        this.direction = newDirection;
         this.addSegment();
         this.resetDirections();
         return true;
@@ -51,7 +49,7 @@ var Snake = Snake || {};
       return this.directions.length === 0;
     },
 
-    pickDirection: function() {
+    pickDirection: function(moving) {
       var seed = Math.random(),
           available = this.directions.length,
           index = Math.ceil(seed * available) -1,
@@ -62,11 +60,11 @@ var Snake = Snake || {};
         this.directions.splice(index, 1);
       }
 
-      return pick;
+      return app.hit.noReverse(moving, pick);
     },
 
     resetDirections: function() {
-      this.directions = ['left', 'right', 'up', 'down'];
+      this.directions = app.state.directions.slice();
     }
 
   };

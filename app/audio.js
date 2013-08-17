@@ -19,7 +19,7 @@ var Snake = Snake || {};
     };
 
     self.start = function() {
-      self.play('music');
+      // self.play('music');
     };
 
     self.play = function(sound) {
@@ -28,7 +28,7 @@ var Snake = Snake || {};
     };
 
     self.stop = function() {
-      file.music.pause();
+      // file.music.pause();
     };
 
     /* Event handling ------ */

@@ -9,7 +9,7 @@
 
     self.init = function() {
       handle.reset();
-      app.events.register(handle,'game');
+      app.events.register(handle, 'game');
     };
 
     self.move = function() {

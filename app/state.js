@@ -8,6 +8,7 @@
       bots: 0,
       points: 1,
       direction: 'none',
+      directions: ['left', 'right', 'up', 'down'],
       fpm: 1, // frames per move
       fps: 8, // frames per second
       fpsDisplay: false,
@@ -35,12 +36,22 @@
         step: 0.04
       },
       color: {
-        borders: '#003300',
-        background: '#000000',
-        obstacles: '0000', // Red is dynamic
-        points: '#00ffff',
-        players: '#00ff00',
-        bots: '#AAAAAA'
+        light: {
+          borders: '#18c3e1',    // blue
+          background: '#ffffff', // white
+          obstacles: '#00ffff',
+          points: '#6fba0a',     // lime
+          players: '#FF00FF',    // pink
+          bots: '#7e57ff'        // purple  228DFF // blue
+        },
+        dark: {
+          borders: '#003300',
+          background: '#000000',
+          obstacles: '#ff0000',
+          points: '#00ffff',
+          players: '#00ff00',
+          bots: '#aaaaaa'
+        }
       }
     },
 
@@ -49,9 +60,9 @@
       small: {
         fps: 4,
         grow: 5,
-        length: 20,
+        length: 10,
         pointsToIncreaseSpeed: 20,
-        borders: 1,
+        borders: 0,
         bots: 1,
         scale: 20,
         stageSize: [30, 30]
@@ -68,16 +79,18 @@
         scale: 10,
         stageSize: [60, 60],
         color: {
-          borders: '#003333',
-          background: '#ff0000',
-          obstacles: '0000', // Red is dynamic
-          points: '#00ffff',
-          players: '#ff9900',
-          bots: '#990000'
+          light: {
+            borders: '#003333',
+            background: '#ff0000',
+            obstacles: '0000', // Red is dynamic
+            points: '#00ffff',
+            players: '#ff9900',
+            bots: '#990000'
+          }
         }
       },
       large: {
-        fps: 30,
+        fps: 10,
         grow: 50,
         length: 30,
         borders: 1,

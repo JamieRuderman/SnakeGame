@@ -4,8 +4,8 @@ var Snake = Snake || {};
 
   app.hit = {
 
-    move: function(direction, position) {
-      switch (direction) {
+    move: function(position) {
+      switch (position[2]) {
         case 'left':
           position[0] -= 1;
           break;
@@ -20,6 +20,16 @@ var Snake = Snake || {};
           break;
       }
       return this.wrap(position);
+    },
+
+    /* Adds the direction to the position when moving to an arbitrary point */
+    moveTo: function(from, to) {
+      var direction;
+      if      (from[0] > to[0]) direction = 'left';
+      else if (from[0] < to[0]) direction = 'right';
+      else if (from[1] < to[1]) direction = 'down';
+      else if (from[1] > to[1]) direction = 'up';
+      return [to[0], to[1], direction];
     },
 
     wrap: function(position) {
@@ -47,20 +57,24 @@ var Snake = Snake || {};
     randomFree: function() {
       var position = [
         Math.round(Math.random() * (app.stage.size[0] -1)),
-        Math.round(Math.random() * (app.stage.size[1] -1))
+        Math.round(Math.random() * (app.stage.size[1] -1)),
+        this.randomDirection()
       ];
       return (app.grid.get(position)) ? this.randomFree() : position;
     },
 
+    randomDirection: function() {
+      return app.state.directions[Math.round(Math.random() * 3)];
+    },
+
     noReverse: function(moving, direction) {
-      if (moving == 'left' && direction =='right') return 'left';
-      else if (moving == 'right' && direction =='left') return 'right';
-      else if (moving == 'up' && direction =='down') return 'up';
-      else if (moving == 'down' && direction =='up') return 'down';
+      if      (moving == 'left'  && direction =='right') return 'left';
+      else if (moving == 'right' && direction =='left' ) return 'right';
+      else if (moving == 'up'    && direction =='down' ) return 'up';
+      else if (moving == 'down'  && direction =='up'   ) return 'down';
       return direction;
     },
 
-    // fixme use grid
     full: function() {
       var occupied = app.grid.length(),
           possible = app.state.stageSize[0] * app.state.stageSize[1];

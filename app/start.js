@@ -6,6 +6,7 @@
 
     self.init = function() {
       app.state.init();
+      // app.colors.init();
       app.menu.init();
       app.audio.init();
       app.input.init();

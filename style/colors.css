@@ -1,0 +1,25 @@
+.light {
+  background-color: #ffffff;
+  color: #FF00FF;
+}
+.light hr {
+  background-color: #FF00FF;
+}
+.light h2 {
+  color: #FF00FF;
+}
+.light .menu {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+.light .select {
+  color: #ffffff;
+  background-color: #FF00FF;
+}
+.light .select:hover,
+.light .select:focus {
+  background-color: #18c3e1;
+}
+.light .scores,
+.light .finalscores {
+  color: #7e57ff;
+}

@@ -7,7 +7,7 @@
 
     /* Add cast member positions to grid */
     self.make = function() {
-      grid = app.digitizer.map('map').slice();
+      grid = app.digitizer.map('map').slice();//slice here seems icky
 
       app.cast.collection(function(member) {
         member.each(function(p) {
@@ -15,16 +15,17 @@
         });
       });
 
-      // FIXME: points should be part of cast
+      // FIXME: points should be part of cast?
       app.points.each(function(p) {
         add(p, app.points.type);
       });
     };
 
+    /* Returns each cell as array [x, y, direction, type] */
     self.each = function(callback) {
       for (var y in grid) {
         for (var x in grid[y]) {
-          callback(grid[y][x], [x, y]);
+          callback([x, y, grid[y][x][0], grid[y][x][1]]);
         }
       }
     };
@@ -59,12 +60,8 @@
 
     /* Add position to grid */
     function add(p, type) {
-      if (grid[p[1]] == undefined) grid[p[1]] = [];
-      grid[p[1]][p[0]] = type;
-    }
-
-    function remove(p, type) {
-      // remove from grid
+      if (grid[p[1]] === undefined) grid[p[1]] = [];
+      grid[p[1]][p[0]] = [p[2], type];
     }
 
     return self;
