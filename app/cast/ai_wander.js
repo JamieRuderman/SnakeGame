@@ -4,15 +4,14 @@ var Snake = Snake || {};
 
   app.aiWander = {
 
-    directions: null,
     turnChance: 0.9,
-    worried: false, // worrying triggers wanting different ai mode
+    worried: false,
 
-    wander: function(from, turn) {
+    /* Return value indicates if the ai is worried and wants a new mode */
+    wander: function(from, turn, worried) {
       var position = !!from && from.slice(),
-          // newDirection = this.direction,
           seed = Math.random(),
-          change, cell, point;
+          change, occupied, point;
 
       if (!position) {
         position = app.hit.randomFree();
@@ -23,25 +22,23 @@ var Snake = Snake || {};
       }
 
       position = app.hit.move(position);
-      cell = app.grid.get(position);
+      occupied = app.grid.occupied(position);
 
       // avoid occupied
-      if (cell && cell[1] != 'points') {
+      if (occupied) {
         if (this.noMoves()) {
           this.die();
         } else {
-          if (this.directions.length < 4) this.worried = true;
-          this.wander(this.position, true); // recursion - stay wandering
-          return this.worried;
+          worried = (this.directions.length < 4) ? true : worried; // worried if direction options are running out
+          this.wander(this.position, true, worried); // recursion - stay wandering
+          return worried;
         }
       }
       // move
       else {
-        this.worried = false;
         this.position = position;
-        this.addSegment();
         this.resetDirections();
-        return true;
+        return worried;
       }
     },
 
@@ -53,7 +50,7 @@ var Snake = Snake || {};
       var seed = Math.random(),
           available = this.directions.length,
           index = Math.ceil(seed * available) -1,
-          pick = null;
+          pick = 'none';
 
       if (index >= 0) {
         pick = this.directions[index];

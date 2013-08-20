@@ -5,7 +5,8 @@
       position [x, y, d]
         x position
         y position
-        d direction (up, right, down, left)
+        f direction from (up, right, down, left)
+        t direction to
   */
   app.Member = function(options) {
     var self = {

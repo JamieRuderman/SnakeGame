@@ -23,6 +23,11 @@
       }
     };
 
+    self.length = function() {
+      console.log('cast len', self.array.length);
+      return self.array.length;
+    };
+
     /* Iterates over all segments in all members of cast UNUSED? */
 /*    self.each = function(callback) {
       self.collection(function(member, index) {

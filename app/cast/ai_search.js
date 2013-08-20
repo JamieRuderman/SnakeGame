@@ -4,7 +4,9 @@ var Snake = Snake || {};
 
   app.aiSearch = {
 
-    // finder: new PF.AStarFinder(),
+    // finder: new PF.AStarFinder({
+    //   heuristic: PF.Heuristic.manhattan
+    // }),
     finder: new PF.BestFirstFinder({
       heuristic: PF.Heuristic.manhattan
     }),
@@ -51,7 +53,9 @@ var Snake = Snake || {};
 
     positionOccupied: function(p) {
       var cell = app.grid.get(p);
-      return cell && cell != 'points';
+      return cell && cell.type != 'points';
+    }
+
 /*
     },
     deathCheck: function() {
@@ -86,7 +90,6 @@ var Snake = Snake || {};
       ];
       return adj;
 */
-    }
 
   };
 

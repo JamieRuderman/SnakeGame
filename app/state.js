@@ -27,6 +27,10 @@
       scale: 10,
       scores: {},
       stageSize: [40, 40],
+      sound: {
+        music: false,
+        effects: true
+      },
       volume: {
         gameover: 0.3,
         kill: 0.3,
@@ -93,9 +97,9 @@
         fps: 10,
         grow: 50,
         length: 30,
-        borders: 1,
+        borders: 0,
         obstaclesLength: 50,
-        bots: 3,
+        bots: 20,
         scale: 5,
         stageSize: [170, 170]
       }

@@ -15,6 +15,7 @@ var Snake = Snake || {};
       type:'bots',
       display: 'Bot',
       length: app.state.length,
+      directions: app.state.directions,
       dead: false,
       respawn: true
     });
@@ -52,7 +53,7 @@ var Snake = Snake || {};
     self.checkHit = function() {
       var cell = app.grid.get(self.position);
 
-      switch (cell[1]) {
+      switch (cell.type) {
         case 'players':
         case 'obstacles':
         case 'bots':

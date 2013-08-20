@@ -22,10 +22,12 @@ hr {
 }
 .select {
   cursor: pointer;
+  font-size: 10px;
   font-weight: 800;
-  padding: 0px 20px;
-  margin: 6px;
   line-height: 30px;
+  margin: 6px;
+  padding: 0px 20px;
+  text-transform: uppercase;
 }
 .select:hover,
 .select:focus {}
@@ -63,14 +65,17 @@ hr {
   left: 50%;
 }
 .controls {}
+.scores {
+  /*font-size: 9px;*/
+}
 .scores span {
-  padding: 2px 6px;
   font-weight: 800;
   line-height: 24px;
-  margin-right: 20px;
+  margin-right: 12px;
+  padding: 2px 1px;
 }
 .scores span + span {
-  border-left: none;
+  /*border-left: none;*/
 }
 .fps {
   font-size: 0.8em;
@@ -84,5 +89,4 @@ hr {
 }
 .finalscores span {
   font-weight: 500;
-  margin: 0 10px 0 10px;
 }

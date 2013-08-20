@@ -39,7 +39,7 @@ var Snake = Snake || {};
     self.checkHit = function() {
       var cell = app.grid.get(self.position);
 
-      switch (cell[1]) {
+      switch (cell.type) {
         case 'players':
         case 'obstacles':
         case 'bots':

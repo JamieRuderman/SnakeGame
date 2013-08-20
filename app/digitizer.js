@@ -40,7 +40,12 @@ var Snake = Snake || {};
       for (var y = 0; y < img.width; y++) {
         array[y] = [];
         for (var x = 0; x < img.height; x++) {
-          if (img.data[index] === 0) array[y][x] = ['none', 'borders'];
+          if (img.data[index] === 0)
+            array[y][x] = {
+              from: 'none',
+              to: 'none',
+              type: 'borders'
+            };
           index += 4;
         }
       }

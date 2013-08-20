@@ -5,7 +5,7 @@ var Snake = Snake || {};
   app.ai = {
 
     aiMode: 'wander', // search || wander
-    awareness: 0.5,   // % of stage that is close by
+    awareness: 0.75,   // % of stage that is close by
 
     aiAdvance: function(noSwitch) {
       var result;
@@ -23,7 +23,7 @@ var Snake = Snake || {};
           break;
         case 'wander':
           result = this.wander(this.position);
-          if (!result && !noSwitch && this.closeBy()) {
+          if (result && !noSwitch && this.closeBy()) {
             this.aiSet('search');
             this.aiAdvance(true);
           }

@@ -107,7 +107,7 @@ var Snake = Snake || {};
 
       if (frameRate > 40) {
         // audio can't render faster frame rates
-        app.audio.play('step');
+        // app.audio.play('step'); // DISABLED TILL FULL AUDIO SUPPORT
       }
 
       // advance frame

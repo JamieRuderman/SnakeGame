@@ -16,7 +16,7 @@
     };
 
     self.add = function(target, selector, label) {
-      el[selector] = $('<span></span>');
+      el[selector] = $('<span></span> ');
       $('.'+ target).append(label).append(el[selector]);
     };
 
@@ -34,13 +34,14 @@
     /* Private -------------- */
 
     function init() {
+      var shorten = app.cast.length() > 10;
       app.events.register(handle);
-
+console.log('shorten',shorten);
       // Create scores display on the el obj
       $('.scores').empty();
       app.cast.collection(function(member) {
         if (member.type == 'bots' || member.type == 'players') {
-          self.add('scores', member.id, member.display);
+          self.add('scores', member.id, shorten ? member.display[0] : member.display);
           state.scores[member.id] = 0;
         }
       });

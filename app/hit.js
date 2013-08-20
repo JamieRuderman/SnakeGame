@@ -75,6 +75,16 @@ var Snake = Snake || {};
       return direction;
     },
 
+    opposite: function(direction) {
+      switch (direction) {
+        case 'left' : return 'right';
+        case 'right': return 'left';
+        case 'up'   : return 'down';
+        case 'down' : return 'up';
+      }
+      return 'none';
+    },
+
     full: function() {
       var occupied = app.grid.length(),
           possible = app.state.stageSize[0] * app.state.stageSize[1];

@@ -19,16 +19,22 @@ var Snake = Snake || {};
     };
 
     self.start = function() {
-      // self.play('music');
+      if (app.state.sound.music) {
+        file.music.play();
+      }
     };
 
     self.play = function(sound) {
-      file[sound].currentTime = 0;
-      file[sound].play();
+      if (app.state.sound.effects) {
+        file[sound].currentTime = 0;
+        file[sound].play();
+      }
     };
 
     self.stop = function() {
-      // file.music.pause();
+      if (app.state.sound.music) {
+        file.music.pause();
+      }
     };
 
     /* Event handling ------ */
