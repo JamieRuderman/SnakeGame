@@ -45,6 +45,13 @@
       return self.segments.length > 0;
     };
 
+    self.damage = function() {
+      self.segments.pop();
+      self.length--;
+      if (self.segments.length === 0)
+        app.events.trigger('gameover');
+    };
+
     self.reset = function() {
       self.length = app.state.length;
       self.segments = [];

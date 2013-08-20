@@ -7,6 +7,7 @@
       borders: 0,
       bots: 0,
       points: 1,
+      damage: true,
       direction: 'none',
       directions: ['left', 'right', 'up', 'down'],
       fpm: 1, // frames per move
@@ -97,6 +98,7 @@
         fps: 10,
         grow: 50,
         length: 30,
+        damage: false,
         borders: 0,
         obstaclesLength: 50,
         bots: 20,

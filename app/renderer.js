@@ -1,4 +1,9 @@
 (function(app){
+  /*
+    TODO: 1. separeate background onto another layer an in a separate file which manages redraw.
+          2. draw all lines and stroke them at once (http://www.html5rocks.com/en/tutorials/canvas/performance/)
+  */
+
 
   app.Renderer = function() {
     var self = {},
@@ -17,11 +22,12 @@
     self.draw = function() {
       self.clear();
       // dev
-      app.bots.collection(function(bot) {
-        bot.eachPath(function(p) {
-          self.path(p[0], p[1]);
-        });
-      });
+      // app.bots.collection(function(bot) {
+      //   bot.eachPath(function(p) {
+      //     self.path(p[0], p[1]);
+      //   });
+      // });
+
       // main
       app.grid.each(function(x, y, options) {
         self[options.type](x, y, options);
@@ -29,7 +35,7 @@
     };
 
     // dev
-    self.path = function(x, y, options) {
+    self.path = function(x, y) {
       context.globalAlpha = 0.1;
       context.fillStyle = color.points;
       fillBlock(x, y);
@@ -60,7 +66,7 @@
       // var style = (app.state.scale < 6) ? fillBlock : fillCircle;
       context.fillStyle = color.points;
       context.strokeStyle = color.points;
-      fillBlock(x, y);
+      fillCircle(x, y);
     };
 
     self.obstacles = function(x, y, options) {

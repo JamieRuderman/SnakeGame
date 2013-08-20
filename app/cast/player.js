@@ -21,11 +21,14 @@ var Snake = Snake || {};
     }
 
     self.advance = function(direction) {
-      self.position[2] = direction;
-      self.position = app.hit.move(self.position);
-      self.checkHit();
-      self.addSegment();
-      self.checkLength();
+      var next = self.position.slice();
+      next[2] = direction;
+      next = app.hit.move(next);
+      if (!self.checkHit(next)) {
+        self.position = next;
+        self.addSegment();
+        self.checkLength();
+      }
     };
 
     self.center = function() {
@@ -36,20 +39,23 @@ var Snake = Snake || {};
       ];
     };
 
-    self.checkHit = function() {
-      var cell = app.grid.get(self.position);
+    /* returns true if there was a hit */
+    self.checkHit = function(position) {
+      var cell = app.grid.get(position);
 
       switch (cell.type) {
         case 'players':
         case 'obstacles':
         case 'bots':
         case 'borders':
-          app.events.trigger('gameover');
-          break;
+          app.state.damage ? self.damage() : app.events.trigger('gameover');
+          return true;
+
         case 'points':
           self.length += app.state.grow;
           app.state.scores[self.id] += app.state.scorePointValue;
-          app.events.trigger('score', self.position);
+          app.events.trigger('score', position);
+          return false;
       }
     };
 

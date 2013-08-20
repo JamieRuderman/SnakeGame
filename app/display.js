@@ -36,7 +36,7 @@
     function init() {
       var shorten = app.cast.length() > 10;
       app.events.register(handle);
-console.log('shorten',shorten);
+
       // Create scores display on the el obj
       $('.scores').empty();
       app.cast.collection(function(member) {
