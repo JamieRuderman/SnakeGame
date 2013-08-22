@@ -14,7 +14,7 @@
 
     self.move = function() {
       self.speedCheck();
-      direction = app.hit.noReverse(moving, direction);
+      direction = app.hit.isReverse(moving, direction) ? moving : direction;
       moving = direction || moving;
       app.players.collection(function(player) {
         player.advance(moving);

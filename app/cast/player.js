@@ -23,7 +23,7 @@ var Snake = Snake || {};
     self.advance = function(direction) {
       var next = self.position.slice();
       next[2] = direction;
-      next = app.hit.move(next);
+      next = app.hit.advance(next);
       if (!self.checkHit(next)) {
         self.position = next;
         self.addSegment();
@@ -48,7 +48,7 @@ var Snake = Snake || {};
         case 'obstacles':
         case 'bots':
         case 'borders':
-          app.state.damage ? self.damage() : app.events.trigger('gameover');
+          self.hit();
           return true;
 
         case 'points':
@@ -57,6 +57,10 @@ var Snake = Snake || {};
           app.events.trigger('score', position);
           return false;
       }
+    };
+
+    self.die = function() {
+      app.events.trigger('gameover');
     };
 
     handle.reset = function() {

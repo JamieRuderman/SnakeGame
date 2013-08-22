@@ -5,63 +5,45 @@ var Snake = Snake || {};
   app.aiWander = {
 
     turnChance: 0.9,
-    worried: false,
+    worryChance: 0.5, // worrying all the time can put in situations of infinite loops
 
-    /* Return value indicates if the ai is worried and wants a new mode */
-    wander: function(from, turn, worried) {
-      var position = !!from && from.slice(),
+    /*
+      Wanders forward, avoiding obsticles
+        @return obj {
+          position (array) position - unchanged if no path can be found
+          worried  (bool)  if the ai is worried and wants a new mode
+        }
+    */
+    wander: function(position) {
+      position = position || app.hit.randomFree();
+
+      var nextPos = position.slice(),
           seed = Math.random(),
-          change, occupied, point;
+          worried = false,
+          success = true;
 
-      if (!position) {
-        position = app.hit.randomFree();
+      nextPos = app.hit.advance(nextPos);
+
+      if (seed > this.turnChance || app.grid.isSolid(nextPos)) {
+        nextPos = this.pickAadjacent(position);
+        worried = seed > this.worryChance;
       }
-
-      if (seed > this.turnChance || turn) {
-        position[2] = this.pickDirection(position[2]);
-      }
-
-      position = app.hit.move(position);
-      occupied = app.grid.occupied(position);
 
       // avoid occupied
-      if (occupied) {
-        if (this.noMoves()) {
-          this.die();
-        } else {
-          worried = (this.directions.length < 4) ? true : worried; // worried if direction options are running out
-          this.wander(this.position, true, worried); // recursion - stay wandering
-          return worried;
-        }
+      if (!nextPos) {
+        success = false;
+        nextPos = position;
       }
+
       // move
-      else {
-        this.position = position;
-        this.resetDirections();
-        return worried;
-      }
+      return { worried: worried, position: nextPos, success: success };
     },
 
-    noMoves: function() {
-      return this.directions.length === 0;
-    },
-
-    pickDirection: function(moving) {
+    pickAadjacent: function(position) {
       var seed = Math.random(),
-          available = this.directions.length,
-          index = Math.ceil(seed * available) -1,
-          pick = 'none';
-
-      if (index >= 0) {
-        pick = this.directions[index];
-        this.directions.splice(index, 1);
-      }
-
-      return app.hit.noReverse(moving, pick);
-    },
-
-    resetDirections: function() {
-      this.directions = app.state.directions.slice();
+          available = app.grid.adjacent(position),
+          index = Math.ceil(seed * available.length) -1;
+      return available[index];
     }
 
   };

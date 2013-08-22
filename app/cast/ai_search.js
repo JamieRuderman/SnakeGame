@@ -13,19 +13,34 @@ var Snake = Snake || {};
     pathIndex: 0,
     path: [],
 
-    search: function() {
-      var point, nextPos = this.followPath();
+    /*
+      Finds a path to the closest point
+        @return position - unchanged if no path is found
+    */
+    search: function(position) {
+      var point,
+          success = true,
+          nextPos = this.followPath();
 
       // is next pos bad
-      if (!nextPos || this.positionOccupied(nextPos)) {
+      if (!nextPos || app.grid.isSolid(nextPos)) {
 
         // Path find a way to the point
         point = app.points.getClosest();
-        this.path = this.findPath(this.position, point, app.grid.matrix());
+        this.path = this.findPath(position, point, app.grid.matrix());
         nextPos = this.followPath();
       }
 
-      return (!nextPos || this.positionOccupied(nextPos)) ? false : nextPos;
+      // move, or return false
+      if (!nextPos) {
+        success = false;
+        nextPos = position;
+      }
+      else {
+        nextPos = app.hit.addDirection(position, nextPos);
+      }
+
+      return { position: nextPos, success: success };
     },
 
     /* Uses https://github.com/qiao/PathFinding.js */
@@ -49,47 +64,7 @@ var Snake = Snake || {};
       for (var i = 0, len = this.path.length; i < len; i++) {
         callback(this.path[i]);
       }
-    },
-
-    positionOccupied: function(p) {
-      var cell = app.grid.get(p);
-      return cell && cell.type != 'points';
     }
-
-/*
-    },
-    deathCheck: function() {
-      if (!findAdjacent(self.position)) {
-        self.die();
-      }
-    },
-
-    // Finds random free adjacent cell to move to
-    findAdjacent: function(p) {
-      var adj = app.shuffle(adjacent(p));
-          result = false;
-
-      for (var i = adj.length; i--;) {
-        cell = app.grid.get(adj[i]);
-        if (!cell || cell == 'points') {
-          result = adj[i];
-          break;
-        }
-      }
-
-      return result;
-    },
-
-    // get valid adjecent cell list
-    adjacent: function(p) {
-      var adj = [
-        [p[0], p[1] -1], // top
-        [p[0] +1, p[1]], // right
-        [p[0], p[1] +1], // bottom
-        [p[0] -1, p[1]]  // left
-      ];
-      return adj;
-*/
 
   };
 

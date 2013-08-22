@@ -15,7 +15,6 @@ var Snake = Snake || {};
       type:'bots',
       display: 'Bot',
       length: app.state.length,
-      directions: app.state.directions,
       dead: false,
       respawn: true
     });
@@ -31,12 +30,15 @@ var Snake = Snake || {};
     };
 
     self.advance = function(noSwitch) {
+      var next;
       if (self.respawning()) return;
 
-      self.aiAdvance();
-      self.checkHit();
-      self.addSegment();
-      self.checkLength();
+      next = self.aiAdvance(this.position);
+      if (!self.checkHit(next)) {
+        self.position = next;
+        self.addSegment();
+        self.checkLength();
+      }
     };
 
     self.respawning = function() {
@@ -50,20 +52,22 @@ var Snake = Snake || {};
       return true;
     };
 
-    self.checkHit = function() {
-      var cell = app.grid.get(self.position);
+    self.checkHit = function(position) {
+      var cell = app.grid.get(position);
 
       switch (cell.type) {
         case 'players':
         case 'obstacles':
         case 'bots':
         case 'borders':
-            self.die();
-          break;
+          self.hit();
+          return true;
+
         case 'points':
           self.length += app.state.grow;
           app.state.scores[self.id] += app.state.stealPointValue;
-          app.events.trigger('steal', self.position);
+          app.events.trigger('steal', position);
+          return false;
       }
     };
 
@@ -83,7 +87,7 @@ var Snake = Snake || {};
     handle.steal = handle.score = function() {
       if (self.dead) return;
 
-      if (self.closeBy()) {
+      if (self.closeBy(self.position)) {
         self.aiSet('search');
       }
       else {

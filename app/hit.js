@@ -4,7 +4,7 @@ var Snake = Snake || {};
 
   app.hit = {
 
-    move: function(position) {
+    advance: function(position) {
       switch (position[2]) {
         case 'left':
           position[0] -= 1;
@@ -22,13 +22,14 @@ var Snake = Snake || {};
       return this.wrap(position);
     },
 
-    /* Adds the direction to the position when moving to an arbitrary point */
-    moveTo: function(from, to) {
+    /* Adds the direction to the position when moving to an adjacent point */
+    addDirection: function(from, to) {
       var direction;
       if      (from[0] > to[0]) direction = 'left';
       else if (from[0] < to[0]) direction = 'right';
       else if (from[1] < to[1]) direction = 'down';
       else if (from[1] > to[1]) direction = 'up';
+      else direction = 'none';
       return [to[0], to[1], direction];
     },
 
@@ -60,19 +61,18 @@ var Snake = Snake || {};
         Math.round(Math.random() * (app.stage.size[1] -1)),
         this.randomDirection()
       ];
-      return (app.grid.get(position)) ? this.randomFree() : position;
+      return (app.grid.isOccupied(position)) ? this.randomFree() : position;
     },
 
     randomDirection: function() {
       return app.state.directions[Math.round(Math.random() * 3)];
     },
 
-    noReverse: function(moving, direction) {
-      if      (moving == 'left'  && direction =='right') return 'left';
-      else if (moving == 'right' && direction =='left' ) return 'right';
-      else if (moving == 'up'    && direction =='down' ) return 'up';
-      else if (moving == 'down'  && direction =='up'   ) return 'down';
-      return direction;
+    isReverse: function(moving, direction) {
+      return (moving == 'left'  && direction =='right') ||
+             (moving == 'right' && direction =='left' ) ||
+             (moving == 'up'    && direction =='down' ) ||
+             (moving == 'down'  && direction =='up'   );
     },
 
     opposite: function(direction) {

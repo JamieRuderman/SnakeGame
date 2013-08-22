@@ -65,8 +65,31 @@
         return grid[p[1]] && grid[p[1]][p[0]] || false;
     };
 
-    self.occupied = function(p) {
-      return grid[p[1]] && grid[p[1]][p[0]] && grid[p[1]][p[0]].type != 'points' || false;
+    /* Position or cell is bad */
+    self.isOccupied = function(p) {
+      return grid[p[1]] && grid[p[1]][p[0]];
+    };
+
+    /* Cell can be passed through */
+    self.isSolid = function(p) {
+      return self.isOccupied(p) && grid[p[1]][p[0]].type != 'points';
+    };
+
+    // get unoccupied adjacent position list
+    self.adjacent = function(p) {
+      // debugger;
+      var adj = [
+        [p[0], p[1] -1, 'up'],
+        [p[0] +1, p[1], 'right'],
+        [p[0], p[1] +1, 'down'],
+        [p[0] -1, p[1], 'left']
+      ];
+      for (var i = adj.length; i--;) {
+        if (self.isSolid(adj[i]) || app.hit.isReverse(p[2], adj[i][2])) {
+          adj.splice(i, 1);
+        }
+      }
+      return adj;
     };
 
     self.length = function() {
@@ -83,7 +106,7 @@
       for (var y = 0; y < app.state.stageSize[1]; y++) {
         matrix[y] = [];
         for (var x = 0; x < app.state.stageSize[0]; x++) {
-          matrix[y][x] = self.occupied([x, y]) ? 1 : 0;
+          matrix[y][x] = self.isSolid([x, y]) ? 1 : 0;
         }
         // console.log(matrix[y]);
       }

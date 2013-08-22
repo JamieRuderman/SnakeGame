@@ -22,11 +22,11 @@
     self.draw = function() {
       self.clear();
       // dev
-      // app.bots.collection(function(bot) {
-      //   bot.eachPath(function(p) {
-      //     self.path(p[0], p[1]);
-      //   });
-      // });
+      app.bots.collection(function(bot) {
+        bot.eachPath(function(p) {
+          self.path(p[0], p[1]);
+        });
+      });
 
       // main
       app.grid.each(function(x, y, options) {

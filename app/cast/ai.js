@@ -5,27 +5,41 @@ var Snake = Snake || {};
   app.ai = {
 
     aiMode: 'wander', // search || wander
-    awareness: 0.75,   // % of stage that is close by
+    awareness: 0.25,   // % of stage that is close by
 
-    aiAdvance: function(noSwitch) {
+    /* Returns the next position as calculated by the current ai mode */
+    aiAdvance: function(position) {
       var result;
 
       switch (this.aiMode) {
         case 'search':
-          result = this.search();
-          if (result) {
-            this.position = app.hit.moveTo(this.position, result);
+          result = this.search(position);
+          if (result.success) {
+            return result.position;
           }
-          else if (!noSwitch) {
+          else {
+            // can't find something to search for try to wander
             this.aiSet('wander');
-            this.aiAdvance(true);
+            return this.aiAdvance(position);
           }
           break;
+
         case 'wander':
-          result = this.wander(this.position);
-          if (result && !noSwitch && this.closeBy()) {
-            this.aiSet('search');
-            this.aiAdvance(true);
+          result = this.wander(position);
+          if (result.success) {
+            if (result.worried && this.closeBy(position)) {
+              console.log('worried');
+              this.aiSet('search');
+              return this.aiAdvance(position);
+            }
+            else {
+              return result.position;
+            }
+          }
+          else {
+            // can't wander means no possible moves
+            this.hit();
+            return result.position;
           }
           break;
       }
@@ -34,16 +48,15 @@ var Snake = Snake || {};
     aiSet: function(mode) {
       // clear the current path to trigger a new one
       this.path = [];
-      this.resetDirections();
       this.aiMode = mode;
     },
 
-    closeBy: function() {
-      if (this.position) {
+    closeBy: function(position) {
+      if (position) {
         var stage = (app.state.stageSize[0] + app.state.stageSize[1]) / 2,
             close = stage * this.awareness,
             point = app.points.getClosest(),
-            distance = this.distance(this.position, point);
+            distance = this.distance(position, point);
         return close > distance;
       }
     },
@@ -53,6 +66,11 @@ var Snake = Snake || {};
       var x = a[0] - b[0],
           y = a[1] - b[1];
       return Math.sqrt(x * x + y * y);
+    },
+
+    checkHit: function(position) {
+      var adjacent = app.grid.adjacent(position);
+      if (adjacent.length === 0) this.hit();
     }
 
   };

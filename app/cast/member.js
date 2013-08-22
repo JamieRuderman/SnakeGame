@@ -45,11 +45,15 @@
       return self.segments.length > 0;
     };
 
+    self.hit = function() {
+      app.state.damage ? self.damage() : self.die();
+    };
+
     self.damage = function() {
       self.segments.pop();
       self.length--;
       if (self.segments.length === 0)
-        app.events.trigger('gameover');
+        self.die();
     };
 
     self.reset = function() {
