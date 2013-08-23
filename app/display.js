@@ -24,7 +24,7 @@
 
     handle.gameover = function() {
       $('.finalscores').empty();
-      app.cast.collection(function(member) {
+      app.cast.each(function(member) {
         if (member.type == 'bots' || member.type == 'players') {
           $('.finalscores').append(member.display).append('<span>'+ state.scores[member.id] +'</span> &nbsp;');
         }
@@ -39,7 +39,7 @@
 
       // Create scores display on the el obj
       $('.scores').empty();
-      app.cast.collection(function(member) {
+      app.cast.each(function(member) {
         if (member.type == 'bots' || member.type == 'players') {
           self.add('scores', member.id, shorten ? member.display[0] : member.display);
           state.scores[member.id] = 0;

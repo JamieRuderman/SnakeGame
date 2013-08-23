@@ -11,7 +11,7 @@
 
       grid = app.digitizer.map('map').slice(); // FIXME: slice here seems icky
 
-      app.cast.collection(function(member) {
+      app.cast.each(function(member) {
         first = true;
 
         member.each(function(p) {
@@ -27,6 +27,7 @@
 
           curr.from = app.hit.opposite(p[2]);
           curr.type = member.type;
+          curr.obj = member;
 
           add(p[0], p[1], curr);
 
@@ -40,13 +41,19 @@
         // }
       });
 
-      app.points.each(function(p) {
-        add(p[0], p[1], {
-          from: 'tail',
-          to: 'head',
-          type: app.points.type
+      console.log('props');
+      app.props.each(function(item) {
+        console.log('item', item, item.type);
+        item.each(function(p) {
+          add(p[0], p[1], {
+            from: 'tail',
+            to: 'head',
+            type: item.type,
+            obj: item
+          });
         });
       });
+
     };
 
     /* Returns each cell as array [x, y, direction, type] */
@@ -72,7 +79,8 @@
 
     /* Cell can be passed through */
     self.isSolid = function(p) {
-      return self.isOccupied(p) && grid[p[1]][p[0]].type != 'points';
+      return self.isOccupied(p) &&
+            (grid[p[1]][p[0]].type != 'points' && grid[p[1]][p[0]].type != 'powerups');
     };
 
     // get unoccupied adjacent position list
@@ -115,7 +123,6 @@
 
     /* Add position to grid */
     function add(x, y, options) {
-      // console.log(x,y,options);
       if (grid[y] === undefined) grid[y] = [];
       grid[y][x] = options;
     }

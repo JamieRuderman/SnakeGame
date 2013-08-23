@@ -44,8 +44,7 @@
 
     self.players = function(x, y, options) {
       context.save();
-      context.fillStyle = color.players;
-      context.strokeStyle = color.players; //background;
+      context.strokeStyle = (options.obj.powerupCount % 2 === 0) ? color.players : color.powerups;
       drawSegment(x, y, options);
       context.restore();
 
@@ -66,6 +65,12 @@
       // var style = (app.state.scale < 6) ? fillBlock : fillCircle;
       context.fillStyle = color.points;
       context.strokeStyle = color.points;
+      fillCircle(x, y);
+    };
+
+    self.powerups = function(x, y, options) {
+      context.fillStyle = color.powerups;
+      context.strokeStyle = color.powerups;
       fillCircle(x, y);
     };
 

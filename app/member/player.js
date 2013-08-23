@@ -11,7 +11,8 @@ var Snake = Snake || {};
       display: 'Player',
       position: [0, 0, 'right'],
       segments: [],
-      length: app.state.length
+      length: app.state.length,
+      powerupCount: 0
     });
 
     function init() {
@@ -29,6 +30,7 @@ var Snake = Snake || {};
         self.addSegment();
         self.checkLength();
       }
+      powerupCountdown();
     };
 
     self.center = function() {
@@ -48,14 +50,26 @@ var Snake = Snake || {};
         case 'obstacles':
         case 'bots':
         case 'borders':
-          self.hit();
-          return true;
+          if (self.powerupCount === 0) {
+            self.hit();
+            return true;
+          }
+          return false;
 
         case 'points':
           self.length += app.state.grow;
           app.state.scores[self.id] += app.state.scorePointValue;
           app.events.trigger('score', position);
           return false;
+
+        case 'powerups':
+          self.powerupCount += app.state.powerupDurration;
+          app.events.trigger('powerup', position);
+          return false;
+
+        case 'gate/teleport':
+        case 'blocks':
+
       }
     };
 
@@ -70,6 +84,10 @@ var Snake = Snake || {};
       self.center();
       self.addSegment(self.position);
     };
+
+    function powerupCountdown() {
+      if (self.powerupCount > 0) self.powerupCount--;
+    }
 
     init();
 

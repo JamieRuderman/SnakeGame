@@ -5,7 +5,7 @@ var Snake = Snake || {};
   app.ai = {
 
     aiMode: 'wander', // search || wander
-    awareness: 0.25,   // % of stage that is close by
+    awareness: 0.75,   // % of stage that is close by
 
     /* Returns the next position as calculated by the current ai mode */
     aiAdvance: function(position) {
@@ -28,7 +28,6 @@ var Snake = Snake || {};
           result = this.wander(position);
           if (result.success) {
             if (result.worried && this.closeBy(position)) {
-              console.log('worried');
               this.aiSet('search');
               return this.aiAdvance(position);
             }

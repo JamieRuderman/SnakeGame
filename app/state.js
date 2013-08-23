@@ -24,6 +24,7 @@
       scorePointValue: 10,
       stealPointValue: 10,
       killPointValue: 30,
+      powerupDurration: 40,
       respawnFrameDelay: 20,
       scale: 10,
       scores: {},
@@ -46,6 +47,7 @@
           background: '#ffffff', // white
           obstacles: '#00ffff',
           points: '#6fba0a',     // lime
+          powerups: '#d0000e',   // red
           players: '#FF00FF',    // pink
           bots: '#7e57ff'        // purple  228DFF // blue
         },

@@ -19,13 +19,19 @@
 
       app.stage = new app.Stage();
       app.grid = new app.Grid();
-      app.points = new app.Point();
+      app.points = new app.Points();
+      app.powerups = new app.Powerups();
 
       app.cast = new app.Cast([
         'borders',
         'players',
         'obstacles',
         'bots'
+      ]);
+
+      app.props = new app.Props([
+        'points',
+        'powerups'
       ]);
 
       app.display = new app.Display();
