@@ -41,9 +41,7 @@
         // }
       });
 
-      console.log('props');
       app.props.each(function(item) {
-        console.log('item', item, item.type);
         item.each(function(p) {
           add(p[0], p[1], {
             from: 'tail',

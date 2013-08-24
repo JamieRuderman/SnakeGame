@@ -45,6 +45,7 @@
         light: {
           borders: '#18c3e1',    // blue
           background: '#ffffff', // white
+          doorways: '#ffdc09',   // gold
           obstacles: '#00ffff',
           points: '#6fba0a',     // lime
           powerups: '#d0000e',   // red

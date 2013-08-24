@@ -23,6 +23,12 @@
       self.reset();
     };
 
+    self.move = function(position) {
+      self.position = position;
+      self.addSegment();
+      self.checkLength();
+    };
+
     // movement method
     self.checkLength = function() {
       if (self.segments.length > self.length) {

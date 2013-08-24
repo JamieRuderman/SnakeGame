@@ -31,7 +31,8 @@
 
       app.props = new app.Props([
         'points',
-        'powerups'
+        'powerups',
+        'doorways'
       ]);
 
       app.display = new app.Display();

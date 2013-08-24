@@ -1,12 +1,9 @@
-var Snake = Snake || {};
-
 (function(app){
 
   app.Powerups = function() {
 
     var self = new app.Item(),
-        handle = {},
-        points = [];
+        handle = {};
 
     self.type = 'powerups';
 
@@ -34,4 +31,4 @@ var Snake = Snake || {};
     return self;
   };
 
-})(Snake);
+})(Snake || {});

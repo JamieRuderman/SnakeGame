@@ -22,13 +22,11 @@ var Snake = Snake || {};
     }
 
     self.advance = function(direction) {
-      var next = self.position.slice();
-      next[2] = direction;
-      next = app.hit.advance(next);
-      if (!self.checkHit(next)) {
-        self.position = next;
-        self.addSegment();
-        self.checkLength();
+      var position = self.position.slice();
+      position[2] = direction;
+      position = app.hit.advance(position);
+      if (!self.checkHit(position)) {
+        self.move(position);
       }
       powerupCountdown();
     };
@@ -67,7 +65,11 @@ var Snake = Snake || {};
           app.events.trigger('powerup', position);
           return false;
 
-        case 'gate/teleport':
+        case 'doorways':
+          var pair = app.doorways.getPair(position);
+          self.move(pair);
+          return true;
+
         case 'blocks':
 
       }

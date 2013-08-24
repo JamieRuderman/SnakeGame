@@ -13,19 +13,29 @@ var Snake = Snake || {};
       self.add();
     };
 
-    self.add = function(item) {
+    self.add = function(position) {
       if (app.hit.full())
         app.events.trigger('gameover');
       else
-        self.items.push(item || app.hit.randomFree());
+        self.items.push(position || app.hit.randomFree());
     };
 
     self.remove = function(position) {
       self.each(function(item, index) {
-        if (item[0] == position[0] && item[1] == position[1]) {
+        if (position[0] == item[0] && position[1] == item[1]) {
           self.items.splice(index, 1);
         }
       });
+    };
+
+    self.get = function(position) {
+      var result = false;
+      self.each(function(item, index) {
+        if (position[0] == item[0] && position[1] == item[1]) {
+          result = item;
+        }
+      });
+      return result;
     };
 
     self.each = function(callback) {

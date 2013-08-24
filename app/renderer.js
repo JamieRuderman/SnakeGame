@@ -74,6 +74,15 @@
       fillCircle(x, y);
     };
 
+    self.doorways = function(x, y, options) {
+      context.save();
+      context.lineWidth = 3;
+      context.fillStyle = color.doorways;
+      context.strokeStyle = color.doorways;
+      strokeCircle(x, y);
+      context.restore();
+    };
+
     self.obstacles = function(x, y, options) {
       context.fillStyle = color.background;
       context.strokeStyle = '#88' + color.obstacles;
@@ -263,6 +272,19 @@
       );
       context.closePath();
       context.fill();
+      context.stroke();
+    }
+
+    function strokeCircle(x, y) {
+      var radius = size / 2;
+      context.beginPath();
+      context.arc(
+        scale(x) + radius,
+        scale(y) + radius,
+        radius - 1,
+        0, Math.PI * 2, true
+      );
+      context.closePath();
       context.stroke();
     }
 

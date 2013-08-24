@@ -35,9 +35,7 @@ var Snake = Snake || {};
 
       next = self.aiAdvance(this.position);
       if (!self.checkHit(next)) {
-        self.position = next;
-        self.addSegment();
-        self.checkLength();
+        self.move(next);
       }
     };
 
