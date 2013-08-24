@@ -27,6 +27,8 @@ var Snake = Snake || {};
       position = app.hit.advance(position);
       if (!self.checkHit(position)) {
         self.move(position);
+        // so that the next player or bot can not co-locate
+        app.grid.add(position[0], position[1], {});
       }
       powerupCountdown();
     };

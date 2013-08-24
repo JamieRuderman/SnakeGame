@@ -5,6 +5,12 @@
     var self = {},
         grid = [[]]; // two dimensional array
 
+    /* Add position to grid */
+    self.add = function(x, y, options) {
+      if (grid[y] === undefined) grid[y] = [];
+      grid[y][x] = options;
+    };
+
     /* Add cast member positions to grid */
     self.make = function() {
       var first, prev, curr;
@@ -29,7 +35,7 @@
           curr.type = member.type;
           curr.obj = member;
 
-          add(p[0], p[1], curr);
+          self.add(p[0], p[1], curr);
 
           prev = curr;
         });
@@ -37,13 +43,13 @@
         // tail
         // if (curr) {
         //   curr.from = 'tail';
-        //   add(p[0], p[1], curr);
+        //   self.add(p[0], p[1], curr);
         // }
       });
 
       app.props.each(function(item) {
         item.each(function(p) {
-          add(p[0], p[1], {
+          self.add(p[0], p[1], {
             from: 'tail',
             to: 'head',
             type: item.type,
@@ -118,12 +124,6 @@
       }
       return matrix;
     };
-
-    /* Add position to grid */
-    function add(x, y, options) {
-      if (grid[y] === undefined) grid[y] = [];
-      grid[y][x] = options;
-    }
 
     return self;
 

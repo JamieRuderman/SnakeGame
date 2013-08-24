@@ -66,7 +66,7 @@
     // presets
     preset: {
       small: {
-        fps: 4,
+        fps: 8,
         grow: 5,
         length: 10,
         pointsToIncreaseSpeed: 20,

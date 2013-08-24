@@ -56,6 +56,7 @@
     };
 
     self.damage = function() {
+      app.state.scores[self.id]--;
       self.segments.pop();
       self.length--;
       if (self.segments.length === 0)

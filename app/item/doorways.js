@@ -27,12 +27,10 @@
 
       self.each(function(item) {
         if (target[3] == item[3] &&
-           (target[0] != item[0] || target[1] != item[1]))
-        {
+           (target[0] != item[0] || target[1] != item[1])) {
           pair = item;
         }
       });
-      console.log(pair);
       return pair;
     };
 
