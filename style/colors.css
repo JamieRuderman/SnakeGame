@@ -11,13 +11,22 @@
 .light .menu {
   background-color: rgba(255, 255, 255, 0.9);
 }
-.light .select {
+.light .submit {
   color: #ffffff;
   background-color: #FF00FF;
 }
+.light .select {
+  color: #ffffff;
+  background-color: #D3D3D3;
+}
+.light .submit:hover,
+.light .submit:focus,
 .light .select:hover,
 .light .select:focus {
   background-color: #18c3e1;
+}
+.light .active {
+  background-color: #FF00FF;
 }
 .light .scores,
 .light .finalscores {

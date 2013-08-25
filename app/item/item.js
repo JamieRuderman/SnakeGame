@@ -5,6 +5,7 @@ var Snake = Snake || {};
   app.Item = function() {
 
     var self = {
+          kind: 'item',
           items: []
         };
 

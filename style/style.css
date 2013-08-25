@@ -20,7 +20,8 @@ hr {
 .hidden {
   display: none;
 }
-.select {
+.select,
+.submit {
   cursor: pointer;
   font-size: 10px;
   font-weight: 800;

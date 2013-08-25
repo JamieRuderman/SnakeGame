@@ -4,6 +4,7 @@
 
     // defaults
     defaults: {
+      // players: 1, // set by menu cannot be in defaults.
       borders: 0,
       bots: 0,
       points: 1,
@@ -20,7 +21,6 @@
       obstaclesLength: 15,
       paused: false,
       pointsToIncreaseSpeed: 5,
-      players: 1,
       scorePointValue: 10,
       stealPointValue: 10,
       killPointValue: 30,
@@ -66,7 +66,7 @@
     // presets
     preset: {
       small: {
-        fps: 8,
+        fps: 4,
         grow: 5,
         length: 10,
         pointsToIncreaseSpeed: 20,

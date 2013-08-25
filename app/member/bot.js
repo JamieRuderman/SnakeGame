@@ -66,6 +66,11 @@ var Snake = Snake || {};
           app.state.scores[self.id] += app.state.stealPointValue;
           app.events.trigger('steal', position);
           return false;
+
+        case 'doorways':
+          var pair = app.doorways.getPair(position);
+          self.move(pair);
+          return true;
       }
     };
 

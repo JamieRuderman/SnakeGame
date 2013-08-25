@@ -84,7 +84,7 @@
     /* Cell can be passed through */
     self.isSolid = function(p) {
       return self.isOccupied(p) &&
-            (grid[p[1]][p[0]].type != 'points' && grid[p[1]][p[0]].type != 'powerups');
+            (grid[p[1]][p[0]].kind != 'item');
     };
 
     // get unoccupied adjacent position list

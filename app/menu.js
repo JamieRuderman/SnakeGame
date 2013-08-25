@@ -52,10 +52,22 @@
     /* menu button selection handlers */
 
     select.begin = function(event) {
-      hide('begin');
-      app.state.set(event.target.name);
+      var select = parse(event);
 
-      app.start.newgame();
+      switch (select[0]) {
+        case 'set':
+          app.state.set(select[1]);
+          displayActive(event);
+          break;
+        case 'players':
+          app.state.players = +select[1];
+          displayActive(event);
+          break;
+        case 'start':
+          hide('begin');
+          app.start.newgame();
+      }
+      console.log('playsrs', app.state.players);
     };
 
     select.gameover = function(event) {
@@ -79,13 +91,31 @@
     };
 
     function show(menu) {
+      setActiveState(menu);
       menus[menu].show();
-      menus[menu].on('click', '.select', select[menu]);
+      menus[menu].on('click', 'button', select[menu]);
     }
 
     function hide(menu) {
       menus[menu].hide();
-      menus[menu].off('click', '.select', select[menu]);
+      menus[menu].off('click', 'button', select[menu]);
+    }
+
+    /* applys the default active menu state */
+    function setActiveState(menu) {
+      var active = menus[menu].find('.active').each(function(index, element) {
+        select[menu]({ target: element });
+      });
+    }
+
+    function displayActive(event) {
+      target = $(event.target);
+      target.parents('ul').find('button').removeClass('active');
+      target.addClass('active');
+    }
+
+    function parse(event) {
+      return event.target.name.split(':');
     }
 
     return self;

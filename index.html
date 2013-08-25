@@ -63,10 +63,16 @@
       <hr />
       <ul>
         <!-- TODO: make dynamicly generated -->
-        <li><button class="select" name="small">Small</button></li>
-        <li><button class="select" name="medium">Medium</button></li>
-        <li><button class="select" name="large">Large</button></li>
+        <li><button class="select active" name="set:small">Small</button></li>
+        <li><button class="select" name="set:medium">Medium</button></li>
+        <li><button class="select" name="set:large">Large</button></li>
       </ul>
+      <ul>
+        <li><button class="select active" name="players:1">1 Player</button></li>
+        <li><button class="select" name="players:2">2 Players</button></li>
+      </ul>
+      <hr />
+      <button class="submit" name="start">Start</button>
     </div>
   </div>
 
@@ -78,8 +84,8 @@
       <h2 class="finalscores"></h2>
       <hr />
       <ul>
-        <li><button class="select" name="restart">Restart</button></li>
-        <li><button class="select" name="menu">Menu</button></li>
+        <li><button class="submit" name="restart">Restart</button></li>
+        <li><button class="submit" name="menu">Menu</button></li>
       </ul>
     </div>
   </div>
@@ -89,8 +95,8 @@
       <h1>PAUSED</h1>
       <hr />
       <ul>
-        <li><button class="select" name="resume">Resume</button></li>
-        <li><button class="select" name="quit">Quit</button></li>
+        <li><button class="submit" name="resume">Resume</button></li>
+        <li><button class="submit" name="quit">Quit</button></li>
       </ul>
     </div>
   </div>

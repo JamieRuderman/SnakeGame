@@ -10,6 +10,7 @@
   */
   app.Member = function(options) {
     var self = {
+          kind: 'member',
           position: null,
           segments: [],
           length: app.state.obstaclesLength // {option} number of segments
