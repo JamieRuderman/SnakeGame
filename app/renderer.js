@@ -44,7 +44,8 @@
 
     self.players = function(x, y, options) {
       context.save();
-      context.strokeStyle = (options.obj.powerupCount % 2 === 0) ? color.players : color.powerups;
+      console.log(options);
+      context.strokeStyle = (options.obj.powerupCount % 2 === 0) ? color.players[options.obj.id -1] : color.powerups;
       drawSegment(x, y, options);
       context.restore();
 

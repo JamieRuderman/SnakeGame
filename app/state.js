@@ -49,8 +49,8 @@
           obstacles: '#00ffff',
           points: '#6fba0a',     // lime
           powerups: '#d0000e',   // red
-          players: '#FF00FF',    // pink
-          bots: '#7e57ff'        // purple  228DFF // blue
+          players: ['#FF00FF', '#228DFF'], // pink, blue
+          bots: '#7e57ff'        // purple
         },
         dark: {
           borders: '#003300',
@@ -85,17 +85,17 @@
         obstaclesLength: 25,
         bots: 2,
         scale: 10,
-        stageSize: [60, 60],
-        color: {
-          light: {
-            borders: '#003333',
-            background: '#ff0000',
-            obstacles: '0000', // Red is dynamic
-            points: '#00ffff',
-            players: '#ff9900',
-            bots: '#990000'
-          }
-        }
+        stageSize: [60, 60]
+        // color: {
+        //   light: {
+        //     borders: '#003333',
+        //     background: '#ff0000',
+        //     obstacles: '0000', // Red is dynamic
+        //     points: '#00ffff',
+        //     players: '#ff9900',
+        //     bots: '#990000'
+        //   }
+        // }
       },
       large: {
         fps: 10,
