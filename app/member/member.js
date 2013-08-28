@@ -38,6 +38,11 @@
       }
     };
 
+    self.turn = function(direction) {
+      if (!direction) return self.position[2];
+      return app.hit.isReverse(self.position[2], direction) ? self.position[2] : direction;
+    };
+
     self.addSegment = function() {
       self.position && self.segments.unshift(self.position.slice());
     };

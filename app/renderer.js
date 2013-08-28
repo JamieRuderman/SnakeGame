@@ -22,7 +22,7 @@
     self.draw = function() {
       self.clear();
       // dev
-      app.bots.collection(function(bot) {
+      app.bots.each(function(bot) {
         bot.eachPath(function(p) {
           self.path(p[0], p[1]);
         });

@@ -18,12 +18,11 @@ var Snake = Snake || {};
     function init() {
       $.extend(self, options);
       app.events.register(handle, 'game');
-      self.center();
     }
 
     self.advance = function(direction) {
       var position = self.position.slice();
-      position[2] = direction;
+      position[2] = self.turn(direction);
       position = app.hit.advance(position);
       if (!self.checkHit(position)) {
         self.move(position);
@@ -85,7 +84,8 @@ var Snake = Snake || {};
       app.state.scores[self.id] = 0;
       self.length = app.state.length;
       self.segments = [];
-      self.center();
+      // self.center();
+      self.position = app.hit.randomFree();
       self.addSegment(self.position);
     };
 

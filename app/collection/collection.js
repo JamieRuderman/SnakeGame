@@ -29,9 +29,9 @@
 
     /* Iterate over selected type of members in cast */
     self.select = function(type, callback) {
-      self.each(function(member) {
+      self.each(function(member, i) {
         if (member.type == type) {
-          callback(member);
+          callback(member, i);
         }
       });
     };

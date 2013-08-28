@@ -36,7 +36,7 @@
 
       // assign global name shortcuts
       app[type] = members;
-      app[type].collection = function(callback) {
+      app[type].each = function(callback) {
         self.select(type, callback);
       };
 
