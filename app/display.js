@@ -15,36 +15,45 @@
       update(state.scores);
     };
 
-    self.add = function(target, selector, label) {
-      el[selector] = $('<span></span> ');
-      $('.'+ target).append(label).append(el[selector]);
+    self.addScores = function(member) {
+      var label = ' ',
+          shorten = app.cast.length() > 10;
+
+      if (member.type == 'bots' || member.type == 'players') {
+        el[member.id] = $('<span></span>').add('<span></span>');
+        label += (shorten ? member.display[0] : member.display) + (member.id +1);
+        el[member.id].css({
+          color: state.color.light.players[member.id]
+        });
+        $('.scores').append(label).append(el[member.id][0]);
+        $('.finalscores').append(label).append(el[member.id][1]);
+      }
     };
 
     /* Event handling ----- */
 
     handle.gameover = function() {
-      $('.finalscores').empty();
-      app.cast.each(function(member) {
-        if (member.type == 'bots' || member.type == 'players') {
-          $('.finalscores').append(member.display).append('<span>'+ state.scores[member.id] +'</span> &nbsp;');
-        }
-      });
+      // var el;
+      // app.cast.each(function(member) {
+      //   self.addScores('finalscores', el, member);
+      // });
     };
 
     /* Private -------------- */
 
     function init() {
-      var shorten = app.cast.length() > 10;
       app.events.register(handle);
 
       // Create scores display on the el obj
       $('.scores').empty();
+      $('.finalscores').empty();
+
       app.cast.each(function(member) {
-        if (member.type == 'bots' || member.type == 'players') {
-          self.add('scores', member.id, shorten ? member.display[0] : member.display);
-          state.scores[member.id] = 0;
-        }
+        self.addScores(member);
       });
+
+      console.log(el);
+      window.foo = el;
 
       // independant of the el object for performance
       fpsEl = $('.fps');

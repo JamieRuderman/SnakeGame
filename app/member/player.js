@@ -83,11 +83,17 @@ var Snake = Snake || {};
     handle.reset = function() {
       app.state.scores[self.id] = 0;
       self.length = app.state.length;
-      self.segments = [];
       // self.center();
       self.position = app.hit.randomFree();
-      self.addSegment(self.position);
+      primeSegments();
     };
+
+    function primeSegments() {
+      self.segments = [];
+      for (var i = self.length; i--;) {
+        self.addSegment();
+      }
+    }
 
     function powerupCountdown() {
       if (self.powerupCount > 0) self.powerupCount--;

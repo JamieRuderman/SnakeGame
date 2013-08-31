@@ -26,7 +26,7 @@
       for (var c = 0; c < count; c++) {
         constructor = type.caps().single();
         members.push(new app[constructor]({
-          id: ++self.serial,
+          id: self.serial++,
           onDeath: self.remove
         }));
       }

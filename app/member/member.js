@@ -70,6 +70,7 @@
     };
 
     self.reset = function() {
+      app.state.scores[self.id] = 0;
       self.length = app.state.length;
       self.segments = [];
     };

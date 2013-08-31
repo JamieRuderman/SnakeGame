@@ -21,7 +21,7 @@
     function cast(type) {
       var constructor = type.caps(),
           prop = new app[constructor]({
-            id: ++self.serial,
+            id: self.serial++,
             onDeath: self.remove
           });
 
